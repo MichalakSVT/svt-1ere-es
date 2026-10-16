@@ -1,0 +1,1530 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SVT 1ère ES</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f8eca6; --surface:#fffdf3; --ink:#1d2227; --ink-2:#3a4148; --muted:#6b6140; --line:#eadb8c; --line-2:#dcc970;
+  --ok:#2f7d4f; --ok-soft:#e8f3ec; --ko:#b8412f; --ko-soft:#f8e9e5;
+  --c:#1f7a8c; --c-soft:rgba(31,122,140,.08); --c-mid:rgba(31,122,140,.22); --c-ink:#15535f;
+  --serif:'Source Serif 4',Georgia,'Times New Roman',serif;
+  --sans:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --r:12px; --ease:cubic-bezier(.2,.75,.25,1);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink);line-height:1.55;font-size:1rem;-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%;overflow-x:hidden}
+button{font:inherit;color:inherit;cursor:pointer;border:none;background:none;padding:0}
+a{color:var(--c-ink)}
+sup,sub{line-height:0}
+.wrap{max-width:900px;margin:0 auto;padding:0 clamp(16px,4vw,32px)}
+
+/* ---------- Barre du haut ---------- */
+.topbar{position:sticky;top:0;z-index:30;background:var(--paper);border-bottom:1px solid var(--line)}
+.topbar .wrap{display:flex;align-items:center;gap:12px;min-height:52px}
+.brand{font-family:var(--serif);font-weight:700;font-size:1.15rem;letter-spacing:.01em}
+.crumbs{display:flex;align-items:center;gap:8px;min-width:0;font-size:.88rem;color:var(--muted);white-space:nowrap;overflow:hidden}
+.crumbs button{color:var(--muted);padding:8px 0}
+.crumbs .cur{color:var(--ink);font-weight:600;overflow:hidden;text-overflow:ellipsis}
+
+main{padding:clamp(22px,5vw,44px) 0 56px}
+.view{animation:appear .4s var(--ease)}
+@keyframes appear{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+.kicker{font-size:.76rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--c-ink);margin:0 0 8px}
+h1,h2,h3{font-family:var(--serif);font-weight:700;letter-spacing:-.005em}
+
+/* ---------- Accueil ---------- */
+.home-head h1{font-size:clamp(2rem,4vw + 1rem,2.9rem);line-height:1.1;margin:0 0 8px}
+.home-head .lead{color:var(--muted);margin:0 0 34px;font-size:1rem}
+.chapter{margin-bottom:38px}
+.ch-head{border-top:3px solid var(--c);padding-top:12px;margin-bottom:14px}
+.ch-head .kicker{margin-bottom:2px}
+.ch-head h2{margin:0;font-size:clamp(1.2rem,1.2vw + .9rem,1.45rem);line-height:1.3}
+.parts{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(320px,1fr))}
+.part{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;transition:border-color .25s,transform .25s var(--ease),box-shadow .25s}
+.part .pid{grid-row:span 3;font-family:var(--serif);font-weight:700;font-size:1.35rem;color:var(--c);line-height:1.2;min-width:30px}
+.part h3{margin:0;font-size:1.1rem;line-height:1.3}
+.part .pq{margin:4px 0 0;font-family:var(--serif);font-style:italic;color:var(--ink-2);font-size:.95rem;line-height:1.5}
+.part .go{margin-top:10px;font-size:.85rem;font-weight:600;color:var(--c-ink)}
+@media (hover:hover){.part:hover{border-color:var(--c);transform:translateY(-2px);box-shadow:0 8px 20px -14px rgba(0,0,0,.3)}}
+.revise{border:1px solid var(--line);background:var(--surface);border-radius:var(--r);padding:18px;display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between}
+.revise h3{margin:0;font-size:1.1rem}
+.revise p{margin:2px 0 0;color:var(--muted);font-size:.9rem}
+
+/* ---------- Boutons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:10px 18px;border-radius:10px;font-weight:600;font-size:.93rem;background:var(--surface);border:1px solid var(--line-2);color:var(--ink);text-decoration:none;transition:background .2s,border-color .2s,color .2s,transform .12s}
+.btn:active{transform:scale(.97)}
+.btn.solid{background:var(--c);border-color:var(--c);color:#fff}
+.btn.ghost{border-color:transparent;background:transparent;color:var(--c-ink);padding-left:0;padding-right:0}
+@media (hover:hover){.btn:hover{border-color:var(--c)}.btn.solid:hover{background:var(--c-ink);border-color:var(--c-ink)}}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+
+/* ---------- En-tête de partie ---------- */
+.hero{margin-bottom:20px}
+.hero h1{font-size:clamp(1.65rem,3vw + 1rem,2.5rem);line-height:1.15;margin:0 0 14px}
+.probl{margin:0;padding:4px 0 4px 16px;border-left:3px solid var(--c);font-family:var(--serif);font-style:italic;font-size:clamp(1rem,.5vw + .9rem,1.12rem);color:var(--ink-2);line-height:1.55;max-width:62ch}
+.probl span{display:block;font-family:var(--sans);font-style:normal;font-size:.72rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--c-ink);margin-bottom:2px}
+
+/* ---------- Onglets ---------- */
+.tabs{position:sticky;top:52px;z-index:20;background:var(--paper);display:grid;grid-auto-flow:column;grid-auto-columns:1fr;border-bottom:1px solid var(--line);margin:0 0 24px}
+.tabs button{position:relative;min-width:0;min-height:48px;padding:10px 4px;font-weight:600;font-size:.94rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:color .2s}
+.tabs button::after{content:"";position:absolute;left:12%;right:12%;bottom:-1px;height:3px;border-radius:3px 3px 0 0;background:var(--c);transform:scaleX(0);transition:transform .3s var(--ease)}
+.tabs button.on{color:var(--ink)}
+.tabs button.on::after{transform:scaleX(1)}
+
+/* ---------- Activités ---------- */
+.acc{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);margin-bottom:10px;transition:border-color .25s}
+.acc.open{border-color:var(--line-2)}
+.acc-head{width:100%;display:flex;align-items:center;gap:14px;padding:16px 18px;text-align:left;min-height:64px}
+.acc-head .t{flex:1;min-width:0}
+.acc-head .type{display:block;font-size:.72rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--c-ink);margin-bottom:2px}
+.acc-head .name{display:block;font-family:var(--serif);font-weight:600;font-size:1.08rem;line-height:1.35}
+.chev{flex:0 0 auto;width:9px;height:9px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:rotate(45deg);margin:0 4px 4px;transition:transform .35s var(--ease)}
+.open > .acc-head .chev,.open > .more-btn .chev{transform:rotate(225deg);margin-bottom:-4px}
+.fold{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s var(--ease)}
+.open > .fold{grid-template-rows:1fr}
+.fold > div{overflow:hidden;min-height:0}
+.acc-body{padding:0 18px 20px}
+.summary{font-family:var(--serif);font-size:1.02rem;line-height:1.65;color:var(--ink-2);margin:0 0 16px}
+.corr-title{font-size:.72rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin:0 0 8px;padding-top:14px;border-top:1px solid var(--line)}
+.corr-item{margin:0 0 14px}
+.corr-item .cq{display:flex;gap:10px;align-items:baseline;font-weight:600;font-size:.93rem;margin-bottom:3px}
+.corr-item .cq b{flex:0 0 auto;font-size:.74rem;color:var(--c-ink);background:var(--c-soft);border-radius:6px;padding:1px 7px}
+.corr-item .ca{margin:0;font-family:var(--serif);font-size:1rem;line-height:1.6}
+.ext{display:inline-flex;margin-top:4px;font-weight:600;font-size:.9rem;color:var(--c-ink);text-decoration:none;min-height:40px;align-items:center}
+
+/* ---------- Tableaux (en cartes sur téléphone) ---------- */
+.tbl{overflow-x:auto;margin:18px 0;border:1px solid var(--line);border-radius:10px;background:var(--surface);-webkit-overflow-scrolling:touch}
+.tbl table{border-collapse:collapse;width:100%;font-size:.9rem}
+.tbl th,.tbl td{padding:9px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+.tbl tr:last-child th,.tbl tr:last-child td{border-bottom:none}
+.tbl thead th{background:var(--c-soft);color:var(--c-ink);font-size:.76rem;text-transform:uppercase;letter-spacing:.05em;font-weight:600}
+.tbl tbody th{font-weight:600}
+.tbl caption{caption-side:top;text-align:left;padding:10px 12px 0;font-size:.82rem;color:var(--muted)}
+@media (max-width:560px){
+  .tbl{border:none;background:none;overflow:visible}
+  .tbl caption{padding:0 0 8px}
+  .tbl thead{display:none}
+  .tbl table,.tbl tbody,.tbl tr,.tbl th,.tbl td{display:block;width:100%}
+  .tbl tr{background:var(--surface);border:1px solid var(--line);border-radius:10px;margin-bottom:8px;overflow:hidden}
+  .tbl tbody th{background:var(--c-soft);color:var(--c-ink);border-bottom:1px solid var(--line)}
+  .tbl td{display:flex;justify-content:space-between;gap:14px;text-align:right;border-bottom:1px solid var(--line)}
+  .tbl td:last-child{border-bottom:none}
+  .tbl td::before{content:attr(data-label);text-align:left;color:var(--muted);font-size:.84rem;flex:0 0 42%}
+}
+
+/* ---------- L'essentiel ---------- */
+.toc{display:flex;flex-wrap:wrap;gap:6px 18px;margin:-6px 0 26px;padding:0 0 16px;border-bottom:1px solid var(--line)}
+.toc button{font-size:.88rem;color:var(--c-ink);font-weight:600;min-height:36px;text-align:left}
+.toc button span{font-family:var(--serif);margin-right:6px}
+.lesson{max-width:none}
+.lesson section{margin-bottom:34px;scroll-margin-top:110px}
+.lesson h2{font-size:clamp(1.25rem,1vw + 1rem,1.5rem);line-height:1.3;margin:0 0 12px;display:flex;gap:12px;align-items:baseline}
+.lesson h2 .num{color:var(--c);font-weight:700;flex:0 0 auto}
+.lesson p{font-family:var(--serif);font-size:clamp(1.02rem,.3vw + .98rem,1.1rem);line-height:1.75;margin:0 0 14px;color:var(--ink);hyphens:auto;-webkit-hyphens:auto}
+.lesson b{font-weight:700}
+.aside{margin:18px 0;padding:14px 18px;background:var(--c-soft);border-radius:10px}
+.aside .lab{display:block;font-size:.72rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--c-ink);margin-bottom:4px}
+.aside p{font-size:.98rem;line-height:1.65;margin:0}
+.recap{border:1px solid var(--line-2);background:var(--surface);border-radius:var(--r);padding:18px 20px;margin-top:10px}
+.recap .lab{display:block;font-size:.72rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--c-ink);margin-bottom:6px}
+.recap p{margin:0}
+.recap p + p{margin-top:10px}
+.recap p.rt{font-family:var(--sans);font-size:.78rem;font-weight:700;color:var(--ink-2);margin-top:16px}
+.recap .lab + p.rt{margin-top:4px}
+.recap p.rt + p{margin-top:4px}
+.facts{margin:0;padding-left:20px}
+.facts li{font-family:var(--serif);font-size:.98rem;line-height:1.6;margin:3px 0}
+.aside .src{font-size:.8rem;color:var(--muted);margin-top:6px}
+.hint-line{font-size:.85rem;color:var(--muted);margin:0 0 20px}
+.hint-line .term{pointer-events:none}
+
+/* Termes avec définition */
+.term{font:inherit;color:inherit;display:inline;padding:0;border-bottom:1.5px dotted var(--c);cursor:help;border-radius:2px;transition:background .2s}
+.term.active,.term:focus-visible{background:var(--c-mid);outline:none}
+@media (hover:hover){.term:hover{background:var(--c-soft)}}
+.tip{position:absolute;z-index:50;top:0;left:0;background:var(--ink);color:#fff;border-radius:10px;padding:11px 14px 12px;font-size:.9rem;line-height:1.5;box-shadow:0 12px 30px -10px rgba(0,0,0,.45);opacity:0;visibility:hidden;transform:translateY(4px);transition:opacity .18s,transform .18s,visibility .18s}
+.tip.show{opacity:1;visibility:visible;transform:none}
+.tip b{display:block;font-family:var(--serif);font-size:1rem;margin-bottom:2px;color:#fff}
+.tip .arrow{position:absolute;top:-6px;width:12px;height:12px;background:var(--ink);transform:rotate(45deg);border-radius:2px}
+.tip.above .arrow{top:auto;bottom:-6px}
+
+/* ---------- Navigation entre parties ---------- */
+.next-nav{display:flex;justify-content:space-between;gap:12px;margin-top:40px;padding-top:18px;border-top:1px solid var(--line);flex-wrap:wrap}
+.next-nav button{text-align:left;max-width:48%;min-height:44px}
+.next-nav button:last-child{text-align:right;margin-left:auto}
+.next-nav small{display:block;color:var(--muted);font-size:.78rem}
+.next-nav span{font-family:var(--serif);font-weight:600;color:var(--c-ink)}
+@media (max-width:560px){.next-nav button{max-width:100%}}
+
+/* ---------- Flashcards ---------- */
+.fc-tools{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;margin-bottom:18px}
+.pills{display:inline-flex;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:3px}
+.pills button{min-height:36px;padding:6px 12px;border-radius:8px;font-weight:600;font-size:.85rem;color:var(--muted);transition:background .2s,color .2s}
+.pills button.on{background:var(--ink);color:var(--paper)}
+.bar{height:4px;background:var(--line);border-radius:99px;overflow:hidden;max-width:620px;margin:0 auto 16px}
+.bar > i{display:block;height:100%;background:var(--c);border-radius:99px;transition:width .4s var(--ease)}
+.scene{perspective:1400px;max-width:620px;margin:0 auto;touch-action:pan-y}
+.flash{position:relative;width:100%;height:clamp(250px,50vw,340px);transform-style:preserve-3d;-webkit-transform-style:preserve-3d;transition:transform .6s var(--ease);cursor:pointer}
+.flash.flipped{transform:rotateY(180deg)}
+.flash.in{animation:slin .35s var(--ease)}
+.flash.in-back{animation:slback .35s var(--ease)}
+@keyframes slin{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:none}}
+@keyframes slback{from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:none}}
+.face{position:absolute;top:0;left:0;right:0;bottom:0;-webkit-backface-visibility:hidden;backface-visibility:hidden;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:36px clamp(18px,4vw,34px) 30px;text-align:center;overflow:auto}
+.face.front{background:var(--surface);border:1px solid var(--line-2);border-top:4px solid var(--c)}
+.face.back{background:var(--c);color:#fff;transform:rotateY(180deg)}
+.face .lab{position:absolute;top:12px;left:16px;font-size:.68rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;opacity:.55}
+.face .code{position:absolute;top:10px;right:14px;font-size:.72rem;font-weight:700;color:var(--c-ink)}
+.face.back .code{color:#fff;opacity:.8}
+.face .term-big{font-family:var(--serif);font-size:clamp(1.4rem,2.2vw + .9rem,2rem);font-weight:700;line-height:1.25}
+.face .def{font-family:var(--serif);font-size:clamp(1.02rem,.6vw + .88rem,1.2rem);line-height:1.55}
+.face .hint{position:absolute;bottom:10px;font-size:.76rem;opacity:.45}
+.fc-count{text-align:center;color:var(--muted);font-size:.86rem;margin:12px 0 2px}
+.fc-know{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:620px;margin:10px auto 0}
+.fc-know .no{color:var(--ko);background:var(--ko-soft);border-color:transparent}
+.fc-know .yes{color:var(--ok);background:var(--ok-soft);border-color:transparent}
+.fc-ctrl{display:grid;grid-template-columns:48px 1fr 48px;gap:10px;max-width:620px;margin:10px auto 0}
+.fc-ctrl .btn{padding:0}
+.fc-ctrl .arrow{font-size:1.3rem}
+.fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.fc-grid .scene{max-width:none;width:100%;margin:0}
+.fc-grid .flash{height:190px}
+.fc-grid .face{padding:28px 14px 14px;border-radius:12px}
+.fc-grid .face .term-big{font-size:1.12rem}
+.fc-grid .face .def{font-size:.9rem}
+.done{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:clamp(22px,5vw,38px);text-align:center;max-width:620px;margin:0 auto}
+.done .big{font-family:var(--serif);font-size:clamp(2.3rem,5vw + 1rem,3.2rem);font-weight:700;color:var(--c);line-height:1}
+.done p{color:var(--muted)}
+.done .row{justify-content:center;margin-top:16px}
+
+/* ---------- QCM ---------- */
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:clamp(18px,4vw,30px);max-width:700px;margin:0 auto}
+.panel h3{margin:0 0 4px;font-size:1.25rem}
+.muted{color:var(--muted);font-size:.9rem}
+.set-label{font-size:.72rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin:18px 0 8px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips button{min-height:40px;padding:6px 14px;border-radius:99px;border:1px solid var(--line-2);font-weight:600;font-size:.88rem;color:var(--ink-2);transition:all .2s}
+.chips button small{color:var(--muted);font-weight:500;margin-left:4px}
+.chips button.on{background:var(--c);border-color:var(--c);color:#fff}
+.chips button.on small{color:rgba(255,255,255,.8)}
+.chips button:disabled{opacity:.35;cursor:default}
+.q-meta{display:flex;justify-content:space-between;gap:10px;color:var(--muted);font-size:.84rem;margin-bottom:8px}
+.lvl{font-weight:600;color:var(--c-ink)}
+.q-text{font-family:var(--serif);font-size:clamp(1.12rem,.8vw + .95rem,1.3rem);font-weight:600;line-height:1.45;margin:16px 0 18px}
+.opts{display:grid;gap:10px}
+.opt{display:flex;align-items:flex-start;gap:12px;text-align:left;min-height:52px;padding:12px 14px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);font-size:.97rem;transition:border-color .2s,background .2s,opacity .2s}
+.opt .k{flex:0 0 26px;height:26px;border-radius:7px;background:var(--paper);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8rem;color:var(--muted)}
+@media (hover:hover){.opt:hover:not([disabled]){border-color:var(--c)}}
+.opt[disabled]{cursor:default}
+.opt.good{border-color:var(--ok);background:var(--ok-soft)}
+.opt.good .k{background:var(--ok);color:#fff}
+.opt.bad{border-color:var(--ko);background:var(--ko-soft)}
+.opt.bad .k{background:var(--ko);color:#fff}
+.opt.dim{opacity:.5}
+.feedback{margin-top:16px;padding:13px 16px;border-radius:10px;font-size:.95rem;animation:appear .3s var(--ease)}
+.feedback.ok{background:var(--ok-soft)}
+.feedback.ko{background:var(--ko-soft)}
+.feedback b{display:block;margin-bottom:2px}
+.feedback.ok b{color:var(--ok)}
+.feedback.ko b{color:var(--ko)}
+.q-next{display:flex;justify-content:flex-end;margin-top:14px}
+.score{font-family:var(--serif);font-size:clamp(2.6rem,6vw + 1rem,3.6rem);font-weight:700;color:var(--c);line-height:1;margin:6px 0 4px}
+.center{text-align:center}
+.more-btn{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:.92rem;color:var(--c-ink);min-height:44px}
+.more-btn .chev{width:8px;height:8px;border-color:var(--c-ink);margin:0 2px 3px}
+.review-item{border-top:1px solid var(--line);padding:12px 0;font-size:.93rem;text-align:left}
+.review-item .r-ok{color:var(--ok);font-weight:600}
+.review-item .r-ko{color:var(--ko);font-weight:600}
+
+/* ---------- Téléphones ---------- */
+@media (max-width:480px){
+  body{font-size:.97rem}
+  main{padding-top:20px}
+  .topbar .wrap{min-height:48px}
+  .tabs{top:48px}
+  .tabs{display:flex;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .tabs::-webkit-scrollbar{display:none}
+  .tabs button{flex:1 0 auto;font-size:.8rem;min-height:46px;padding:10px 5px;overflow:visible;text-overflow:clip}
+  .tabs button::after{left:6px;right:6px}
+  .parts{grid-template-columns:1fr}
+  .part{padding:16px}
+  .acc-head{padding:14px 14px}
+  .acc-body{padding:0 14px 18px}
+  .fc-tools{justify-content:center}
+  .pills button{padding:6px 10px;font-size:.8rem}
+  .panel{padding:18px 16px}
+}
+/* ---------- Barre du haut : glossaire et réglages ---------- */
+.topbar .wrap{position:relative}
+.top-actions{margin-left:auto;display:flex;gap:6px;flex:0 0 auto}
+.tbtn{white-space:nowrap;flex:0 0 auto;min-height:36px;padding:6px 12px;border:1px solid var(--line-2);border-radius:8px;font-size:.86rem;font-weight:600;background:var(--surface);transition:border-color .2s}
+.tbtn.on{border-color:var(--ink)}
+@media (hover:hover){.tbtn:hover{border-color:var(--ink)}}
+.settings{position:absolute;right:clamp(16px,4vw,32px);top:calc(100% + 6px);width:min(340px,calc(100vw - 32px));background:var(--surface);border:1px solid var(--line-2);border-radius:12px;padding:16px;box-shadow:0 14px 34px -14px rgba(0,0,0,.35);display:none;z-index:40}
+.settings.show{display:block;animation:appear .25s var(--ease)}
+.settings .set-label:first-child{margin-top:0}
+.settings .pills{display:flex}
+.settings .pills button{flex:1}
+.settings .note{font-size:.8rem;color:var(--muted);margin:10px 0 0;line-height:1.45}
+.btn:disabled{opacity:.45;cursor:default}
+
+/* ---------- Réglages de lecture ---------- */
+/* Thèmes : papier (par défaut), clair, sombre */
+html.th-clair{--paper:#ffffff;--surface:#ffffff;--ink:#000000;--ink-2:#1a1a1a;--muted:#4d4d4d;--line:#e3e3e3;--line-2:#cdcdcd}
+html.th-sombre{color-scheme:dark;--paper:#16191c;--surface:#1f2327;--ink:#ebe8e2;--ink-2:#d3cfc7;--muted:#9ba1a7;--line:#2e3439;--line-2:#3d444b;--ok:#62c78f;--ok-soft:rgba(98,199,143,.14);--ko:#ef8472;--ko-soft:rgba(239,132,114,.15)}
+html.th-sombre .face.back,html.th-sombre .btn.solid,html.th-sombre .chips button.on{background:var(--c-deep,var(--c));border-color:var(--c-deep,var(--c))}
+html.th-sombre .btn.solid:hover{background:var(--c);border-color:var(--c)}
+html.th-sombre .tip,html.th-sombre .tip .arrow{background:#2e3439}
+html.th-sombre .tip{border:1px solid #454d54;color:#ebe8e2}
+html.th-sombre .part:hover,html.th-sombre .settings{box-shadow:0 14px 34px -14px rgba(0,0,0,.8)}
+.nav-btn{display:none}
+.nav-btn.show{display:inline-flex;align-items:center}
+.brand.hide{display:none}
+html.f-lex{--serif:'Lexend',system-ui,sans-serif;--sans:'Lexend',system-ui,sans-serif}
+html.f-lex .probl,html.f-lex .part .pq{font-style:normal}
+html.sp-wide body{letter-spacing:.03em;word-spacing:.12em}
+html.sp-wide .lesson p,html.sp-wide .aside p,html.sp-wide .recap p,html.sp-wide .summary,html.sp-wide .corr-item .ca,html.sp-wide .model,html.sp-wide .gl-item p{line-height:1.95}
+html.sp-wide .lesson p,html.sp-wide .aside p,html.sp-wide .recap p,html.sp-wide .summary,html.sp-wide .corr-item .ca,html.sp-wide .probl,html.sp-wide .part .pq,html.sp-wide .feedback,html.sp-wide .review-item .muted,html.sp-wide .model{text-align:left;-webkit-hyphens:manual;hyphens:manual}
+
+/* ---------- Glossaire ---------- */
+.gl-search{display:block;width:100%;font:inherit;font-size:1.05rem;padding:13px 16px;border:1.5px solid var(--line-2);border-radius:12px;background:var(--surface);color:var(--ink);margin:0 0 8px;-webkit-appearance:none;appearance:none}
+.gl-info{font-size:.86rem;color:var(--muted);margin:0 0 10px;min-height:1.3em}
+.gl-letter{font-family:var(--serif);font-weight:700;color:var(--ink-2);font-size:1.15rem;margin:22px 0 2px;padding-bottom:4px;border-bottom:1px solid var(--line-2)}
+.gl-item{padding:13px 0;border-bottom:1px solid var(--line)}
+.gl-item h3{margin:0 0 3px;font-size:1.08rem}
+.gl-item p{margin:0;font-family:var(--serif);line-height:1.6}
+.gl-tags{margin-top:7px;display:flex;gap:6px;flex-wrap:wrap}
+.gl-tags button{font-size:.78rem;font-weight:600;color:var(--c-ink);background:var(--c-soft);border-radius:6px;padding:3px 10px;min-height:30px}
+mark{background:var(--c-mid);color:inherit;border-radius:2px;padding:0 1px}
+
+/* ---------- Accueil ---------- */
+.extras{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-top:12px}
+.extras .revise{flex-wrap:nowrap}
+
+
+@media (max-width:520px){.crumbs{display:none}}
+
+/* ---------- Tuto ---------- */
+.tuto{position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(20,30,22,.45)}
+.tuto.show{display:flex;animation:fade .25s var(--ease)}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.tuto-box{position:relative;width:min(560px,100%);max-height:calc(100vh - 32px);max-height:calc(100dvh - 32px);display:flex;flex-direction:column;background:var(--surface);border-radius:16px;box-shadow:0 24px 60px -20px rgba(0,0,0,.5);overflow:hidden;animation:appear .35s var(--ease)}
+.tuto-box{min-height:min(510px,calc(100vh - 32px))}
+@media (max-width:560px){.tuto-box{min-height:min(640px,calc(100vh - 32px))}}
+.tuto-body{flex:1;padding:26px clamp(18px,5vw,30px) 8px;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.tuto-body h2{margin:0 0 12px;font-size:clamp(1.3rem,1.5vw + 1rem,1.6rem);line-height:1.25}
+.tuto-body p{margin:0 0 12px;line-height:1.6;color:var(--ink-2)}
+.tuto-body ul{margin:0 0 12px;padding-left:0;list-style:none}
+.tuto-body li{position:relative;padding-left:18px;margin:0 0 9px;line-height:1.55;color:var(--ink-2)}
+.tuto-body li::before{content:"";position:absolute;left:2px;top:.62em;width:7px;height:7px;border-radius:50%;background:var(--c)}
+.tuto-body li b,.tuto-body p b{color:var(--ink)}
+.tuto-step{animation:appear .3s var(--ease)}
+.tuto-x{position:absolute;top:10px;right:10px;width:40px;height:40px;border-radius:10px;font-size:1.4rem;line-height:1;color:var(--muted);z-index:1}
+@media (hover:hover){.tuto-x:hover{background:var(--paper);color:var(--ink)}}
+.tuto-demo{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 14px}
+.tuto-demo span{font-size:.8rem;font-weight:600;padding:5px 11px;border-radius:8px;background:var(--c-soft);color:var(--c-ink)}
+.tuto-demo .dterm{background:none;padding:0;border-radius:0;font-size:1rem;font-weight:400;font-family:var(--serif);color:var(--ink);border-bottom:1.5px dotted var(--c)}
+.tuto-foot{display:flex;align-items:center;gap:10px;padding:14px clamp(18px,5vw,30px) 18px;border-top:1px solid var(--line)}
+.tuto-dots{display:flex;gap:2px;flex:1;justify-content:center;flex-wrap:wrap}
+.tuto-dots button{width:22px;height:28px;display:flex;align-items:center;justify-content:center}
+.tuto-dots button::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--line-2);transition:background .2s,transform .2s}
+.tuto-dots button.on::before{background:var(--c);transform:scale(1.3)}
+.tuto-foot .btn{min-width:108px}
+.tuto-foot .btn.ghost{min-width:0;padding:10px 6px}
+@media (max-width:480px){.tuto-foot .btn{min-width:0}.tuto-dots button{width:16px}}
+@media (max-width:420px){.back-lbl{display:none}.tbtn{padding:6px 9px}.top-actions{gap:4px}}
+
+/* ---------- Halloween (actif seulement si HALLOWEEN = true dans les réglages) ---------- */
+html.hw main{position:relative}
+html.hw .brand{white-space:nowrap}
+@media (max-width:420px){html.hw .brand{font-size:1rem}html.hw .brand .hw-p{margin-left:.25em}}
+html.hw main > .wrap{position:relative;z-index:1}
+.hw-web{position:absolute;top:0;width:clamp(70px,12vw,170px);height:clamp(70px,12vw,170px);color:var(--muted);opacity:.42;pointer-events:none;z-index:0}
+.hw-web.l{left:0}
+.hw-web.r{right:0;transform:scaleX(-1)}
+.hw-web svg{display:block;width:100%;height:100%}
+html.th-sombre .hw-web{opacity:.4}
+.hw-p{display:inline-block;width:1.15em;height:1.08em;vertical-align:-.14em;margin-left:.35em;line-height:0}
+.hw-p svg{display:block;width:100%;height:100%;overflow:visible}
+.hw-p .pf{fill:#3a2208;transition:fill .3s}
+.foot .hw-p{margin:0 .45em 0 0}
+html.hw .home-head{position:relative}
+.hw-big{position:absolute;right:0;top:2px;width:clamp(46px,9vw,68px);height:clamp(44px,8.5vw,64px);padding:0;margin:0;cursor:pointer;transition:transform .2s var(--ease)}
+.hw-big .hw-p{width:100%;height:100%;margin:0;vertical-align:0}
+@media (hover:hover){.hw-big:hover{transform:rotate(-6deg) scale(1.06)}}
+.hw-big:focus-visible{outline:2px solid #e2771a;outline-offset:4px;border-radius:12px}
+.hw-big.lit .pf{fill:#ffd84a}
+.hw-big.lit svg{filter:drop-shadow(0 0 10px rgba(255,170,40,.75))}
+.hw-big.lit{animation:hwWig .6s var(--ease)}
+@keyframes hwWig{0%,100%{transform:rotate(0)}25%{transform:rotate(-12deg)}55%{transform:rotate(9deg)}80%{transform:rotate(-4deg)}}
+.hw-rain{position:fixed;inset:0;z-index:70;overflow:hidden;pointer-events:none}
+.hw-rain .hw-p{position:absolute;top:0;margin:0;animation:hwFall linear forwards;will-change:transform}
+@keyframes hwFall{from{transform:translateY(-80px) rotate(0)}to{transform:translateY(calc(100vh + 80px)) rotate(var(--rot))}}
+@media (max-width:480px){html.hw .home-head h1{padding-right:56px}}
+
+/* ---------- Schéma (figure) ---------- */
+.fig{margin:18px 0;padding:16px clamp(12px,3vw,20px) 14px;background:var(--surface);border:1px solid var(--line);border-radius:10px}
+.fig figcaption{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:10px;font-size:.86rem;color:var(--ink-2)}
+.fig figcaption span{display:inline-flex;align-items:center;gap:7px}
+.fig .dot{width:12px;height:12px;border-radius:50%;background:var(--c);flex:0 0 auto}
+.fig .tails{width:12px;height:14px;border-left:2.4px solid var(--muted);border-right:2.4px solid var(--muted);flex:0 0 auto}
+.lesson .fig p.fig-t{font-family:var(--sans);font-size:.8rem;font-weight:600;color:var(--muted);margin:8px 0 0;text-align:left}
+
+/* ---------- Frise chronologique ---------- */
+.frise{list-style:none;margin:18px 0;padding:0 0 0 22px;position:relative}
+.frise::before{content:"";position:absolute;left:6px;top:8px;bottom:8px;width:3px;border-radius:3px;background:var(--c-mid)}
+.frise li{position:relative;padding:0 0 14px 8px;display:grid;grid-template-columns:auto 1fr;gap:0 12px;align-items:baseline}
+.frise li:last-child{padding-bottom:0}
+.frise li::before{content:"";position:absolute;left:-21px;top:.45em;width:11px;height:11px;border-radius:50%;background:var(--c);box-shadow:0 0 0 3px var(--paper)}
+.frise b{font-family:var(--serif);font-size:1.05rem;color:var(--c-ink);min-width:3.2em}
+.frise span{font-family:var(--serif);font-weight:600;line-height:1.4}
+.frise i{grid-column:2;color:var(--muted);font-size:.9rem}
+
+.act-lab{font-size:.72rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--c-ink);margin:0 0 4px}
+.corr-item .cq b{white-space:nowrap}
+
+/* ---------- Pied de page ---------- */
+.foot{border-top:1px solid var(--line);padding:16px 0 22px;text-align:center;font-size:.82rem;color:var(--muted)}
+
+/* Texte justifié (avec césure pour éviter les grands espaces) */
+.lesson p,.aside p,.recap p,.summary,.corr-item .ca,.probl,.part .pq,.feedback,.review-item .muted{text-align:justify;-webkit-hyphens:auto;hyphens:auto;overflow-wrap:break-word}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="wrap"><button class="tbtn nav-btn" id="backBtn" aria-label="Retour">←<span class="back-lbl">&nbsp;Retour</span></button><button class="tbtn nav-btn" id="homeBtn">Accueil</button><button class="brand" id="brand">SVT · 1ère ES</button><nav class="crumbs" id="crumbs"></nav><div class="top-actions"><button class="tbtn" id="tutoBtn" aria-haspopup="dialog">Tuto</button><button class="tbtn" id="glBtn">Glossaire</button><button class="tbtn" id="setBtn" aria-label="Réglages du texte" aria-expanded="false">Aa</button></div><div class="settings" id="settings" role="dialog" aria-label="Réglages du texte"></div></div></div>
+<main><div class="wrap" id="app"></div></main>
+<footer class="foot"><div class="wrap">© Bruno Michalak – Tous droits réservés.</div></footer>
+<div class="tip" id="tip" role="tooltip"></div>
+<div class="tuto" id="tuto" role="dialog" aria-modal="true" aria-label="Tuto : comment utiliser le site"><div class="tuto-box"><button class="tuto-x" id="tutoX" aria-label="Fermer le tuto">×</button><div class="tuto-body" id="tutoBody"></div><div class="tuto-foot"><button class="btn ghost" id="tutoPrev">← Précédent</button><div class="tuto-dots" id="tutoDots"></div><button class="btn solid" id="tutoNext">Suivant →</button></div></div></div>
+
+<script>
+/* =====================================================================
+   RÉGLAGES
+   OUVRIR_SUR : null = accueil. "1a", "1b"… = ouvre directement la partie
+                (utile pour faire une page Google Sites par partie).
+   AFFICHER_CORRECTIONS : false pour masquer les corrections.
+   ===================================================================== */
+var OUVRIR_SUR = null;
+var AFFICHER_CORRECTIONS = true;
+
+/* HALLOWEEN : true = toiles et citrouilles affichées. Mettre false pour tout enlever. */
+var HALLOWEEN = true;
+
+/* Couleur de chaque chapitre : Chapitre 1 = 1re couleur, etc. */
+var COULEURS = ["#1f7a8c", "#bf5a2f", "#7a4fae", "#2f5fae", "#4f8a2f", "#a8435f"];
+
+/* =====================================================================
+   COMMENT ÉCRIRE LE CONTENU
+   Dans les textes de « L'essentiel » :
+     **mot**            → mot en gras
+     *texte*            → italique
+     [[terme]]          → terme souligné : définition au survol / au toucher
+     [[pluriel|terme]]  → affiche « pluriel », définition de « terme »
+   Les définitions viennent des flashcards + du GLOSSAIRE ci-dessous.
+
+   QCM : {q: "question", o: ["A","B","C","D"], r: index de la bonne
+          réponse (0 = A), e: "explication", n: niveau 1, 2 ou 3}
+          n = 1 facile · 2 moyen · 3 difficile
+   ===================================================================== */
+
+
+/* Définitions supplémentaires (termes qui ne sont pas dans les flashcards) */
+var GLOSSAIRE = {
+ "noyau": "Partie de la cellule qui contient l'ADN.",
+ "tissu": "Ensemble de cellules qui assurent la même fonction.",
+ "liège": "Écorce du chêne-liège, formée de cellules mortes.",
+ "paroi": "Enveloppe rigide qui entoure les cellules végétales.",
+ "animalcule": "Nom donné par Leeuwenhoek aux micro-organismes.",
+ "micro-organisme": "Être vivant visible seulement au microscope.",
+ "bactérie": "Micro-organisme formé d'une seule cellule (1 à 5 µm).",
+ "molécule": "Assemblage d'atomes.",
+ "lipide": "Molécule grasse, qui ne se mélange pas à l'eau.",
+ "protéine": "Grosse molécule fabriquée par les cellules.",
+ "micromètre": "Un millionième de mètre (1 mm = 1 000 µm).",
+ "microscope électronique": "Microscope très puissant, qui montre des détails de quelques nanomètres.",
+ "microscope électronique à transmission": "Microscope très puissant (MET), qui montre des détails de quelques nanomètres.",
+ "modèle": "Représentation simplifiée, construite à partir de résultats d'expériences.",
+ "milieu de culture": "Mélange nutritif où l'on fait pousser des micro-organismes.",
+ "cristal": "Solide aux constituants empilés régulièrement, comme le sel."
+};
+/* Schéma de la bicouche de phospholipides (dessiné en SVG, s'adapte au thème) */
+function bicoucheSVG(){
+  var s = '<svg viewBox="0 0 520 300" role="img" aria-label="Schéma en coupe de la bicouche de phospholipides entre le milieu extracellulaire et le cytoplasme" style="display:block;width:100%;height:auto">';
+  s += '<rect x="0" y="36" width="520" height="40" fill="var(--c-soft)"/><rect x="0" y="224" width="520" height="40" fill="var(--c-soft)"/>';
+  s += '<text x="260" y="24" text-anchor="middle" font-size="17" font-weight="600" fill="var(--ink)" font-family="inherit">Milieu extracellulaire (aqueux)</text>';
+  s += '<text x="260" y="290" text-anchor="middle" font-size="17" font-weight="600" fill="var(--ink)" font-family="inherit">Cytoplasme (aqueux)</text>';
+  for (var x = 34; x <= 486; x += 22){
+    s += '<path d="M' + (x - 4) + ' 90 C' + (x - 7) + ' 110 ' + (x - 1) + ' 125 ' + (x - 4) + ' 146 M' + (x + 4) + ' 90 C' + (x + 7) + ' 110 ' + (x + 1) + ' 125 ' + (x + 4) + ' 146" stroke="var(--muted)" stroke-width="2.4" fill="none" stroke-linecap="round"/>';
+    s += '<path d="M' + (x - 4) + ' 154 C' + (x - 1) + ' 175 ' + (x - 7) + ' 190 ' + (x - 4) + ' 210 M' + (x + 4) + ' 154 C' + (x + 1) + ' 175 ' + (x + 7) + ' 190 ' + (x + 4) + ' 210" stroke="var(--muted)" stroke-width="2.4" fill="none" stroke-linecap="round"/>';
+    s += '<circle cx="' + x + '" cy="82" r="10" fill="var(--c)"/><circle cx="' + x + '" cy="218" r="10" fill="var(--c)"/>';
+  }
+  s += '</svg>';
+  return '<figure class="fig">' + s + '<figcaption><span><i class="dot"></i>Tête hydrophile, au contact de l\'eau</span><span><i class="tails"></i>Deux queues hydrophobes, regroupées au centre</span><span>Épaisseur totale ≈ 7 à 10 nm</span></figcaption><p class="fig-t">Organisation des phospholipides en bicouche (schéma en coupe)</p></figure>';
+}
+
+/* Frise chronologique de la théorie cellulaire */
+function frise(items){
+  var h = '<ol class="frise">';
+  items.forEach(function(it){ h += '<li><b>' + it[0] + '</b><span>' + it[1] + '</span><i>' + it[2] + '</i></li>'; });
+  return h + '</ol>';
+}
+
+/* =====================================================================
+   CONTENU
+   ===================================================================== */
+var NIVEAUX = [
+{
+ id: "1es",
+ nom: "1ère Enseignement scientifique",
+ intro: "Thème 1 – Une longue histoire de la matière · 1.3 Une structure complexe : la cellule vivante",
+ chapitres: [
+ {
+  num: 1,
+  titre: "La cellule, une structure complexe du vivant",
+  parties: [
+  /* ================================================================ 1a */
+  {
+   id: "1a",
+   titre: "La théorie cellulaire",
+   problematique: "Comment des observations réalisées sur différents organismes ont-elles conduit à proposer une organisation commune du vivant ?",
+
+   activites: [
+    {
+     type: "Activité · Séance 1", titre: "Les prémices de la théorie cellulaire",
+     resume: "À partir de trois documents historiques écrits à plus de 170 ans d'intervalle, on a étudié les observations au microscope de Robert Hooke sur le liège (1665), de Matthias Schleiden sur les tissus végétaux (1838) et de Theodor Schwann sur les tissus animaux (1839). On a distingué ce que Hooke observe de l'interprétation qu'il propose, puis comparé les travaux de Schleiden et de Schwann pour en tirer une idée générale sur l'organisation des êtres vivants.",
+     pourquoi: "Savoir d'où vient l'idée que les êtres vivants sont formés de cellules, en travaillant comme un historien des sciences : sur les textes des savants eux-mêmes. L'activité entraîne aussi à ne pas confondre ce qu'un scientifique observe et ce qu'il en déduit.",
+     apport: "Elle a montré que la cellule a d'abord été une simple observation sur un seul matériau (Hooke), avant de devenir une idée générale lorsque Schleiden et Schwann ont retrouvé des cellules chez les végétaux et chez les animaux. Elle nous a ainsi permis de construire la première idée de la théorie cellulaire, notée dans le bilan 1a).",
+     correction: [
+      ["C1 · Observation ou interprétation chez Hooke", "Hooke observe dans le liège de nombreuses petites cavités séparées par de fines cloisons, auxquelles il donne le nom de « cellules ». Il propose ensuite une interprétation : ces cavités seraient remplies d'air, ce qui pourrait expliquer la faible masse du liège et sa capacité à flotter.<br><br><b>Ce que Hooke observe :</b> le liège présente de nombreux pores et petites cavités ; ces cavités sont séparées les unes des autres par de fines cloisons ; l'ensemble ressemble à un rayon de miel.<br><b>Interprétation proposée par Hooke :</b> il considère ces cavités comme des « cellules » ; il pense que ces cellules sont remplies d'air ; il suppose que l'air enfermé dans ces cavités explique la légèreté du liège et sa capacité à flotter."],
+      ["C2 · Comparer Schleiden et Schwann", "Schleiden observe que les tissus végétaux sont constitués de nombreuses cellules, souvent pourvues d'un noyau lorsqu'elles sont jeunes. De son côté, Schwann retrouve également des cellules dans différents tissus animaux, comme le cartilage ou certains tissus embryonnaires. Leurs observations portent donc sur des organismes différents, mais mettent en évidence une organisation comparable."],
+      ["C3 · Proposer une idée générale", "En rapprochant ces résultats, Schleiden et Schwann constatent que les végétaux comme les animaux sont formés de cellules. Le fait de retrouver cette même organisation chez des êtres vivants très différents permet de proposer une idée générale : la cellule constitue l'unité de base de l'organisation des êtres vivants."],
+      ["C2 bis · Bonus : plus loin que Hooke", "Hooke observe uniquement le liège et décrit de petites cavités qu'il nomme « cellules ». Schleiden et Schwann vont plus loin car ils retrouvent des cellules dans de nombreux tissus, chez les végétaux comme chez les animaux. Leurs travaux permettent donc de passer d'une observation particulière à une idée générale sur l'organisation des êtres vivants."]
+     ],
+     conclusionTitre: "Critères de réussite",
+     conclusion: "J'ai réussi si : je distingue clairement une observation d'une interprétation chez Hooke ; je relève les principales observations de Schleiden et de Schwann ; je compare correctement leurs résultats en m'appuyant sur les documents ; je justifie l'idée que la cellule constitue l'unité de base des êtres vivants ; mes réponses sont rédigées avec un vocabulaire scientifique précis."
+    },
+    {
+     type: "Activité · Séance 2", titre: "Une théorie confrontée à de nouveaux faits",
+     resume: "À la fin des années 1830, une question reste ouverte : d'où viennent les cellules nouvelles ? Deux hypothèses s'affrontent. Hypothèse A : des cellules ou des micro-organismes peuvent apparaître spontanément à partir d'une matière non cellulaire. Hypothèse B : toute nouvelle cellule provient d'une cellule préexistante. On a confronté ces hypothèses à trois documents : la conception d'Aristote, les observations de Remak (1852) reprises par Virchow (1858), et l'expérience des ballons à col de cygne de Pasteur.",
+     pourquoi: "Répondre à la question laissée ouverte à la séance 1 : d'où viennent les nouvelles cellules ? Deux hypothèses s'opposaient, et il fallait les départager à l'aide de faits, comme l'ont fait les scientifiques du XIXᵉ siècle.",
+     apport: "Elle a montré qu'une hypothèse se juge sur les faits : les observations de Remak puis l'expérience de Pasteur soutiennent l'hypothèse B et conduisent à abandonner la génération spontanée, pourtant admise depuis Aristote. Elle nous a permis de compléter la théorie cellulaire et de construire la frise du bilan.",
+     correction: [
+      ["C1 · La conception d'Aristote", "La conception d'Aristote correspond à l'hypothèse A. Il considère que certains êtres vivants peuvent apparaître spontanément à partir de matière en décomposition, sans provenir d'un être vivant préexistant."],
+      ["C2 · Les observations de Remak", "Remak observe qu'une cellule et son noyau se divisent, puis que deux cellules apparaissent. Les nouvelles cellules observées apparaissent donc à la suite de la division d'une cellule déjà présente et non librement à partir d'une matière non cellulaire. Dans le cas du développement embryonnaire étudié, les cellules nouvelles proviennent donc de cellules préexistantes. Ces observations soutiennent l'hypothèse B."],
+      ["C3 · L'expérience de Pasteur", "Lorsque les micro-organismes présents dans l'environnement ne peuvent pas atteindre le bouillon, aucun micro-organisme n'y apparaît. En revanche, lorsqu'ils peuvent entrer en contact avec le milieu, des micro-organismes se développent. Les résultats de Pasteur sont donc compatibles avec l'hypothèse B et remettent en cause l'hypothèse d'une génération spontanée."]
+     ],
+     conclusionTitre: "C4 · Conclusion de l'activité",
+     conclusion: "Les observations de Remak montrent que, lors du développement embryonnaire, de nouvelles cellules apparaissent par division de cellules préexistantes. Virchow généralise ensuite cette idée en 1858 avec le principe Omnis cellula e cellula. Quelques années plus tard, les expériences de Pasteur apportent un argument expérimental supplémentaire contre l'hypothèse d'une apparition spontanée des micro-organismes. L'ensemble de ces travaux conduit ainsi à remettre en cause l'hypothèse A et à soutenir l'hypothèse B."
+    }
+   ],
+
+   essentiel: {
+    intro: {
+     texte: [
+      "Aujourd'hui, on sait que tous les êtres vivants sont formés de [[cellules|cellule]]. Pourtant, une cellule mesure le plus souvent quelques dizaines de [[micromètres|micromètre]] : elle est **invisible à l'œil nu**. Cette idée ne s'est donc pas imposée d'un coup : elle s'est construite en près de trois siècles. C'est ce que résume la **[[théorie cellulaire]]**."
+     ]
+    },
+    sections: [
+     {titre: "Le microscope rend visible l'invisible", blocs: [
+      "**La découverte de la cellule est liée à l'invention du [[microscope]].** Tant qu'on ne disposait que de l'œil nu, il était impossible de savoir de quoi les êtres vivants sont faits. Les premiers microscopes apparaissent vers 1595 ; au XVIIᵉ siècle, ils permettent d'observer **des structures invisibles à l'œil nu**.",
+      "En **1665**, **Robert Hooke** observe dans le [[liège]] de nombreuses **petites cavités séparées par de fines cloisons**, qu'il nomme **« cellules »**. C'est la première fois que ce mot est employé. Quelques années plus tard, en 1674, Leeuwenhoek observe des êtres vivants microscopiques, les « [[animalcules|animalcule]] ».",
+      {aside: "Pour bien comprendre", texte: "Le mot « cellule » vient du latin *cellula*, « petite chambre ». Le liège est un tissu mort : Hooke n'a vu que les [[parois|paroi]] de cellules vides, sans leur contenu. Il a donc donné son nom à la cellule sans savoir encore ce qu'elle est vraiment."},
+      {aside: "À retenir", texte: "Un progrès **technique** (le microscope) a rendu possible un progrès des **connaissances** (la cellule). Ce lien entre instruments et découvertes se retrouve dans toute l'histoire des sciences."}
+     ]},
+     {titre: "Végétaux et animaux : une organisation commune", blocs: [
+      "Près de deux siècles après Hooke, les microscopes se sont améliorés. En **1838**, **Schleiden** observe que **les [[tissus|tissu]] végétaux sont constitués de cellules**, souvent avec un **[[noyau]]**. En **1839**, **Schwann** **retrouve également des cellules dans différents tissus animaux**.",
+      "En comparant leurs travaux, ils montrent que **végétaux et animaux possèdent une organisation commune**. Des êtres vivants qui se ressemblent très peu sont donc construits de la même façon.",
+      "Ces observations conduisent à une idée essentielle de la théorie cellulaire : **la cellule constitue l'unité de base de l'organisation des êtres vivants**.",
+      {aside: "Pour bien comprendre", texte: "« Unité de base » signifie deux choses : la cellule est la **brique** avec laquelle tous les êtres vivants sont construits, et c'est la **plus petite structure** que l'on puisse qualifier de vivante. Un être vivant peut être formé d'une seule cellule ou de milliards de cellules."},
+      {aside: "Ce qui change par rapport à Hooke", texte: "Hooke avait fait **une observation particulière**, sur un seul matériau. Schleiden et Schwann énoncent **une idée générale**, valable pour tous les êtres vivants étudiés : c'est ce passage du particulier au général qui fonde une théorie."}
+     ]},
+     {titre: "Toute cellule provient d'une cellule", blocs: [
+      "Il restait une question : **d'où viennent les nouvelles cellules ?** Depuis l'Antiquité, beaucoup pensaient que des êtres vivants pouvaient apparaître spontanément à partir de matière non vivante : c'est la **[[génération spontanée]]**.",
+      "Au XIXᵉ siècle, cette idée est abandonnée. On observe que les nouvelles cellules apparaissent par **[[division cellulaire]]** d'une cellule déjà présente, ce que Virchow résume en 1858 par la formule **[[Omnis cellula e cellula]]** : toute cellule provient d'une cellule. Puis **Pasteur réfute la génération spontanée** en 1859 : des [[micro-organismes|micro-organisme]] n'apparaissent dans un liquide que s'ils y ont été apportés.",
+      {aside: "Pour bien comprendre", texte: "Cette idée a une conséquence importante : chaque cellule actuelle descend d'une cellule plus ancienne, qui descend elle-même d'une autre cellule… La vie se transmet donc **de cellule en cellule, sans interruption**."}
+     ]},
+     {titre: "La théorie cellulaire : un savoir construit dans le temps", blocs: [
+      "La **théorie cellulaire** rassemble ces idées : **tous les êtres vivants sont formés de cellules ; la cellule est l'unité de base du vivant ; toute cellule provient d'une cellule préexistante**.",
+      {html: frise([
+       ["1595", "Invention du microscope", "Janssen"],
+       ["1665", "Première observation de cellules", "Hooke"],
+       ["1674", "Observation d'animalcules", "Leeuwenhoek"],
+       ["1838", "Cellule = unité de base du vivant", "Schwann et Schleiden"],
+       ["1859", "Réfutation de la génération spontanée", "Pasteur"]
+      ])},
+      "Cette frise montre qu'un savoir scientifique **se construit progressivement** : il s'appuie sur des observations de plus en plus nombreuses, dépend des instruments disponibles, et peut **remettre en cause une idée ancienne** lorsque les faits la contredisent.",
+      {aside: "À retenir en priorité", texte: "Les **trois idées** de la théorie cellulaire et **l'ordre des étapes** de la frise. Les dates servent de repères : l'important est de savoir ce que chaque étape a apporté."},
+      {aside: "Et ensuite ?", texte: "Au XXᵉ siècle, le **[[microscope électronique]]** permet d'explorer l'intérieur de la cellule, jusqu'à l'échelle des [[molécules|molécule]]. C'est grâce à lui que l'on observe la [[membrane plasmique]], étudiée en 1b)."}
+     ]}
+    ],
+    /* « En résumé » = les bilans du cours, mot pour mot */
+    recap: [
+     {titre: "Bilan de la séance 1 – Bilan 1a)", texte: "Au XVIIᵉ siècle, le microscope permet d'observer des structures invisibles à l'œil nu. En 1665, Robert Hooke observe dans le liège de nombreuses petites cavités séparées par de fines cloisons, qu'il nomme « cellules »."},
+     {texte: "Près de deux siècles plus tard, Schleiden observe que les tissus végétaux sont constitués de cellules, souvent avec un noyau."},
+     {texte: "Schwann retrouve également des cellules dans différents tissus animaux. En comparant leurs travaux, ils montrent que végétaux et animaux possèdent une organisation commune."},
+     {texte: "Ces observations conduisent à une idée essentielle de la théorie cellulaire : **la cellule constitue l'unité de base de l'organisation des êtres vivants.**"},
+     {titre: "Bilan de la séance 2 – Frise", texte: "**1595** – Invention du microscope (*Janssen*)."},
+     {texte: "**1665** – Première observation de cellules (*Hooke*)."},
+     {texte: "**1674** – Observation d'animalcules (*Leeuwenhoek*)."},
+     {texte: "**1838** – Cellule = unité de base du vivant (*Schwann et Schleiden*)."},
+     {texte: "**1859** – Réfutation de la génération spontanée (*Pasteur*)."}
+    ]
+   },
+
+   flashcards: [
+    ["Cellule", "Unité de base de tous les êtres vivants."],
+    ["Microscope", "Instrument qui grossit les objets trop petits pour être vus à l'œil nu."],
+    ["Théorie cellulaire", "Tous les êtres vivants sont formés de cellules, et toute cellule provient d'une autre cellule."],
+    ["Génération spontanée", "Idée ancienne, aujourd'hui réfutée : des êtres vivants naîtraient de matière non vivante."],
+    ["Division cellulaire", "Partage d'une cellule en deux nouvelles cellules."],
+    ["Omnis cellula e cellula", "« Toute cellule provient d'une cellule » (Virchow, 1858)."],
+    ["Observation", "Ce que l'on voit réellement."],
+    ["Interprétation", "Explication proposée à partir d'une observation."],
+    ["Hypothèse", "Explication possible, à vérifier par les faits."]
+   ],
+   qcm: [
+    {n: 1, q: "Qui a employé pour la première fois le mot « cellule » ?", o: ["Pasteur", "Robert Hooke", "Aristote", "Virchow"], r: 1, e: "En 1665, en observant le liège au microscope."},
+    {n: 1, q: "La découverte de la cellule est liée :", o: ["à l'invention du microscope", "à l'invention de la lunette astronomique uniquement", "à la découverte de l'ADN", "aux travaux d'Aristote"], r: 0, e: "La cellule est invisible à l'œil nu : il fallait un microscope pour l'observer."},
+    {n: 1, q: "Hooke a observé au microscope :", o: ["du sang", "du liège", "du cartilage", "un embryon de grenouille"], r: 1, e: "Une tranche très fine de liège, où il voit des cavités séparées par de fines cloisons."},
+    {n: 1, q: "Schleiden a étudié des cellules :", o: ["animales", "végétales", "bactériennes", "sanguines"], r: 1, e: "Schwann, lui, a étudié des tissus animaux."},
+    {n: 1, q: "Schwann a étudié des cellules :", o: ["animales", "végétales", "de liège", "de levure"], r: 0, e: "Notamment dans le cartilage et des tissus embryonnaires."},
+    {n: 1, q: "« Omnis cellula e cellula » signifie :", o: ["toute cellule contient un noyau", "toute cellule provient d'une cellule", "toute cellule est vivante", "toute cellule est microscopique"], r: 1, e: "Principe formulé par Virchow en 1858."},
+    {n: 1, q: "La génération spontanée est l'idée que :", o: ["les cellules se divisent", "des êtres vivants apparaissent spontanément à partir de matière non vivante", "les végétaux sont formés de cellules", "le microscope grossit les objets"], r: 1, e: "Idée défendue dès Aristote, réfutée par Pasteur."},
+    {n: 1, q: "Qui a réfuté expérimentalement la génération spontanée ?", o: ["Hooke", "Schleiden", "Pasteur", "Leeuwenhoek"], r: 2, e: "Grâce à ses ballons à col de cygne, vers 1859-1862."},
+    {n: 2, q: "Dans le texte de Hooke, laquelle de ces phrases est une interprétation ?", o: ["Le liège présente de nombreuses petites cavités", "Les cavités sont séparées par de fines cloisons", "Les cavités sont remplies d'air, ce qui explique que le liège flotte", "L'ensemble ressemble à un rayon de miel"], r: 2, e: "C'est une explication proposée, pas quelque chose qu'il voit directement."},
+    {n: 2, q: "La conception d'Aristote correspond à :", o: ["l'hypothèse A : apparition spontanée à partir de matière non cellulaire", "l'hypothèse B : toute cellule provient d'une cellule préexistante", "la théorie cellulaire", "aucune des deux hypothèses"], r: 0, e: "Pour Aristote, certains êtres vivants naissent de la terre ou de matières qui pourrissent."},
+    {n: 2, q: "Qu'observe Remak en 1852 chez l'embryon de grenouille ?", o: ["Des cellules qui se forment à partir d'un liquide", "Le noyau d'une cellule qui se divise, puis la cellule qui se partage en deux", "Des cavités remplies d'air", "Des animalcules"], r: 1, e: "Les nouvelles cellules proviennent donc de la division d'une cellule préexistante : hypothèse B."},
+    {n: 2, q: "Dans l'expérience de Pasteur, le bouillon reste stérile lorsque :", o: ["l'air ne peut pas entrer dans le ballon", "les micro-organismes de l'air ne peuvent pas atteindre le bouillon", "le bouillon n'a pas été chauffé", "le col du ballon est cassé"], r: 1, e: "Le col de cygne laisse passer l'air mais retient les micro-organismes."},
+    {n: 2, q: "Les résultats de Pasteur sont compatibles avec :", o: ["l'hypothèse A", "l'hypothèse B", "les deux hypothèses", "aucune hypothèse"], r: 1, e: "Les micro-organismes ne se développent que s'ils viennent de l'environnement."},
+    {n: 2, q: "En quoi Schleiden et Schwann vont-ils plus loin que Hooke ?", o: ["Ils inventent le microscope", "Ils retrouvent des cellules chez les végétaux et chez les animaux, et en tirent une idée générale", "Ils découvrent la génération spontanée", "Ils observent uniquement le liège"], r: 1, e: "Ils passent d'une observation particulière à une idée générale."},
+    {n: 2, q: "Quel est l'ordre chronologique correct ?", o: ["Hooke – Janssen – Pasteur – Schwann", "Janssen – Hooke – Leeuwenhoek – Schleiden et Schwann – Pasteur", "Janssen – Schwann – Hooke – Pasteur", "Leeuwenhoek – Janssen – Hooke – Pasteur"], r: 1, e: "1595, 1665, 1674, 1838-1839, 1859."},
+    {n: 2, q: "Leeuwenhoek appelle « animalcules » :", o: ["les cellules du liège", "des micro-organismes observés au microscope", "les noyaux des cellules", "des embryons"], r: 1, e: "Il est considéré comme le père de la microbiologie."},
+    {n: 3, q: "Les « cellules » observées par Hooke dans le liège étaient en réalité :", o: ["des cellules vivantes avec leur noyau", "les parois de cellules mortes, vides", "des bulles d'air sans lien avec les cellules", "des micro-organismes"], r: 1, e: "Le liège est un tissu mort : il n'en reste que les parois."},
+    {n: 3, q: "Pourquoi l'expérience de Pasteur est-elle convaincante ?", o: ["Parce que Pasteur était célèbre", "Parce que les deux ballons ne diffèrent que par l'accès des micro-organismes au bouillon", "Parce qu'il n'utilise pas de bouillon", "Parce qu'il empêche l'air d'entrer"], r: 1, e: "Un seul facteur varie : on peut donc lui attribuer la différence de résultat."},
+    {n: 3, q: "Quel énoncé correspond à la théorie cellulaire du milieu du XIXᵉ siècle ?", o: ["Seuls les animaux sont formés de cellules", "Tous les êtres vivants sont formés de cellules, et toute cellule provient d'une cellule préexistante", "Les cellules apparaissent spontanément dans les liquides", "Les cellules sont remplies d'air"], r: 1, e: "Elle rassemble les apports de Schleiden, Schwann, Remak, Virchow et Pasteur."},
+    {n: 3, q: "L'histoire de la théorie cellulaire montre qu'un savoir scientifique :", o: ["ne change jamais une fois énoncé", "se construit progressivement et peut être remis en cause par de nouveaux faits", "repose uniquement sur l'autorité des savants", "ne dépend pas des progrès techniques"], r: 1, e: "La génération spontanée, admise depuis Aristote, a été abandonnée face aux faits."}
+   ]
+  },
+  /* ================================================================ 1b */
+  {
+   id: "1b",
+   titre: "La membrane plasmique",
+   problematique: "Comment la membrane plasmique assure-t-elle ses fonctions grâce à son organisation ?",
+
+   activites: [
+    {
+     type: "Activité · Séance 1", titre: "Organisation de la membrane plasmique",
+     resume: "À la fin du XIXᵉ siècle, Overton constate que les substances apolaires, peu solubles dans l'eau, pénètrent rapidement dans les cellules végétales. On a cherché à construire un premier modèle de la membrane plasmique : on a estimé son épaisseur sur une photographie au microscope électronique à transmission (MET), exploité l'expérience de Gorter et Grendel (1925) sur les globules rouges, puis schématisé l'organisation des phospholipides entre le cytoplasme et le milieu extracellulaire.",
+     pourquoi: "La membrane plasmique est trop fine pour qu'on voie de quoi elle est faite, même au microscope électronique. Il fallait donc raisonner à partir de mesures et de résultats d'expériences pour imaginer son organisation, c'est-à-dire construire un modèle.",
+     apport: "Elle nous a permis d'estimer l'épaisseur de la membrane à partir d'une échelle, puis de comprendre, grâce aux mesures de Gorter et Grendel, que ses lipides forment deux couches. On a pu ainsi dessiner le schéma de la bicouche de phospholipides, qui est au cœur du bilan.",
+     correction: [
+      ["C1 · Épaisseur de la membrane", "On mesure sur le document l'épaisseur de la membrane et la longueur de la barre d'échelle. On applique ensuite un produit en croix :<br><b>Épaisseur = (mesure de la membrane ÷ mesure de la barre d'échelle) × 70 nm</b><br>On obtient une épaisseur de l'ordre de 7 à 10 nm, ce qui montre que la membrane plasmique est une structure extrêmement fine."],
+      ["C2 · L'expérience de Gorter et Grendel", "Pour chaque espèce, la surface occupée par les lipides est environ deux fois supérieure à la surface totale des globules rouges : (62 ÷ 31,3 ≈ 2), (12,2 ÷ 6,2 ≈ 2) et (6,2 ÷ 2,95 ≈ 2,1). Une seule couche de lipides aurait occupé une surface équivalente à celle des cellules. Gorter et Grendel proposent donc que les lipides de la membrane plasmique sont organisés en deux couches."],
+      ["C3 · Schéma de l'organisation des phospholipides", "Les phospholipides sont organisés en bicouche entre le cytoplasme et le milieu extracellulaire. Leurs têtes hydrophiles sont orientées vers ces deux milieux aqueux. Leurs queues hydrophobes évitent le contact avec l'eau et sont regroupées face à face au centre de la membrane.<br><br>Le schéma doit être titré (ex. « Organisation des phospholipides dans la membrane plasmique ») et légendé : milieu extracellulaire, cytoplasme, tête hydrophile, queues hydrophobes, bicouche lipidique. Un modèle de schéma se trouve dans l'onglet L'essentiel."],
+      ["C3 bonus · Les observations d'Overton", "Les substances apolaires sont peu solubles dans l'eau, mais peuvent interagir avec les queues hydrophobes des phospholipides. Elles peuvent donc pénétrer dans la partie centrale de la bicouche lipidique. Le modèle construit permet ainsi d'expliquer pourquoi Overton observait leur passage rapide à travers la membrane plasmique."]
+     ]
+    }
+   ],
+
+   essentiel: {
+    sections: [
+     {titre: "Une frontière très fine autour de la cellule", blocs: [
+      "**La [[membrane plasmique]] délimite la cellule et sépare son contenu du milieu extérieur.** À l'intérieur se trouve le [[cytoplasme]], à l'extérieur le [[milieu extracellulaire]]. Ces deux milieux sont **aqueux**, c'est-à-dire riches en eau.",
+      "C'est **une structure très fine : environ 7 à 10 [[nanomètres|nanomètre]]** d'épaisseur. Elle est donc invisible au microscope optique : seul le **[[microscope électronique à transmission]]** permet de la distinguer.",
+      {table: {legende: "Situer la membrane parmi les ordres de grandeur du vivant", entetes: ["Objet", "Ordre de grandeur", "Observé avec"],
+       lignes: [["Atome", "0,1 nm", "Invisible au microscope"], ["Molécule (ex. phospholipide)", "Quelques nm", "Techniques moléculaires"], ["Membrane plasmique (épaisseur)", "7 à 10 nm", "Microscope électronique"], ["Organite (ex. noyau)", "1 à 10 µm", "Microscope optique ou électronique"], ["Cellule", "10 à 100 µm", "Microscope optique"], ["Organisme", "Du mm à plusieurs m", "À l'œil nu"]]}},
+      {aside: "Pour bien comprendre", texte: "1 mm = 1 000 µm et 1 µm = 1 000 nm. Une membrane de 8 nm est environ **1 000 fois plus fine** qu'une cellule de 8 µm. Si la cellule avait la taille d'une salle de classe, sa membrane aurait l'épaisseur d'une feuille de carton."}
+     ]},
+     {titre: "Une double couche de phospholipides", blocs: [
+      "Les expériences de **Gorter et Grendel (1925)** ont permis de proposer un **[[modèle]]** dans lequel **les [[lipides|lipide]] de la membrane sont organisés en [[bicouche|bicouche lipidique]]**, c'est-à-dire en deux couches superposées.",
+      "Ces lipides sont des **[[phospholipides|phospholipide]]**. Chaque phospholipide comporte deux parties qui se comportent de façon opposée face à l'eau : une **tête [[hydrophile]]**, qui peut être au contact de l'eau, et **des queues [[hydrophobes|hydrophobe]]**, qui évitent le contact avec l'eau.",
+      "Dans la bicouche, **les têtes hydrophiles sont orientées vers les milieux aqueux** (le milieu extracellulaire d'un côté, le cytoplasme de l'autre) et **les queues hydrophobes sont regroupées au centre de la membrane**.",
+      {html: bicoucheSVG()},
+      {aside: "Pour bien comprendre", texte: "« Hydro » signifie eau, « phile » qui aime, « phobe » qui craint. Pense à l'huile dans l'eau : elle ne se mélange pas et se regroupe. Les queues des phospholipides font la même chose : elles se rassemblent entre elles, à l'abri de l'eau."}
+     ]},
+     {titre: "Une organisation stable", blocs: [
+      "**Cette organisation permet d'expliquer la stabilité de la bicouche lipidique.** Comme il y a de l'eau des deux côtés de la membrane, la disposition en deux couches est la seule qui place **toutes les têtes au contact de l'eau** et **toutes les queues à l'abri de l'eau**.",
+      "Les phospholipides ne sont donc pas « collés » les uns aux autres : ils **restent en place spontanément**, parce que cette disposition est la plus stable en milieu aqueux. La membrane forme ainsi une frontière continue autour de la cellule.",
+      {aside: "À retenir en priorité", texte: "Savoir **refaire le schéma** de la bicouche, titré et légendé (milieu extracellulaire, cytoplasme, tête hydrophile, queues hydrophobes), et savoir **expliquer pourquoi** cette organisation est stable. La formule chimique des phospholipides n'est pas à connaître."},
+      {aside: "Et ensuite ?", texte: "La membrane plasmique ne contient pas que des lipides : on y trouve aussi des **[[protéines|protéine]]**. La cellule réalise en permanence des échanges avec son environnement : la séance suivante montrera comment ils se font à travers la membrane."}
+     ]}
+    ],
+    /* « En résumé » = les bilans du cours, mot pour mot */
+    recap: [
+     {titre: "Bilan de la séance 1", texte: "La membrane plasmique est une structure très fine (environ 7 à 10 nm) qui délimite la cellule et sépare son contenu du milieu extérieur."},
+     {texte: "Les expériences de Gorter et Grendel (1925) ont permis de proposer un modèle dans lequel les lipides sont organisés en bicouche. Les phospholipides présentent une tête hydrophile orientée vers les milieux aqueux et des queues hydrophobes regroupées au centre de la membrane."},
+     {texte: "Cette organisation permet d'expliquer la stabilité de la bicouche lipidique."}
+    ]
+   },
+
+   flashcards: [
+    ["Membrane plasmique", "Enveloppe très fine (7 à 10 nm) qui délimite la cellule."],
+    ["Cytoplasme", "Intérieur de la cellule, riche en eau."],
+    ["Milieu extracellulaire", "Milieu situé à l'extérieur de la cellule, riche en eau."],
+    ["Phospholipide", "Lipide de la membrane : une tête hydrophile et deux queues hydrophobes."],
+    ["Hydrophile", "Qui peut être au contact de l'eau."],
+    ["Hydrophobe", "Qui évite le contact avec l'eau."],
+    ["Bicouche lipidique", "Double couche de phospholipides : têtes vers l'eau, queues au centre."],
+    ["Nanomètre", "Un milliardième de mètre (1 µm = 1 000 nm)."]
+   ],
+   qcm: [
+    {n: 1, q: "La membrane plasmique sépare :", o: ["le noyau du cytoplasme", "le cytoplasme du milieu extracellulaire", "deux cellules végétales uniquement", "les lipides des protéines"], r: 1, e: "Elle délimite la cellule et sépare son contenu du milieu extérieur."},
+    {n: 1, q: "L'épaisseur de la membrane plasmique est d'environ :", o: ["7 à 10 µm", "7 à 10 nm", "7 à 10 mm", "0,1 nm"], r: 1, e: "C'est une structure extrêmement fine, observable au microscope électronique."},
+    {n: 1, q: "Quel instrument a permis d'observer la membrane plasmique dans les années 1950 ?", o: ["La loupe", "Le microscope optique", "Le microscope électronique à transmission", "Le télescope"], r: 2, e: "Le MET permet d'observer des structures de quelques nanomètres."},
+    {n: 1, q: "La tête d'un phospholipide est :", o: ["hydrophobe", "hydrophile", "apolaire", "absente"], r: 1, e: "Elle peut être au contact de l'eau."},
+    {n: 1, q: "Les queues d'un phospholipide sont :", o: ["hydrophiles", "hydrophobes", "dans le noyau", "au contact de l'eau"], r: 1, e: "Elles évitent le contact avec l'eau."},
+    {n: 1, q: "Selon le modèle de Gorter et Grendel, les lipides de la membrane forment :", o: ["une seule couche", "deux couches", "trois couches", "des sphères isolées"], r: 1, e: "Une bicouche lipidique."},
+    {n: 1, q: "1 µm est égal à :", o: ["10 nm", "100 nm", "1 000 nm", "1 000 000 nm"], r: 2, e: "1 µm = 1 000 nm."},
+    {n: 2, q: "Pourquoi Gorter et Grendel utilisent-ils des globules rouges ?", o: ["Parce qu'ils sont très gros", "Parce qu'ils n'ont pas d'organites entourés de membranes", "Parce qu'ils n'ont pas de membrane", "Parce qu'ils sont faciles à colorer"], r: 1, e: "Tous les lipides extraits proviennent donc de la membrane plasmique."},
+    {n: 2, q: "Chez le chien, les lipides couvrent 62,0 m² et les cellules 31,3 m². Le rapport est d'environ :", o: ["0,5", "1", "2", "31"], r: 2, e: "62 ÷ 31,3 ≈ 2 : deux couches de lipides."},
+    {n: 2, q: "Si la membrane était formée d'une seule couche de lipides, le rapport surface des lipides / surface des cellules serait proche de :", o: ["0", "1", "2", "10"], r: 1, e: "Les lipides couvriraient exactement la surface des cellules."},
+    {n: 2, q: "Dans la bicouche, les têtes hydrophiles sont orientées :", o: ["vers le centre de la membrane", "vers le milieu extracellulaire et vers le cytoplasme", "uniquement vers le cytoplasme", "au hasard"], r: 1, e: "Les deux milieux sont aqueux : les têtes sont au contact de l'eau des deux côtés."},
+    {n: 2, q: "Les queues hydrophobes se trouvent :", o: ["au contact du cytoplasme", "au contact du milieu extracellulaire", "face à face au centre de la membrane", "à l'extérieur de la cellule"], r: 2, e: "À l'abri de l'eau."},
+    {n: 2, q: "Sur une image, la membrane mesure 3 mm et la barre d'échelle de 70 nm mesure 21 mm. Épaisseur réelle :", o: ["3 nm", "10 nm", "21 nm", "70 nm"], r: 1, e: "3 ÷ 21 × 70 = 10 nm."},
+    {n: 2, q: "Quel est l'ordre croissant de taille correct ?", o: ["Cellule – organite – molécule – atome", "Atome – molécule – organite – cellule – organisme", "Molécule – atome – cellule – organite", "Organite – cellule – atome – organisme"], r: 1, e: "0,1 nm ; quelques nm ; 1 à 10 µm ; 10 à 100 µm ; du mm au m."},
+    {n: 3, q: "Ce qui stabilise la bicouche lipidique, c'est :", o: ["la présence d'un noyau", "le caractère hydrophile ou hydrophobe des parties des phospholipides", "la paroi de la cellule", "l'absence d'eau autour de la cellule"], r: 1, e: "Têtes au contact de l'eau, queues regroupées à l'abri de l'eau."},
+    {n: 3, q: "Pourquoi les substances apolaires observées par Overton traversent-elles rapidement la membrane ?", o: ["Parce qu'elles sont très solubles dans l'eau", "Parce qu'elles peuvent se mêler aux queues hydrophobes au centre de la bicouche", "Parce que la membrane est trouée", "Parce qu'elles sont transportées par le noyau"], r: 1, e: "Peu solubles dans l'eau, elles interagissent avec la partie hydrophobe de la membrane."},
+    {n: 3, q: "Le modèle de Gorter et Grendel est un modèle car :", o: ["il a été observé directement au microscope", "c'est une représentation proposée à partir de données, qui pourra être complétée", "il n'est plus jamais modifié", "il décrit toutes les molécules de la membrane"], r: 1, e: "On sait aujourd'hui que la membrane contient aussi des protéines."},
+    {n: 3, q: "Pourquoi la membrane plasmique n'était-elle pas visible au microscope optique ?", o: ["Parce qu'elle est transparente et mesure quelques nanomètres, bien en dessous de ce que distingue un microscope optique", "Parce qu'elle n'existe que dans les globules rouges", "Parce qu'elle est à l'intérieur du noyau", "Parce qu'elle est trop épaisse"], r: 0, e: "Il faut le microscope électronique pour distinguer des structures de quelques nanomètres."}
+   ]
+  },
+  /* ================================================================ 1c */
+  {
+   id: "1c",
+   titre: "La mosaïque du tabac",
+   problematique: "Comment définir la place des virus dans le monde vivant ?",
+
+   activites: [
+    {
+     type: "Activité · Enquête", titre: "Qui rend le tabac malade ?",
+     resume: "À la fin du XIXᵉ siècle, une maladie couvre les feuilles de tabac de taches claires et foncées en mosaïque, et le jus de feuilles malades suffit à rendre malades des plantes saines. Qui est le coupable ? On a mené l'enquête à partir de dossiers historiques : la filtration d'Ivanovsky (1892), les infections en série de Beijerinck (1898), les cristaux de Stanley et le microscope électronique (1935-1939), puis, en bonus, l'expérience de Fraenkel-Conrat et Williams (1955). Chaque dossier a été validé à l'oral sous la forme « Je constate que… donc… », avant de rédiger un texte de synthèse.",
+     pourquoi: "Les virus ne sont pas des cellules : pour savoir ce qu'ils sont, il fallait suivre pas à pas l'enquête menée par les scientifiques pendant plus de 60 ans sur une maladie du tabac, chaque expérience répondant à la question laissée par la précédente.",
+     apport: "Chaque dossier a apporté une caractéristique du virus : sa petite taille (filtration), sa multiplication uniquement dans des cellules vivantes (infections en série), sa composition et sa capacité à cristalliser. En les réunissant, on a pu discuter des arguments pour et contre l'appartenance des virus au vivant, ce que résume le bilan 1c).",
+     correction: [
+      ["Dossier 1 · Ivanovsky (1892)", "Je constate que le jus filtré, sans bactéries, rend malades des plantes saines ; donc l'agent de la maladie traverse un filtre qui retient les bactéries : il est plus petit qu'une bactérie."],
+      ["Dossier 2 · Beijerinck (1898)", "Je constate que la maladie reste aussi forte de plante en plante, alors qu'une toxine serait diluée, et l'agent ne se multiplie que dans une plante vivante ; donc ce n'est pas une toxine : l'agent se multiplie, mais seulement dans des cellules vivantes."],
+      ["Dossier 3 · Stanley et le microscope électronique (1935-1939)", "Je constate que l'agent forme des cristaux comme un sel, qui restent infectieux, et c'est un bâtonnet de protéines et d'ARN ; donc le virus peut être cristallisé comme une matière inerte, mais il possède un matériel génétique."],
+      ["Dossier bonus · Fraenkel-Conrat et Williams (1955)", "Je constate que les protéines seules n'infectent pas, l'ARN seul infecte rarement et le mélange redonne des virus infectieux ; donc c'est l'ARN qui permet l'infection, et le virus se démonte puis se remonte comme un assemblage de molécules."],
+      ["C1 · Texte attendu", "Le virus de la mosaïque du tabac est beaucoup plus petit qu'une bactérie : il traverse les filtres qui les retiennent et n'est visible qu'au microscope électronique, sous la forme d'un bâtonnet. Il est formé de protéines et d'un ARN, qui est un matériel génétique. Il se multiplie, puisque la maladie reste aussi forte de plante en plante, mais seulement à l'intérieur de cellules vivantes.<br><br>Le virus possède donc certains caractères du vivant : un matériel génétique et la capacité de se multiplier. Mais il n'en possède pas d'autres : il n'est pas formé d'une cellule, il ne réalise aucun échange avec son milieu et ne se multiplie pas seul, hors d'une cellule. Il peut même être cristallisé comme du sel, ce qui le rapproche d'une matière inerte. C'est pourquoi les scientifiques ont du mal à trancher : selon les critères retenus pour définir le vivant, le virus peut être considéré comme vivant ou non, et son statut reste débattu.<br><br><b>Avec le dossier bonus :</b> c'est l'ARN qui permet l'infection, et le virus peut être démonté puis remonté comme un assemblage de molécules, ce qui est impossible pour une cellule."]
+     ],
+     conclusionTitre: "Critères de réussite",
+     conclusion: "Au moins trois caractéristiques du virus, chacune appuyée sur un dossier (taille, multiplication dans les cellules, composition) ; au moins un caractère du vivant présent et un caractère du vivant absent ; une explication de la difficulté : le statut dépend des critères retenus ; un texte rédigé de plusieurs lignes, avec des phrases complètes."
+    }
+   ],
+
+   essentiel: {
+    intro: {
+     texte: [
+      "En 1a), on a vu que la cellule est l'unité de base du vivant. Les **[[virus]]** posent alors une question : ils provoquent des maladies, comme la **[[mosaïque du tabac]]**, et se transmettent d'un organisme à l'autre, mais **ce ne sont pas des cellules**. Où les placer ?"
+     ]
+    },
+    sections: [
+     {titre: "Des particules bien plus petites que les cellules", blocs: [
+      "**Les virus sont des particules beaucoup plus petites que les cellules.** Ils sont même bien plus petits que les [[bactéries|bactérie]] : c'est pour cela qu'on ne les voit qu'au **[[microscope électronique]]**.",
+      {table: {legende: "Situer un virus parmi les ordres de grandeur", entetes: ["Objet", "Taille", "Observé avec"],
+       lignes: [["Membrane plasmique (épaisseur)", "7 à 10 nm", "Microscope électronique"], ["Virus de la mosaïque du tabac", "300 nm de long", "Microscope électronique"], ["Bactérie", "1 à 5 µm", "Microscope optique"], ["Cellule végétale ou animale", "10 à 100 µm", "Microscope optique"]]}},
+      "**Ils sont constitués d'un [[matériel génétique]] entouré de [[protéines|protéine]].** Le matériel génétique porte les informations nécessaires à la fabrication de nouveaux virus ; les protéines forment une enveloppe qui le protège. Dans le virus de la mosaïque du tabac, ce matériel génétique est un **[[ARN]]**.",
+      {aside: "Pour bien comprendre", texte: "Un virus n'a **ni [[membrane plasmique]], ni [[cytoplasme]]** : ce n'est donc pas une cellule. On parle de « particule » virale. Comparé à une cellule, il est extrêmement simple : quelques molécules assemblées."}
+     ]},
+     {titre: "Une multiplication impossible sans cellule vivante", blocs: [
+      "**Les virus ne peuvent pas se multiplier seuls : ils utilisent obligatoirement une cellule vivante pour produire de nouveaux virus.**",
+      "Une cellule fabrique elle-même ses constituants et se divise. Un virus en est incapable : il doit **entrer dans une cellule** et utiliser le fonctionnement de celle-ci pour faire fabriquer de nouveaux virus à partir de son matériel génétique. C'est ce qui rend la cellule, puis l'organisme, malade.",
+      {aside: "Pour bien comprendre", texte: "Une bactérie se multiplie seule dans un [[milieu de culture]] qui lui apporte de quoi se nourrir. Un virus placé dans le même milieu ne se multiplie jamais : il lui faut des cellules vivantes. C'est une différence essentielle entre une bactérie et un virus."}
+     ]},
+     {titre: "En dehors des cellules, des particules inertes", blocs: [
+      "**En dehors d'une cellule, les virus peuvent rester [[inertes|inerte]]** : ils ne se nourrissent pas, ne réalisent aucun échange avec leur milieu et ne se multiplient pas.",
+      "**Certains peuvent même être cristallisés, comme une matière non vivante.** La **[[cristallisation]]** est ce qui se produit pour le sel lorsque l'eau s'évapore : les particules s'empilent de façon régulière pour former un [[cristal]]. Un virus cristallisé peut pourtant redevenir infectieux dès qu'il retrouve une cellule vivante.",
+      {aside: "Pour bien comprendre", texte: "Aucune cellule ne peut être cristallisée puis « redémarrer ». Le virus se comporte donc de deux façons : comme une **matière inerte** hors d'une cellule, et comme un **agent qui se multiplie** dans une cellule."}
+     ]},
+     {titre: "Vivants ou non ? Une question de critères", blocs: [
+      "**Les virus possèdent donc certaines caractéristiques du vivant, mais pas toutes.**",
+      {table: {legende: "Le virus face aux caractères du vivant", entetes: ["Caractère du vivant", "Cellule", "Virus"],
+       lignes: [["Formé d'au moins une cellule", "Oui", "Non"], ["Possède un matériel génétique", "Oui", "Oui"], ["Se multiplie", "Oui, par division", "Oui, mais seulement dans une cellule vivante"], ["Réalise des échanges avec son milieu", "Oui", "Non"], ["Peut être cristallisé", "Non", "Oui, comme une matière inerte"]]}},
+      "**Leur appartenance au monde vivant dépend des critères retenus et reste discutée.** Si l'on retient « posséder un matériel génétique et se multiplier », le virus peut être considéré comme vivant. Si l'on retient « être formé d'une cellule et fonctionner de façon autonome », il ne l'est pas.",
+      {aside: "À retenir en priorité", texte: "Il n'y a pas une « bonne réponse » à réciter : tu dois savoir **donner des arguments dans les deux sens** et expliquer que la conclusion **dépend de la définition du vivant** que l'on choisit."}
+     ]}
+    ],
+    /* « En résumé » = les bilans du cours, mot pour mot */
+    recap: [
+     {titre: "Bilan 1c)", texte: "Les virus sont des particules beaucoup plus petites que les cellules. Ils sont constitués d'un matériel génétique entouré de protéines."},
+     {texte: "Ils ne peuvent pas se multiplier seuls : ils utilisent obligatoirement une cellule vivante pour produire de nouveaux virus."},
+     {texte: "En dehors d'une cellule, ils peuvent rester inertes et certains peuvent même être cristallisés, comme une matière non vivante."},
+     {texte: "Les virus possèdent donc certaines caractéristiques du vivant, mais pas toutes. Leur appartenance au monde vivant dépend des critères retenus et reste discutée."}
+    ]
+   },
+
+   flashcards: [
+    ["Virus", "Particule bien plus petite qu'une cellule : un matériel génétique entouré de protéines."],
+    ["Mosaïque du tabac", "Maladie du tabac due à un virus : les feuilles se couvrent de taches."],
+    ["Matériel génétique", "Molécule (ADN ou ARN) qui porte les informations d'un être vivant ou d'un virus."],
+    ["ARN", "Matériel génétique du virus de la mosaïque du tabac."],
+    ["Cristallisation", "Formation de cristaux, comme pour le sel."],
+    ["Inerte", "Sans aucune activité : ni échange, ni multiplication."]
+   ],
+   qcm: [
+    {n: 1, q: "La mosaïque du tabac est due à :", o: ["une bactérie", "un virus", "une toxine", "un champignon"], r: 1, e: "Le virus de la mosaïque du tabac est le premier virus découvert."},
+    {n: 1, q: "Un virus est constitué :", o: ["d'une cellule avec un noyau", "d'un matériel génétique entouré de protéines", "uniquement de protéines", "d'une bicouche de phospholipides seule"], r: 1, e: "Pour le virus de la mosaïque du tabac : un ARN entouré de protéines."},
+    {n: 1, q: "Par rapport à une bactérie, un virus est :", o: ["beaucoup plus grand", "de la même taille", "beaucoup plus petit", "visible à l'œil nu"], r: 2, e: "Il traverse les filtres qui retiennent les bactéries."},
+    {n: 1, q: "Un virus peut se multiplier :", o: ["seul, dans l'eau", "dans un milieu de culture pour bactéries", "uniquement dans une cellule vivante", "dans un cristal"], r: 2, e: "Il utilise obligatoirement une cellule vivante pour produire de nouveaux virus."},
+    {n: 1, q: "Quel instrument a permis de voir le virus de la mosaïque du tabac ?", o: ["La loupe", "Le microscope optique", "Le microscope électronique", "Le filtre en porcelaine"], r: 2, e: "En 1939 : il apparaît comme un bâtonnet d'environ 300 nm."},
+    {n: 1, q: "Dans le virus de la mosaïque du tabac, le matériel génétique est :", o: ["l'ARN", "les protéines", "la porcelaine", "une toxine"], r: 0, e: "L'ARN contient les informations nécessaires à la fabrication de nouveaux virus."},
+    {n: 1, q: "Le statut des virus (vivants ou non) est :", o: ["tranché : ils sont vivants", "tranché : ils ne sont pas vivants", "discuté : il dépend des critères retenus", "sans intérêt scientifique"], r: 2, e: "Ils ont certaines caractéristiques du vivant, mais pas toutes."},
+    {n: 2, q: "Que montre l'expérience d'Ivanovsky (1892) ?", o: ["Le jus filtré ne rend plus les plantes malades", "Le jus filtré, sans bactéries, rend encore les plantes malades", "Les bactéries traversent le filtre", "Le virus forme des cristaux"], r: 1, e: "L'agent est donc plus petit qu'une bactérie."},
+    {n: 2, q: "Pourquoi les infections en série de Beijerinck écartent-elles l'hypothèse d'une toxine ?", o: ["Parce qu'une toxine serait diluée à chaque passage, alors que la maladie reste aussi forte", "Parce que la toxine est trop grosse pour le filtre", "Parce que la toxine est visible au microscope", "Parce que les plantes guérissent"], r: 0, e: "L'agent se multiplie donc dans la plante."},
+    {n: 2, q: "Beijerinck observe que l'agent de la maladie :", o: ["se multiplie dans tous les milieux de culture", "ne se multiplie que dans une plante vivante", "ne se multiplie jamais", "est retenu par le filtre"], r: 1, e: "Les virus ont besoin de cellules vivantes."},
+    {n: 2, q: "Stanley (1935) montre que le virus :", o: ["est une bactérie", "peut être cristallisé comme un sel tout en restant infectieux", "est détruit par l'eau", "est une toxine"], r: 1, e: "Ce comportement le rapproche d'une matière inerte."},
+    {n: 2, q: "Le virus de la mosaïque du tabac mesure environ 300 nm et une bactérie 3 µm. La bactérie est environ :", o: ["10 fois plus grande", "100 fois plus grande", "10 fois plus petite", "de la même taille"], r: 0, e: "3 µm = 3 000 nm ; 3 000 ÷ 300 = 10."},
+    {n: 2, q: "Quel caractère du vivant le virus possède-t-il ?", o: ["Il est formé d'une cellule", "Il possède un matériel génétique", "Il réalise des échanges avec son milieu", "Il se multiplie seul"], r: 1, e: "Ici un ARN."},
+    {n: 2, q: "Quel caractère du vivant le virus ne possède-t-il pas ?", o: ["Un matériel génétique", "La capacité de se multiplier dans une cellule", "Une organisation en cellule", "Des protéines"], r: 2, e: "Un virus n'est pas une cellule : il n'a ni membrane plasmique ni cytoplasme."},
+    {n: 3, q: "Dans l'expérience de 1955, l'ARN seul donne quelques rares taches et les protéines seules aucune. On en déduit que :", o: ["les protéines permettent l'infection", "c'est l'ARN qui permet l'infection", "ni l'un ni l'autre ne jouent de rôle", "le virus est une bactérie"], r: 1, e: "L'ARN est le matériel génétique ; les protéines le protègent et rendent l'infection bien plus efficace."},
+    {n: 3, q: "Pourquoi le fait de « démonter puis remonter » un virus est-il un argument pour le classer hors du vivant ?", o: ["Parce qu'il se comporte comme un assemblage de molécules, ce qui est impossible pour une cellule", "Parce qu'il devient plus gros", "Parce qu'il n'a pas de matériel génétique", "Parce qu'il se multiplie seul"], r: 0, e: "Une cellule détruite ne se reforme pas à partir de ses constituants."},
+    {n: 3, q: "Quel argument permet de dire qu'un virus est proche du vivant ?", o: ["Il peut être cristallisé", "Il traverse les filtres", "Il possède un matériel génétique et se multiplie", "Il est inerte hors d'une cellule"], r: 2, e: "Les trois autres propositions le rapprochent plutôt de la matière inerte."},
+    {n: 3, q: "En quoi les virus interrogent-ils la théorie cellulaire ?", o: ["Ils prouvent que la génération spontanée existe", "Ils se multiplient et possèdent un matériel génétique sans être des cellules", "Ils montrent que les cellules n'existent pas", "Ils sont plus grands que les cellules"], r: 1, e: "Mais ils dépendent toujours d'une cellule vivante pour se multiplier."},
+    {n: 3, q: "Quelle réponse à la problématique est la plus juste ?", o: ["Les virus sont des êtres vivants comme les bactéries", "Les virus sont de simples poisons", "Les virus possèdent certains caractères du vivant mais pas tous : leur place dépend des critères retenus et reste discutée", "Les virus sont des cristaux de sel"], r: 2, e: "C'est le bilan 1c)."}
+   ]
+  }
+  ]
+ }
+ ]
+}
+];
+
+
+
+/* =====================================================================
+   MOTEUR DU SITE
+   ===================================================================== */
+var app = document.getElementById('app');
+var crumbsEl = document.getElementById('crumbs');
+var tipEl = document.getElementById('tip');
+var S = {view: 'home', niveau: null, chap: null, partie: null, tab: 'essentiel'};
+var keyHandler = null;
+var NIVEAUX_LBL = {1: 'Facile', 2: 'Moyen', 3: 'Difficile'};
+
+function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+function shuffle(a){ a = a.slice(); for (var i = a.length - 1; i > 0; i--){ var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+function $(id){ return document.getElementById(id); }
+function store(k, v){ try { if (v === undefined) return JSON.parse(localStorage.getItem('svt1es_' + k)); localStorage.setItem('svt1es_' + k, JSON.stringify(v)); } catch(e){ return null; } }
+function setKeys(fn){ if (keyHandler) document.removeEventListener('keydown', keyHandler); keyHandler = fn; if (fn) document.addEventListener('keydown', fn); }
+function toTop(){ try { window.scrollTo({top: 0, behavior: 'smooth'}); } catch(e){ window.scrollTo(0, 0); } }
+
+/* Couleurs */
+function hexRgb(h){ h = h.replace('#', ''); return [parseInt(h.substr(0,2),16), parseInt(h.substr(2,2),16), parseInt(h.substr(4,2),16)]; }
+/* En thème sombre, les couleurs de chapitre sont éclaircies pour rester lisibles */
+function colorVars(hex){
+  var c = hexRgb(hex), dark = typeof REG !== 'undefined' && REG.theme === 'sombre';
+  if (dark){
+    var c2 = c.map(function(x){ return Math.round(x + (255 - x) * .22); }), d2 = c.map(function(x){ return Math.round(x + (255 - x) * .55); });
+    var dp = c.map(function(x){ return Math.round(x * .8); });
+    return '--c:rgb(' + c2 + ');--c-soft:rgba(' + c + ',.18);--c-mid:rgba(' + c + ',.38);--c-ink:rgb(' + d2 + ');--c-deep:rgb(' + dp + ')';
+  }
+  var d = c.map(function(x){ return Math.round(x * .7); });
+  return '--c:' + hex + ';--c-soft:rgba(' + c + ',.08);--c-mid:rgba(' + c + ',.22);--c-ink:rgb(' + d + ');--c-deep:' + hex;
+}
+/* Couleur neutre (pages Tout réviser, Glossaire) */
+function neutre(){ return typeof REG !== 'undefined' && REG.theme === 'sombre' ? '#8f99a3' : '#2c3338'; }
+function chapColor(ch){ return ch.couleur || COULEURS[(ch.num - 1) % COULEURS.length]; }
+
+/* Parties visibles uniquement (une partie avec  cache: true  est masquée partout) */
+function allParties(niv){ var out = []; niv.chapitres.forEach(function(ch){ (ch.parties || []).filter(visible).forEach(function(p){ out.push({ch: ch, p: p}); }); }); return out; }
+function findPartie(id){
+  for (var i = 0; i < NIVEAUX.length; i++){ var l = allParties(NIVEAUX[i]); for (var j = 0; j < l.length; j++) if (l[j].p.id === id) return {niveau: NIVEAUX[i], ch: l[j].ch, p: l[j].p}; }
+  return null;
+}
+
+/* ---------- Glossaire ---------- */
+function norm(s){
+  s = String(s).toLowerCase().replace(/\([^)]*\)/g, '').replace(/[’']/g, "'").trim().replace(/\s+/g, ' ');
+  try { s = s.normalize('NFD').replace(/[̀-ͯ]/g, ''); } catch(e){}
+  return s;
+}
+/* Éléments masqués (cache: true, ou "cache" en fin de flashcard) */
+function visible(x){ return !(x && (x.cache === true || (Array.isArray(x) && x[2] === 'cache'))); }
+function recapText(r){ return Array.isArray(r) ? r.filter(visible).map(function(b){ return b.texte; }).join(' ') : (r || ''); }
+
+var GLOSS = {};
+function addPart(k, x){ var g = GLOSS[k]; if (g && !g.parts.some(function(p){ return p.p === x.p; })) g.parts.push(x); }
+NIVEAUX.forEach(function(n){ allParties(n).forEach(function(x){ x.p.flashcards.filter(visible).forEach(function(c){ var k = norm(c[0]); if (!GLOSS[k]) GLOSS[k] = {t: c[0], d: c[1], parts: []}; addPart(k, x); }); }); });
+Object.keys(GLOSSAIRE).forEach(function(k){ if (!GLOSS[norm(k)]) GLOSS[norm(k)] = {t: k.charAt(0).toUpperCase() + k.slice(1), d: GLOSSAIRE[k], parts: []}; });
+/* Relie chaque terme aux parties dont le cours l'utilise */
+NIVEAUX.forEach(function(n){ allParties(n).forEach(function(x){
+  var e = x.p.essentiel, txt = [recapText(e.recap)].concat(e.intro && e.intro.texte || []);
+  e.sections.filter(visible).forEach(function(s){ s.blocs.forEach(function(b){ if (typeof b === 'string') txt.push(b); else if (b.texte) txt.push(b.texte); }); });
+  txt.join(' ').replace(/\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g, function(_, a, b){ addPart(norm(b || a), x); return ''; });
+}); });
+/* Le glossaire ne garde que les mots utilisés dans les parties visibles */
+Object.keys(GLOSS).forEach(function(k){ if (!GLOSS[k].parts.length) delete GLOSS[k]; });
+
+/* Mise en forme : **gras**, *italique*, [[terme]] */
+function rich(s){
+  return String(s)
+    .replace(/\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g, function(_, txt, key){
+      var k = norm(key || txt);
+      if (!GLOSS[k]){ if (window.console) console.warn('Terme sans définition : ' + (key || txt)); return txt; }
+      return '<button type="button" class="term" data-k="' + esc(k) + '">' + txt + '</button>';
+    })
+    .replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>')
+    .replace(/\*([^*]+)\*/g, '<i>$1</i>')
+    .replace(/« /g, '« ').replace(/ ([»:;?!])/g, ' $1');
+}
+
+/* Bulle de définition (souris, clavier et tactile) */
+var tipFor = null, tipTimer = null;
+var FINE = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+function showTip(el){
+  clearTimeout(tipTimer);
+  var g = GLOSS[el.getAttribute('data-k')]; if (!g) return;
+  if (tipFor) tipFor.classList.remove('active');
+  tipFor = el; el.classList.add('active');
+  tipEl.innerHTML = '<b>' + esc(g.t) + '</b>' + esc(g.d) + '<i class="arrow"></i>';
+  var vw = document.documentElement.clientWidth, w = Math.min(320, vw - 24);
+  tipEl.style.width = w + 'px';
+  var rects = el.getClientRects(), r = rects.length ? rects[0] : el.getBoundingClientRect();
+  var left = Math.max(12, Math.min(r.left + r.width / 2 - w / 2, vw - w - 12));
+  var sx = window.pageXOffset, sy = window.pageYOffset;
+  tipEl.classList.remove('above');
+  tipEl.style.left = (left + sx) + 'px';
+  tipEl.style.top = (r.bottom + sy + 10) + 'px';
+  var th = tipEl.offsetHeight;
+  if (r.bottom + th + 20 > window.innerHeight && r.top - th - 20 > 60){ tipEl.style.top = (r.top + sy - th - 10) + 'px'; tipEl.classList.add('above'); }
+  tipEl.querySelector('.arrow').style.left = Math.max(10, Math.min(r.left + r.width / 2 - left - 6, w - 22)) + 'px';
+  tipEl.classList.add('show');
+}
+function hideTip(){ clearTimeout(tipTimer); tipEl.classList.remove('show'); if (tipFor) tipFor.classList.remove('active'); tipFor = null; }
+document.addEventListener('click', function(e){
+  var t = e.target.closest ? e.target.closest('.term') : null;
+  if (t){ e.preventDefault(); if (tipFor === t && !FINE) hideTip(); else showTip(t); return; }
+  if (!tipEl.contains(e.target)) hideTip();
+});
+if (FINE){
+  document.addEventListener('mouseover', function(e){ var t = e.target.closest && e.target.closest('.term'); if (t) showTip(t); });
+  document.addEventListener('mouseout', function(e){ var t = e.target.closest && e.target.closest('.term'); if (t) tipTimer = setTimeout(hideTip, 180); });
+  tipEl.addEventListener('mouseenter', function(){ clearTimeout(tipTimer); });
+  tipEl.addEventListener('mouseleave', function(){ tipTimer = setTimeout(hideTip, 180); });
+}
+document.addEventListener('focusin', function(e){ if (e.target.classList && e.target.classList.contains('term')) showTip(e.target); });
+document.addEventListener('keydown', function(e){ if (e.key === 'Escape') hideTip(); });
+window.addEventListener('resize', hideTip);
+
+/* ---------- Blocs réutilisables ---------- */
+function tableHtml(t){
+  var h = '<div class="tbl"><table>' + (t.legende ? '<caption>' + esc(t.legende) + '</caption>' : '') + '<thead><tr>';
+  t.entetes.forEach(function(x){ h += '<th scope="col">' + x + '</th>'; });
+  h += '</tr></thead><tbody>';
+  t.lignes.forEach(function(l){
+    h += '<tr>';
+    l.forEach(function(x, i){ h += i === 0 ? '<th scope="row">' + x + '</th>' : '<td data-label="' + esc(String(t.entetes[i]).replace(/<[^>]+>/g, '')) + '">' + x + '</td>'; });
+    h += '</tr>';
+  });
+  return h + '</tbody></table></div>';
+}
+function foldable(label, inner){
+  return '<div class="sub-block"><button class="more-btn" data-fold>' + label + '<span class="chev"></span></button><div class="fold"><div>' + inner + '</div></div></div>';
+}
+function bindFolds(root){ root.querySelectorAll('[data-fold]').forEach(function(b){ b.onclick = function(){ b.parentNode.classList.toggle('open'); }; }); }
+
+/* ---------- Navigation ---------- */
+function renderCrumbs(){
+  var h = '', LBL = {revision: 'Tout réviser', glossaire: 'Glossaire'};
+  if (S.view !== 'home' && S.niveau) h += '<span>/</span><button data-go="home">' + esc(S.niveau.nom) + '</button>';
+  if (S.view === 'partie') h += '<span>/</span><span class="cur">' + esc(S.partie.id) + ' · ' + esc(S.partie.titre) + '</span>';
+  if (LBL[S.view]) h += '<span>/</span><span class="cur">' + LBL[S.view] + '</span>';
+  $('glBtn').classList.toggle('on', S.view === 'glossaire');
+  var home = S.view === 'home';
+  $('backBtn').classList.toggle('show', !home);
+  $('homeBtn').classList.toggle('show', !home);
+  $('brand').classList.toggle('hide', !home);
+  crumbsEl.innerHTML = h;
+  crumbsEl.querySelectorAll('[data-go]').forEach(function(b){ b.onclick = function(){ go('home'); }; });
+}
+function goHome(){ if (NIVEAUX.length > 1) S.niveau = null; go('home'); }
+$('brand').onclick = goHome;
+$('homeBtn').onclick = goHome;
+
+/* Historique : le bouton « Retour » et le bouton retour du navigateur
+   ramènent à la page précédente du site */
+var HIST = [];
+/* Dans une page intégrée (Google Sites…), l'historique du navigateur appartient à la
+   page qui héberge le site : y toucher recharge ou quitte la page. On ne l'utilise
+   donc que lorsque le site est ouvert seul ; sinon « Retour » reste interne au site. */
+var FRAMED = true; try { FRAMED = window.self !== window.top; } catch(e){}
+var USE_HISTORY = !FRAMED && /^(https?|file):$/.test(location.protocol);
+function snap(){ return {view: S.view, niveau: S.niveau, chap: S.chap, partie: S.partie, tab: S.tab}; }
+function restore(){
+  var s = HIST.pop();
+  if (s){ S.view = s.view; S.niveau = s.niveau; S.chap = s.chap; S.partie = s.partie; S.tab = s.tab; } else S.view = 'home';
+  render(); toTop();
+}
+function histDepth(){ try { return (history.state && history.state.svt) || 0; } catch(e){ return -1; } }
+function goBack(){
+  if (!HIST.length){ if (S.view !== 'home'){ S.view = 'home'; render(); toTop(); } return; }
+  /* history.back() seulement si l'historique du navigateur est bien aligné sur celui du site */
+  if (USE_HISTORY && histDepth() === HIST.length){ try { history.back(); return; } catch(e){} }
+  restore();
+}
+$('backBtn').onclick = goBack;
+if (USE_HISTORY) window.addEventListener('popstate', function(e){
+  var k = (e.state && e.state.svt) || 0;
+  if (k < HIST.length){ HIST.length = k + 1; restore(); }
+  else if (k > HIST.length){ try { history.go(HIST.length - k); } catch(err){} }
+});
+
+function go(view, opts){
+  opts = opts || {};
+  if (!opts.noPush){
+    HIST.push(snap());
+    if (USE_HISTORY){ try { history.pushState({svt: HIST.length}, ''); } catch(e){ USE_HISTORY = false; } }
+  }
+  S.view = view;
+  if (opts.partie){ S.partie = opts.partie; S.chap = opts.ch; }
+  if (opts.tab) S.tab = opts.tab;
+  render(); toTop();
+}
+function render(){
+  setKeys(null); hideTip();
+  if (!S.niveau && NIVEAUX.length === 1) S.niveau = NIVEAUX[0];
+  document.body.style.cssText = S.view === 'partie' ? colorVars(chapColor(S.chap)) : (S.view === 'home' ? '' : colorVars(neutre()));
+  renderCrumbs();
+  if (S.view === 'partie') renderPartie();
+  else if (S.view === 'revision') renderRevision();
+  else if (S.view === 'glossaire') renderGlossaire();
+  else if (!S.niveau) renderNiveaux();
+  else renderNiveau();
+}
+
+/* ---------- Accueil ---------- */
+function renderNiveaux(){
+  var h = '<div class="view home-head"><p class="kicker">Sciences de la vie et de la Terre</p><h1>Choisis ton niveau</h1></div><div class="parts">';
+  NIVEAUX.forEach(function(n, i){ h += '<button class="part" data-n="' + i + '"><span class="pid"></span><h3>' + esc(n.nom) + '</h3><p class="pq">' + esc(n.intro || '') + '</p></button>'; });
+  app.innerHTML = h + '</div>';
+  app.querySelectorAll('[data-n]').forEach(function(b){ b.onclick = function(){ S.niveau = NIVEAUX[+b.dataset.n]; go('home'); }; });
+}
+
+function renderNiveau(){
+  var n = S.niveau;
+  var h = '<div class="view"><header class="home-head"><p class="kicker" style="color:var(--muted)">Sciences de la vie et de la Terre</p><h1>' + esc(n.nom) + '</h1><p class="lead">' + esc(n.intro || '') + '</p></header>';
+  n.chapitres.forEach(function(ch){
+    var parts = (ch.parties || []).filter(visible);
+    if (!parts.length) return;
+    h += '<section class="chapter" style="' + colorVars(chapColor(ch)) + '"><div class="ch-head"><p class="kicker">Chapitre ' + ch.num + '</p><h2>' + esc(ch.titre) + '</h2></div><div class="parts">';
+    parts.forEach(function(p){
+      h += '<button class="part" data-p="' + p.id + '"><span class="pid">' + esc(p.id) + '</span><h3>' + esc(p.titre) + '</h3><p class="pq">' + esc(p.problematique || '') + '</p><span class="go">Ouvrir le cours →</span></button>';
+    });
+    h += '</div></section>';
+  });
+  h += '<div class="revise" style="' + colorVars(neutre()) + '"><div><h3>Tout réviser</h3><p>Flashcards et QCM de toutes les parties, mélangés.</p></div><div class="row"><button class="btn" id="rvF">Flashcards</button><button class="btn solid" id="rvQ">QCM</button></div></div>'
+    + '<div class="extras" style="' + colorVars(neutre()) + '"><div class="revise"><div><h3>Glossaire</h3><p>Tous les mots du cours, avec une recherche.</p></div><button class="btn" id="goG">Ouvrir</button></div></div></div>';
+  app.innerHTML = h;
+  $('goG').onclick = function(){ go('glossaire'); };
+  app.querySelectorAll('[data-p]').forEach(function(b){ b.onclick = function(){ var f = findPartie(b.dataset.p); go('partie', {partie: f.p, ch: f.ch, tab: 'essentiel'}); }; });
+  $('rvF').onclick = function(){ go('revision', {tab: 'flashcards'}); };
+  $('rvQ').onclick = function(){ go('revision', {tab: 'qcm'}); };
+}
+
+/* ---------- Page d'une partie ---------- */
+var TABS = [['essentiel', "L'essentiel"], ['activites', 'Activités'], ['flashcards', 'Flashcards'], ['qcm', 'QCM']];
+
+function renderPartie(){
+  var p = S.partie, ch = S.chap;
+  var h = '<div class="view"><header class="hero"><p class="kicker">Chapitre ' + ch.num + ' · Partie ' + esc(p.id) + '</p><h1>' + esc(p.titre) + '</h1>'
+    + '<p class="probl"><span>Problématique</span>' + esc(p.problematique || '') + '</p></header></div>'
+    + '<nav class="tabs" id="tabs">';
+  TABS.forEach(function(t){ h += '<button data-t="' + t[0] + '" class="' + (S.tab === t[0] ? 'on' : '') + '">' + t[1] + '</button>'; });
+  h += '</nav><div id="tab"></div>';
+
+  var list = allParties(S.niveau), idx = -1;
+  list.forEach(function(x, i){ if (x.p.id === p.id) idx = i; });
+  h += '<nav class="next-nav">';
+  if (idx > 0) h += '<button data-nav="' + (idx - 1) + '"><small>← Partie précédente</small><span>' + esc(list[idx - 1].p.id + ' · ' + list[idx - 1].p.titre) + '</span></button>';
+  if (idx < list.length - 1) h += '<button data-nav="' + (idx + 1) + '"><small>Partie suivante →</small><span>' + esc(list[idx + 1].p.id + ' · ' + list[idx + 1].p.titre) + '</span></button>';
+  h += '</nav>';
+  app.innerHTML = h;
+  app.querySelectorAll('#tabs button').forEach(function(b){ b.onclick = function(){ switchTab(b.dataset.t); }; });
+  app.querySelectorAll('[data-nav]').forEach(function(b){ b.onclick = function(){ var x = list[+b.dataset.nav]; go('partie', {partie: x.p, ch: x.ch}); }; });
+  drawTab();
+}
+function switchTab(t, scroll){
+  S.tab = t;
+  app.querySelectorAll('#tabs button').forEach(function(x){ x.classList.toggle('on', x.dataset.t === t); });
+  drawTab();
+  /* Remonte juste au-dessus des onglets (sous l'en-tête de la partie) */
+  if (scroll){
+    var hero = app.querySelector('.hero'), bar = document.querySelector('.topbar');
+    var y = hero ? Math.max(0, hero.getBoundingClientRect().bottom + window.pageYOffset - (bar ? bar.offsetHeight : 52) - 4) : 0;
+    try { window.scrollTo({top: y, behavior: 'smooth'}); } catch(e){ window.scrollTo(0, y); }
+  }
+}
+function drawTab(){
+  var tab = $('tab'), p = S.partie;
+  setKeys(null); hideTip();
+  tab.classList.remove('view'); void tab.offsetWidth; tab.classList.add('view');
+  if (S.tab === 'activites') renderActivites(tab, p);
+  else if (S.tab === 'essentiel') renderEssentiel(tab, p);
+  else if (S.tab === 'flashcards') renderFlashcards(tab, p.flashcards.filter(visible));
+  else renderQcm(tab, p.qcm.filter(visible), 'qcm_' + p.id);
+}
+
+/* ---------- L'essentiel ---------- */
+var ROMAIN = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'];
+function renderEssentiel(tab, p){
+  var ess = p.essentiel, h = '';
+  var secs = ess.sections.filter(visible);
+  if (secs.length > 1){
+    h += '<nav class="toc">';
+    secs.forEach(function(s, i){ h += '<button data-sec="' + i + '"><span>' + ROMAIN[i] + '.</span>' + esc(s.titre) + '</button>'; });
+    h += '</nav>';
+  }
+  h += '<p class="hint-line">Les mots <span class="term">soulignés en pointillés</span> ont une définition : ' + (FINE ? 'passe la souris dessus.' : 'touche-les pour l\'afficher.') + ' Tu les retrouves tous dans le glossaire.</p><article class="lesson">';
+  /* Introduction (chiffres + texte), avant les parties numérotées */
+  if (ess.intro){
+    h += '<section id="secIntro"><h2><span>Introduction</span></h2>';
+    var ch = ess.intro.chiffres;
+    if (ch){
+      h += '<div class="aside"><span class="lab">' + esc(ch.titre || 'Quelques chiffres') + '</span><ul class="facts">';
+      ch.lignes.forEach(function(l){ h += '<li>' + rich(l) + '</li>'; });
+      h += '</ul>' + (ch.source ? '<p class="src">Source : ' + esc(ch.source) + '</p>' : '') + '</div>';
+    }
+    (ess.intro.texte || []).forEach(function(t){ h += '<p>' + rich(t) + '</p>'; });
+    h += '</section>';
+  }
+  secs.forEach(function(s, i){
+    h += '<section id="sec' + i + '"><h2><span class="num">' + ROMAIN[i] + '.</span><span>' + esc(s.titre) + '</span></h2>';
+    s.blocs.forEach(function(b){
+      if (typeof b === 'string') h += '<p>' + rich(b) + '</p>';
+      else if (b.table) h += tableHtml(b.table);
+      else if (b.html) h += b.html; '<div class="aside"><span class="lab">' + esc(b.aside) + '</span><p>' + rich(b.texte) + '</p></div>';
+    });
+    h += '</section>';
+  });
+  /* « En résumé » : les bilans du cours, éventuellement avec un titre (Bilan de la séance 1…) */
+  var rcs = Array.isArray(ess.recap) ? ess.recap.filter(visible) : (ess.recap ? [{texte: ess.recap}] : []);
+  if (rcs.length) h += '<div class="recap"><span class="lab">En résumé</span>' + rcs.map(function(b){ return (b.titre ? '<p class="rt">' + esc(b.titre) + '</p>' : '') + '<p>' + rich(b.texte) + '</p>'; }).join('') + '</div>';
+  h += '</article><div class="row" style="margin-top:26px"><button class="btn" id="toF">Réviser avec les flashcards</button><button class="btn solid" id="toQ">Faire le QCM</button></div>';
+  tab.innerHTML = h;
+  tab.querySelectorAll('[data-sec]').forEach(function(b){
+    b.onclick = function(){ var s = $('sec' + b.dataset.sec); try { window.scrollTo({top: s.getBoundingClientRect().top + window.pageYOffset - 110, behavior: 'smooth'}); } catch(e){ s.scrollIntoView(); } };
+  });
+  $('toF').onclick = function(){ switchTab('flashcards', true); };
+  $('toQ').onclick = function(){ switchTab('qcm', true); };
+}
+
+/* ---------- Activités ---------- */
+function renderActivites(tab, p){
+  var h = '';
+  p.activites.filter(visible).forEach(function(a, i){
+    h += '<div class="acc" id="acc' + i + '"><button class="acc-head" data-acc="' + i + '"><span class="t"><span class="type">' + esc(a.type) + '</span><span class="name">' + esc(a.titre) + '</span></span><span class="chev"></span></button>'
+      + '<div class="fold"><div><div class="acc-body">'
+      + '<p class="act-lab">Ce qu\'on a fait</p><p class="summary">' + a.resume + '</p>'
+      + (a.pourquoi ? '<p class="act-lab">Pourquoi cette activité ?</p><p class="summary">' + rich(a.pourquoi) + '</p>' : '')
+      + (a.apport ? '<p class="act-lab">À quoi ça nous a servi</p><p class="summary">' + rich(a.apport) + '</p>' : '')
+      + (a.conclusion ? '<div class="aside"><span class="lab">' + esc(a.conclusionTitre || 'Conclusion') + '</span><p>' + rich(a.conclusion) + '</p></div>' : '');
+    if (a.lien && a.lien.url) h += '<a class="ext" href="' + esc(a.lien.url) + '" target="_blank" rel="noopener">' + esc(a.lien.texte) + ' ↗</a>';
+    if (AFFICHER_CORRECTIONS && a.correction && a.correction.length){
+      h += '<p class="corr-title">Correction</p>';
+      /* Titre « Étiquette · intitulé » : l'étiquette (C1, Dossier 2, Bonus…) remplace la numérotation automatique */
+      a.correction.forEach(function(c, k){ var m = /^(.+?) · (.+)$/.exec(c[0]); h += '<div class="corr-item"><div class="cq"><b>' + (m ? m[1] : 'C' + (k + 1)) + '</b><span>' + (m ? m[2] : c[0]) + '</span></div><p class="ca">' + c[1] + '</p></div>'; });
+    }
+    h += '</div></div></div></div>';
+  });
+  tab.innerHTML = h;
+  tab.querySelectorAll('[data-acc]').forEach(function(b){ b.onclick = function(){ $('acc' + b.dataset.acc).classList.toggle('open'); }; });
+}
+
+/* ---------- Glossaire avec recherche tolérante aux fautes ---------- */
+function lev(a, b, max){
+  if (Math.abs(a.length - b.length) > max) return max + 1;
+  var prev = [], cur, i, j;
+  for (j = 0; j <= b.length; j++) prev[j] = j;
+  for (i = 1; i <= a.length; i++){
+    cur = [i]; var best = i;
+    for (j = 1; j <= b.length; j++){
+      cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+      if (cur[j] < best) best = cur[j];
+    }
+    if (best > max) return max + 1;
+    prev = cur;
+  }
+  return prev[b.length];
+}
+function tol(s){ return s.length <= 3 ? 0 : s.length <= 5 ? 1 : s.length <= 8 ? 2 : 3; }
+var GLIST = null;
+function glossList(){
+  if (GLIST) return GLIST;
+  GLIST = Object.keys(GLOSS).map(function(k){
+    var g = GLOSS[k], dn = norm(g.d);
+    return {k: k, g: g, words: k.split(/[^a-z0-9]+/).filter(Boolean), dn: dn, dwords: dn.split(/[^a-z0-9]+/).filter(function(w){ return w.length >= 4; })};
+  }).sort(function(a, b){ return a.k < b.k ? -1 : 1; });
+  return GLIST;
+}
+function searchGloss(q){
+  var qn = norm(q), toks = qn.split(/[^a-z0-9]+/).filter(function(t){ return t.length >= 2; });
+  var toks4 = toks.filter(function(t){ return t.length >= 4; });
+  if (!qn) return {list: glossList(), fuzzy: false};
+  var res = [], fuzzy = true;
+  glossList().forEach(function(e){
+    var s = 0;
+    if (e.k === qn) s = 1000; else if (e.k.indexOf(qn) === 0) s = 600; else if (e.k.indexOf(qn) > -1) s = 400;
+    else if (lev(qn, e.k, tol(qn)) <= tol(qn)) s = 350;
+    if (s) fuzzy = false;
+    if (!s && toks.length){
+      var all = toks.every(function(t){
+        return e.words.some(function(w){ return w.indexOf(t) === 0 || lev(t, w, tol(t)) <= tol(t); });
+      });
+      if (all) s = 250;
+    }
+    if (e.dn.indexOf(qn) > -1){ s += 80; if (s === 80) fuzzy = false; }
+    else if (toks4.length && toks4.every(function(t){ return e.dwords.some(function(w){ return w.indexOf(t) === 0 || lev(t, w, tol(t)) <= tol(t); }); })) s += 40;
+    if (s) res.push({e: e, s: s});
+  });
+  res.sort(function(a, b){ return b.s - a.s || (a.e.k < b.e.k ? -1 : 1); });
+  return {list: res.map(function(r){ return r.e; }), fuzzy: fuzzy && res.length > 0};
+}
+function hl(text, q){
+  var t = esc(text); if (!q || q.length < 2) return t;
+  try { return t.replace(new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi'), '<mark>$1</mark>'); } catch(e){ return t; }
+}
+function renderGlossaire(){
+  var h = '<div class="view"><header class="hero"><p class="kicker">' + esc(S.niveau.nom) + '</p><h1>Glossaire</h1><p class="probl"><span>Rechercher</span>Tape un mot ou un morceau de définition. Pas de souci si le mot est mal orthographié.</p></header>'
+    + '<input class="gl-search" id="glq" type="search" placeholder="Ex. : chromatide, réplication, haploïde…" autocomplete="off" spellcheck="false" aria-label="Rechercher dans le glossaire"><p class="gl-info" id="gli"></p><div id="gll"></div></div>';
+  app.innerHTML = h;
+  var q = $('glq'); q.value = S.glq || '';
+  function upd(){
+    S.glq = q.value;
+    var r = searchGloss(q.value), qt = q.value.trim(), out = '', letter = '';
+    $('gli').textContent = !qt ? r.list.length + ' mots dans le glossaire' : !r.list.length ? 'Aucun résultat pour « ' + qt + ' ».' : (r.fuzzy ? 'Résultats approchants pour « ' + qt + ' » : ' : '') + r.list.length + ' résultat' + (r.list.length > 1 ? 's' : '');
+    r.list.forEach(function(e){
+      if (!qt){ var L = e.k.charAt(0).toUpperCase(); if (L !== letter){ letter = L; out += '<div class="gl-letter">' + L + '</div>'; } }
+      out += '<div class="gl-item"><h3>' + hl(e.g.t, qt) + '</h3><p>' + hl(e.g.d, qt) + '</p>';
+      if (e.g.parts.length){ out += '<div class="gl-tags">'; e.g.parts.forEach(function(x){ out += '<button style="' + colorVars(chapColor(x.ch)) + '" data-gp="' + x.p.id + '">' + esc(x.p.id) + ' · ' + esc(x.p.titre) + '</button>'; }); out += '</div>'; }
+      out += '</div>';
+    });
+    $('gll').innerHTML = out;
+    $('gll').querySelectorAll('[data-gp]').forEach(function(b){ b.onclick = function(){ var f = findPartie(b.dataset.gp); go('partie', {partie: f.p, ch: f.ch, tab: 'essentiel'}); }; });
+  }
+  q.oninput = upd; upd();
+  if (FINE) q.focus();
+}
+
+/* ---------- Réglages de lecture ---------- */
+/* Par défaut : taille normale, police Lexend, espacement normal, thème papier */
+var REG = {taille: 1, police: 'lex', espace: 'n', theme: 'papier'};
+try { var r0 = JSON.parse(localStorage.getItem('svt1es_reglages_v2')); if (r0) for (var k0 in r0) REG[k0] = r0[k0]; } catch(e){}
+var TAILLES = ['93.75%', '100%', '112.5%', '125%'];
+function applyReg(){
+  var r = document.documentElement;
+  r.style.fontSize = TAILLES[REG.taille] || '100%';
+  r.classList.toggle('f-lex', REG.police === 'lex');
+  r.classList.toggle('sp-wide', REG.espace === 'w');
+  r.classList.toggle('th-clair', REG.theme === 'clair');
+  r.classList.toggle('th-sombre', REG.theme === 'sombre');
+  try { localStorage.setItem('svt1es_reglages_v2', JSON.stringify(REG)); } catch(e){}
+}
+function pillRow(label, key, opts){
+  var h = '<p class="set-label">' + label + '</p><div class="pills">';
+  opts.forEach(function(o){ h += '<button data-set="' + key + '" data-val="' + o[0] + '" class="' + (String(REG[key]) === String(o[0]) ? 'on' : '') + '"' + (o[2] ? ' style="' + o[2] + '"' : '') + '>' + o[1] + '</button>'; });
+  return h + '</div>';
+}
+function drawSettings(){
+  var s = $('settings');
+  s.innerHTML = pillRow('Thème', 'theme', [['papier', 'Jaune'], ['clair', 'Clair'], ['sombre', 'Sombre']])
+    + pillRow('Taille du texte', 'taille', [[0, 'A−', 'font-size:.78rem'], [1, 'A', 'font-size:.86rem'], [2, 'A+', 'font-size:.96rem'], [3, 'A++', 'font-size:1.06rem']])
+    + pillRow('Police', 'police', [['lex', 'Lexend'], ['std', 'Classique']])
+    + pillRow('Espacement', 'espace', [['n', 'Normal'], ['w', 'Élargi']])
+    + '<p class="note">Lexend est une police conçue pour faciliter la lecture. L\'espacement élargi ajoute de l\'espace entre les lettres, les mots et les lignes, et aligne le texte à gauche (utile en cas de dyslexie).</p>';
+  s.querySelectorAll('[data-set]').forEach(function(b){
+    b.onclick = function(){
+      var key = b.dataset.set, v = b.dataset.val;
+      REG[key] = key === 'taille' ? +v : v;
+      applyReg();
+      if (key === 'theme') render();
+      drawSettings();
+    };
+  });
+}
+function toggleSettings(show){
+  var s = $('settings'), on = show === undefined ? !s.classList.contains('show') : show;
+  if (on) drawSettings();
+  s.classList.toggle('show', on); $('setBtn').classList.toggle('on', on); $('setBtn').setAttribute('aria-expanded', on);
+}
+$('setBtn').onclick = function(e){ e.stopPropagation(); hideTip(); toggleSettings(); };
+$('glBtn').onclick = function(){ toggleSettings(false); go('glossaire'); };
+document.addEventListener('click', function(e){ if ($('settings').classList.contains('show') && !$('settings').contains(e.target)) toggleSettings(false); });
+document.addEventListener('keydown', function(e){ if (e.key === 'Escape') toggleSettings(false); });
+applyReg();
+
+/* ---------- Tuto (s'ouvre uniquement avec le bouton « Tuto ») ---------- */
+var TUTO = [
+ {t: "Bienvenue !", h: "<p>Ce site accompagne la partie SVT de l'enseignement scientifique de première. Chaque partie du cahier (1a, 1b, 1c…) a sa propre page, avec le cours, les corrections des activités et des outils pour réviser.</p><p>Ce tuto présente en quelques étapes comment le site est organisé et ce que tu peux y faire. Tu peux le rouvrir à tout moment avec le bouton <b>Tuto</b>, en haut de l'écran.</p>"},
+ {t: "L'organisation du site", h: "<ul><li>L'<b>accueil</b> présente les chapitres. Chaque chapitre a sa couleur et contient ses parties, avec leur problématique.</li><li>Clique sur une partie pour ouvrir son cours.</li><li>En haut, <b>← Retour</b> ramène à la page précédente et <b>Accueil</b> à la liste des chapitres.</li><li>En bas de chaque partie, tu peux passer directement à la <b>partie précédente</b> ou à la <b>partie suivante</b>.</li></ul>"},
+ {t: "Les quatre onglets d'une partie", h: "<div class=\"tuto-demo\"><span>L'essentiel</span><span>Activités</span><span>Flashcards</span><span>QCM</span></div><ul><li><b>L'essentiel</b> : les bilans du cours, repris idée par idée, complétés et expliqués, avec un sommaire (I, II, III…). À la fin, l'encadré <b>En résumé</b> redonne les bilans de ton cahier, mot pour mot.</li><li><b>Activités</b> : pour chaque activité, ce qu'on a fait, pourquoi on l'a faite et à quoi elle nous a servi, puis la correction question par question (C1, C2…). Touche le titre pour l'ouvrir.</li><li><b>Flashcards</b> et <b>QCM</b> : pour réviser, voir les étapes suivantes.</li></ul>"},
+ {t: "Les mots du cours et le glossaire", h: "<div class=\"tuto-demo\"><span class=\"dterm\">matrice extracellulaire</span></div><ul><li>Dans le cours, les mots <b>soulignés en pointillés</b> ont une définition : passe la souris dessus ou touche-les pour l'afficher.</li><li>Le bouton <b>Glossaire</b>, en haut, rassemble tous les mots du cours, classés par ordre alphabétique.</li><li>La recherche du glossaire accepte les petites fautes d'orthographe, et chaque mot indique les parties où il est utilisé.</li></ul>"},
+ {t: "Réviser avec les flashcards", h: "<ul><li>Chaque carte a un mot-clé d'un côté et sa définition de l'autre. <b>Touche la carte</b> (ou appuie sur Espace) pour la retourner.</li><li>Réponds honnêtement avec <b>Je savais</b> ou <b>À revoir</b> : à la fin, tu vois ton score et tu peux revoir seulement les cartes ratées.</li><li><b>Une par une</b> ou <b>Toutes</b> : une carte à la fois, ou toutes les cartes affichées d'un coup.</li><li><b>Mot d'abord</b> ou <b>Définition d'abord</b> : pour t'entraîner dans les deux sens.</li><li>Pour changer de carte, fais glisser ton doigt ou utilise les flèches.</li></ul>"},
+ {t: "S'entraîner avec les QCM", h: "<ul><li>Choisis un <b>niveau</b> (facile, moyen, difficile ou tous) et le <b>nombre de questions</b>.</li><li>Après chaque réponse, une <b>explication</b> s'affiche, que tu aies juste ou non.</li><li>Les questions et les réponses sont mélangées à chaque essai.</li><li>À la fin, tu peux revoir tes erreurs. Ton <b>meilleur score</b> est gardé sur ton appareil.</li><li>Sur l'accueil, <b>Tout réviser</b> mélange les flashcards et les QCM de toutes les parties : idéal avant un contrôle.</li></ul>"},
+ {t: "Adapter l'affichage", h: "<p>Le bouton <b>Aa</b>, en haut à droite, permet de régler la lecture selon tes besoins :</p><ul><li><b>Thème</b> : jaune, clair ou sombre.</li><li><b>Taille du texte</b> : de A− à A++.</li><li><b>Police</b> : Lexend, conçue pour faciliter la lecture, ou une police classique.</li><li><b>Espacement élargi</b> : plus d'espace entre les lettres, les mots et les lignes (utile en cas de dyslexie).</li></ul><p>Tes réglages sont gardés pour tes prochaines visites.</p>"},
+ {t: "Comment bien réviser ?", h: "<ul><li><b>1.</b> Lis <b>L'essentiel</b> et vérifie que tu comprends les mots soulignés.</li><li><b>2.</b> Relis les corrections des <b>Activités</b> que tu n'as pas réussies.</li><li><b>3.</b> Fais les <b>flashcards</b> jusqu'à ne plus avoir de carte à revoir.</li><li><b>4.</b> Termine par le <b>QCM</b>, du niveau facile au niveau difficile.</li></ul><p>Bon travail !</p>"}
+];
+var tutoI = 0, tutoFocus = null;
+function drawTuto(){
+  var s = TUTO[tutoI], last = tutoI === TUTO.length - 1;
+  $('tutoBody').innerHTML = '<div class="tuto-step"><p class="kicker">Tuto · Étape ' + (tutoI + 1) + ' sur ' + TUTO.length + '</p><h2>' + s.t + '</h2>' + s.h + '</div>';
+  $('tutoBody').scrollTop = 0;
+  var d = '';
+  TUTO.forEach(function(x, k){ d += '<button class="' + (k === tutoI ? 'on' : '') + '" data-k="' + k + '" aria-label="Étape ' + (k + 1) + '"></button>'; });
+  $('tutoDots').innerHTML = d;
+  $('tutoDots').querySelectorAll('button').forEach(function(b){ b.onclick = function(){ tutoI = +b.dataset.k; drawTuto(); }; });
+  $('tutoPrev').style.visibility = tutoI ? 'visible' : 'hidden';
+  $('tutoNext').textContent = last ? "C'est parti !" : 'Suivant →';
+}
+function openTuto(){
+  hideTip(); toggleSettings(false);
+  tutoFocus = document.activeElement; tutoI = 0; drawTuto();
+  $('tuto').classList.add('show'); document.body.style.overflow = 'hidden';
+  $('tutoNext').focus();
+}
+function closeTuto(){
+  $('tuto').classList.remove('show'); document.body.style.overflow = '';
+  if (tutoFocus && tutoFocus.focus) tutoFocus.focus();
+}
+$('tutoBtn').onclick = function(e){ e.stopPropagation(); openTuto(); };
+$('tutoX').onclick = closeTuto;
+$('tutoPrev').onclick = function(){ if (tutoI > 0){ tutoI--; drawTuto(); } };
+$('tutoNext').onclick = function(){ if (tutoI < TUTO.length - 1){ tutoI++; drawTuto(); } else closeTuto(); };
+$('tuto').addEventListener('click', function(e){ if (e.target === $('tuto')) closeTuto(); });
+document.addEventListener('keydown', function(e){
+  if (!$('tuto').classList.contains('show')) return;
+  e.stopImmediatePropagation();
+  if (e.key === 'Escape') closeTuto();
+  else if (e.key === 'ArrowRight' && tutoI < TUTO.length - 1){ tutoI++; drawTuto(); }
+  else if (e.key === 'ArrowLeft' && tutoI > 0){ tutoI--; drawTuto(); }
+}, true);
+
+/* ---------- Tout réviser ---------- */
+function renderRevision(){
+  var fc = [], q = [];
+  allParties(S.niveau).forEach(function(x){
+    var col = chapColor(x.ch);
+    x.p.flashcards.filter(visible).forEach(function(c){ fc.push({t: c[0], d: c[1], col: col, tag: x.p.id}); });
+    x.p.qcm.filter(visible).forEach(function(it){ q.push({q: it.q, o: it.o, r: it.r, e: it.e, n: it.n, col: col, tag: x.p.id}); });
+  });
+  var h = '<div class="view"><header class="hero"><p class="kicker">' + esc(S.niveau.nom) + '</p><h1>Tout réviser</h1><p class="probl"><span>Mode révision</span>Toutes les parties sont mélangées.</p></header></div>'
+    + '<nav class="tabs" id="tabs"><button data-t="flashcards" class="' + (S.tab === 'flashcards' ? 'on' : '') + '">Flashcards</button><button data-t="qcm" class="' + (S.tab === 'qcm' ? 'on' : '') + '">QCM</button></nav><div id="tab"></div>';
+  app.innerHTML = h;
+  function draw(){ var tab = $('tab'); setKeys(null); if (S.tab === 'flashcards') renderFlashcards(tab, fc); else renderQcm(tab, q, 'qcm_tout_' + S.niveau.id); }
+  app.querySelectorAll('#tabs button').forEach(function(b){ b.onclick = function(){ S.tab = b.dataset.t; app.querySelectorAll('#tabs button').forEach(function(x){ x.classList.toggle('on', x === b); }); draw(); }; });
+  draw();
+}
+
+/* ---------- Flashcards ---------- */
+function renderFlashcards(tab, cards){
+  cards = cards.map(function(c){ return Array.isArray(c) ? {t: c[0], d: c[1]} : c; });
+  var mode = 'jeu', sens = 'mot', deck, idx, known, review, dir = 1;
+  function reset(list){ deck = shuffle(list || cards); idx = 0; known = 0; review = []; dir = 1; }
+  reset();
+
+  function faces(c, small){
+    var term = '<div class="term-big">' + esc(c.t) + '</div>', def = '<div class="def">' + esc(c.d) + '</div>';
+    var f = sens === 'mot' ? [term, def, 'Mot-clé', 'Définition'] : [def, term, 'Définition', 'Mot-clé'];
+    var tag = c.tag ? '<span class="code">' + esc(c.tag) + '</span>' : '';
+    return '<div class="face front"><span class="lab">' + f[2] + '</span>' + tag + f[0] + (small ? '' : '<span class="hint">Touche la carte pour la retourner</span>') + '</div>'
+         + '<div class="face back"><span class="lab">' + f[3] + '</span>' + tag + f[1] + '</div>';
+  }
+  function cstyle(c){ return c.col ? ' style="' + colorVars(c.col) + '"' : ''; }
+
+  function draw(){
+    var h = '<div class="fc-tools"><div class="pills"><button data-m="jeu" class="' + (mode === 'jeu' ? 'on' : '') + '">Une par une</button><button data-m="liste" class="' + (mode === 'liste' ? 'on' : '') + '">Toutes</button></div>'
+      + '<div class="pills"><button data-s="mot" class="' + (sens === 'mot' ? 'on' : '') + '">Mot d\'abord</button><button data-s="def" class="' + (sens === 'def' ? 'on' : '') + '">Définition d\'abord</button></div></div>';
+    if (mode === 'liste'){
+      h += '<div class="fc-grid">';
+      cards.forEach(function(c){ h += '<div class="scene"' + cstyle(c) + '><div class="flash">' + faces(c, true) + '</div></div>'; });
+      h += '</div>';
+      setKeys(null);
+    } else if (idx >= deck.length){
+      h += '<div class="done"><div class="big">' + known + ' / ' + deck.length + '</div><p>cartes connues</p>'
+        + (review.length ? '<p>' + review.length + ' carte' + (review.length > 1 ? 's' : '') + ' à revoir.</p>' : '<p>Parfait, tu connais tout !</p>')
+        + '<div class="row">' + (review.length ? '<button class="btn solid" id="again">Revoir les cartes ratées</button>' : '') + '<button class="btn" id="restart">Recommencer</button></div></div>';
+      setKeys(null);
+    } else {
+      var c = deck[idx];
+      h += '<div class="bar"><i style="width:' + (idx / deck.length * 100) + '%"></i></div>'
+        + '<div class="scene" id="scene"' + cstyle(c) + '><div class="flash ' + (dir > 0 ? 'in' : 'in-back') + '" id="card">' + faces(c) + '</div></div>'
+        + '<div class="fc-count">Carte ' + (idx + 1) + ' sur ' + deck.length + '</div>'
+        + '<div class="fc-know"><button class="btn no" id="no">À revoir</button><button class="btn yes" id="yes">Je savais</button></div>'
+        + '<div class="fc-ctrl"><button class="btn arrow" id="prev" aria-label="Carte précédente">‹</button><button class="btn" id="mix">Mélanger</button><button class="btn arrow" id="next" aria-label="Carte suivante">›</button></div>';
+    }
+    tab.innerHTML = h;
+    tab.querySelectorAll('[data-m]').forEach(function(b){ b.onclick = function(){ mode = b.dataset.m; draw(); }; });
+    tab.querySelectorAll('[data-s]').forEach(function(b){ b.onclick = function(){ sens = b.dataset.s; draw(); }; });
+    tab.querySelectorAll('.flash').forEach(function(f){ f.onclick = function(){ f.classList.remove('in', 'in-back'); f.classList.toggle('flipped'); }; });
+    if ($('again')) $('again').onclick = function(){ reset(review); draw(); };
+    if ($('restart')) $('restart').onclick = function(){ reset(); draw(); };
+    if (!$('card')) return;
+    function next(){ if (idx < deck.length - 1){ idx++; dir = 1; draw(); } }
+    function prev(){ if (idx > 0){ idx--; dir = -1; draw(); } }
+    function flip(){ var f = $('card'); f.classList.remove('in', 'in-back'); f.classList.toggle('flipped'); }
+    $('next').onclick = next; $('prev').onclick = prev;
+    $('mix').onclick = function(){ reset(); draw(); };
+    $('yes').onclick = function(){ known++; idx++; dir = 1; draw(); };
+    $('no').onclick = function(){ review.push(deck[idx]); idx++; dir = 1; draw(); };
+    var sx = null, sy = null, sc = $('scene');
+    sc.addEventListener('touchstart', function(e){ sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, {passive: true});
+    sc.addEventListener('touchend', function(e){
+      if (sx === null) return;
+      var dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy; sx = null;
+      if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5){ e.preventDefault(); if (dx < 0) next(); else prev(); }
+    });
+    setKeys(function(e){
+      if (e.target && /INPUT|SELECT|TEXTAREA/.test(e.target.tagName)) return;
+      if (e.key === ' ' || e.key === 'Enter'){ e.preventDefault(); flip(); }
+      else if (e.key === 'ArrowRight') next();
+      else if (e.key === 'ArrowLeft') prev();
+    });
+  }
+  draw();
+}
+
+/* ---------- QCM ---------- */
+function renderQcm(tab, bank, key){
+  bank = bank.map(function(q){ return {q: q.q, o: q.o, r: q.r, e: q.e, n: q.n || 2, col: q.col, tag: q.tag}; });
+  var lvl = 0, nb = 10, qs, i, score, answers;
+  function pool(){ return lvl ? bank.filter(function(q){ return q.n === lvl; }) : bank; }
+
+  function start(list){
+    qs = list.map(function(q){
+      var order = shuffle(q.o.map(function(_, k){ return k; }));
+      return {q: q.q, o: order.map(function(k){ return q.o[k]; }), r: order.indexOf(q.r), e: q.e, n: q.n, col: q.col, tag: q.tag};
+    });
+    i = 0; score = 0; answers = []; draw();
+  }
+  function intro(){
+    var pl = pool(), best = store(key + '_' + lvl);
+    var counts = {0: bank.length, 1: 0, 2: 0, 3: 0};
+    bank.forEach(function(q){ counts[q.n]++; });
+    var opts = [5, 10, 20].filter(function(v){ return v < pl.length; }).concat([pl.length]);
+    if (opts.indexOf(nb) < 0) nb = opts[Math.min(1, opts.length - 1)];
+    var h = '<div class="panel"><h3>QCM</h3><p class="muted" style="margin:0">Questions et réponses mélangées à chaque essai.</p>'
+      + '<p class="set-label">Niveau</p><div class="chips" id="lv">';
+    [0, 1, 2, 3].forEach(function(l){ h += '<button data-l="' + l + '" class="' + (lvl === l ? 'on' : '') + '"' + (counts[l] ? '' : ' disabled') + '>' + (l ? NIVEAUX_LBL[l] : 'Tous niveaux') + '<small>' + counts[l] + '</small></button>'; });
+    h += '</div><p class="set-label">Nombre de questions</p><div class="chips" id="nbq">';
+    opts.forEach(function(v){ h += '<button data-v="' + v + '" class="' + (v === nb ? 'on' : '') + '">' + (v === pl.length ? 'Toutes (' + v + ')' : v) + '</button>'; });
+    h += '</div><div class="row" style="justify-content:space-between;margin-top:22px"><button class="btn solid" id="go">Commencer</button>' + (best ? '<span class="muted">Meilleur score : ' + best + ' %</span>' : '') + '</div></div>';
+    tab.innerHTML = h;
+    tab.querySelectorAll('#lv button').forEach(function(b){ b.onclick = function(){ lvl = +b.dataset.l; intro(); }; });
+    tab.querySelectorAll('#nbq button').forEach(function(b){ b.onclick = function(){ nb = +b.dataset.v; tab.querySelectorAll('#nbq button').forEach(function(x){ x.classList.toggle('on', x === b); }); }; });
+    $('go').onclick = function(){ start(shuffle(pool()).slice(0, nb)); };
+  }
+  function draw(){
+    if (i >= qs.length) return end();
+    var q = qs[i];
+    var h = '<div class="panel view"' + (q.col ? ' style="' + colorVars(q.col) + '"' : '') + '><div class="q-meta"><span>Question ' + (i + 1) + ' / ' + qs.length + (q.tag ? ' · ' + esc(q.tag) : '') + '</span><span class="lvl">' + NIVEAUX_LBL[q.n] + '</span></div>'
+      + '<div class="bar" style="max-width:none"><i style="width:' + (i / qs.length * 100) + '%"></i></div>'
+      + '<div class="q-text">' + esc(q.q) + '</div><div class="opts">';
+    q.o.forEach(function(o, k){ h += '<button class="opt" data-k="' + k + '"><span class="k">' + 'ABCD'[k] + '</span><span>' + esc(o) + '</span></button>'; });
+    h += '</div><div id="fb"></div></div>';
+    tab.innerHTML = h;
+    tab.querySelectorAll('.opt').forEach(function(b){
+      b.onclick = function(){
+        var k = +b.dataset.k, ok = k === q.r;
+        if (ok) score++;
+        answers.push({q: q, choix: k, ok: ok});
+        tab.querySelectorAll('.opt').forEach(function(x){
+          x.disabled = true;
+          var xk = +x.dataset.k;
+          if (xk === q.r) x.classList.add('good'); else if (xk === k) x.classList.add('bad'); else x.classList.add('dim');
+        });
+        $('fb').innerHTML = '<div class="feedback ' + (ok ? 'ok' : 'ko') + '"><b>' + (ok ? 'Bonne réponse' : 'Pas tout à fait') + '</b>' + esc(q.e || '') + '</div>'
+          + '<div class="q-next"><button class="btn solid" id="nx">' + (i === qs.length - 1 ? 'Voir mon score' : 'Question suivante') + '</button></div>';
+        $('nx').onclick = function(){ i++; draw(); };
+        setKeys(function(e){ if (e.key === 'Enter'){ e.preventDefault(); setKeys(null); i++; draw(); } });
+      };
+    });
+  }
+  function end(){
+    setKeys(null);
+    var pct = Math.round(score / qs.length * 100), bk = key + '_' + lvl;
+    if (pct > (store(bk) || 0)) store(bk, pct);
+    var msg = pct >= 90 ? 'Excellent !' : pct >= 70 ? 'Très bien, continue.' : pct >= 50 ? 'Pas mal, revois les points ratés.' : "Relis L'essentiel et les flashcards, puis réessaie.";
+    var wrong = answers.filter(function(a){ return !a.ok; });
+    var det = '';
+    answers.forEach(function(a, n){
+      det += '<div class="review-item"><div><b>' + (n + 1) + '.</b> ' + esc(a.q.q) + '</div>'
+        + (a.ok ? '<div class="r-ok">✓ ' + esc(a.q.o[a.choix]) + '</div>'
+                : '<div class="r-ko">✗ ' + esc(a.q.o[a.choix]) + '</div><div class="r-ok">✓ ' + esc(a.q.o[a.q.r]) + '</div>')
+        + '<div class="muted">' + esc(a.q.e || '') + '</div></div>';
+    });
+    var h = '<div class="panel view center"><div class="score">' + score + ' / ' + qs.length + '</div><p class="muted" style="margin:0">' + pct + ' % · ' + msg + '</p>'
+      + '<div class="row" style="justify-content:center;margin:20px 0 10px">' + (wrong.length ? '<button class="btn solid" id="redo">Refaire les ' + wrong.length + ' ratée' + (wrong.length > 1 ? 's' : '') + '</button>' : '') + '<button class="btn" id="again">Nouveau QCM</button></div>'
+      + '<div style="text-align:left">' + foldable('Voir la correction détaillée', det) + '</div></div>';
+    tab.innerHTML = h;
+    bindFolds(tab);
+    if ($('redo')) $('redo').onclick = function(){ start(wrong.map(function(a){ return a.q; })); };
+    $('again').onclick = intro;
+  }
+  intro();
+}
+
+/* ---------- Halloween : toiles dans les coins et citrouilles ----------
+   Pour l'enlever après la période : mettre  HALLOWEEN = false  tout en haut du script. */
+if (HALLOWEEN) (function(){
+  document.documentElement.classList.add('hw');
+  var PUMP = '<span class="hw-p" aria-hidden="true"><svg viewBox="0 0 64 60"><path d="M29 13c0-6 2-9 7-11l3 4c-3 1-4 3-4 7z" fill="#5b7a2e"/><ellipse cx="18" cy="36" rx="14" ry="18" fill="#e2771a"/><ellipse cx="46" cy="36" rx="14" ry="18" fill="#e2771a"/><ellipse cx="32" cy="36" rx="16" ry="21" fill="#f08a24"/><path class="pf" d="M17 31l5-8 5 8zM37 31l5-8 5 8zM15 40q17 15 34 0l-5 1-3-3-4 4-5-4-5 4-4-4-3 3z"/></svg></span>';
+  /* Toile d'araignée (sans araignée) : rayons + fils en arc, depuis le coin */
+  function web(){
+    var R = 120, n = 4, d = '', i, k;
+    function pt(r, a){ return (r * Math.cos(a)).toFixed(1) + ' ' + (r * Math.sin(a)).toFixed(1); }
+    for (i = 0; i <= n; i++) d += 'M0 0L' + pt(R, i * Math.PI / 2 / n);
+    [26, 50, 76, 104].forEach(function(r){
+      for (k = 0; k < n; k++){ var a = k * Math.PI / 2 / n, b = (k + 1) * Math.PI / 2 / n; d += 'M' + pt(r, a) + 'Q' + pt(r * .8, (a + b) / 2) + ' ' + pt(r, b); }
+    });
+    return '<svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"><path d="' + d + '"/></svg>';
+  }
+  var main = document.querySelector('main');
+  ['l', 'r'].forEach(function(c){ var w = document.createElement('div'); w.className = 'hw-web ' + c; w.setAttribute('aria-hidden', 'true'); w.innerHTML = web(); main.insertBefore(w, main.firstChild); });
+  $('brand').insertAdjacentHTML('beforeend', PUMP);
+  document.querySelector('.foot .wrap').insertAdjacentHTML('afterbegin', PUMP);
+  /* Pluie de citrouilles : elles tombent du haut de l'écran puis disparaissent */
+  function rain(){
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var box = document.createElement('div'), h = '', n = window.innerWidth < 560 ? 22 : 36, i;
+    box.className = 'hw-rain'; box.setAttribute('aria-hidden', 'true');
+    for (i = 0; i < n; i++){
+      var size = 22 + Math.random() * 30, dur = 2.2 + Math.random() * 1.8, delay = Math.random() * 1.6;
+      h += PUMP.replace('class="hw-p"', 'class="hw-p" style="left:' + (Math.random() * 96).toFixed(1) + '%;width:' + size.toFixed(0) + 'px;height:' + (size * .94).toFixed(0) + 'px;--rot:' + ((Math.random() * 2 - 1) * 320).toFixed(0) + 'deg;animation-duration:' + dur.toFixed(2) + 's;animation-delay:' + delay.toFixed(2) + 's;transform:translateY(-80px)"');
+    }
+    box.innerHTML = h;
+    document.body.appendChild(box);
+    setTimeout(function(){ if (box.parentNode) box.parentNode.removeChild(box); }, 6000);
+  }
+  /* Grande citrouille de l'accueil : un clic déclenche la pluie de citrouilles */
+  var base = render, timer = null;
+  render = function(){
+    base();
+    var head = S.view === 'home' && app.querySelector('.home-head');
+    if (!head) return;
+    var b = document.createElement('button');
+    b.className = 'hw-big'; b.type = 'button'; b.setAttribute('aria-label', 'Citrouille d\'Halloween');
+    b.innerHTML = PUMP;
+    b.onclick = function(){
+      if (document.querySelector('.hw-rain')) return;
+      clearTimeout(timer);
+      b.classList.add('lit');
+      timer = setTimeout(function(){ b.classList.remove('lit'); }, 4500);
+      rain();
+    };
+    head.appendChild(b);
+  };
+})();
+
+/* ---------- Démarrage ---------- */
+if (OUVRIR_SUR){ var f0 = findPartie(OUVRIR_SUR); if (f0){ S.niveau = f0.niveau; S.view = 'partie'; S.partie = f0.p; S.chap = f0.ch; } }
+render();
+</script>
+</body>
+</html>
