@@ -921,6 +921,8 @@ var NIVEAUX = [
 
    activites: [
     {
+     /* Masquée tant que l'activité n'a pas été faite en classe : enlever  cache: true,  pour l'afficher */
+     cache: true,
      type: "Activité", titre: "Les galets de Nice",
      resume: "La plage de Nice est un cordon de galets de 4,5 km qui protège la ville des vagues de tempête, mais elle perd chaque année des milliers de mètres cubes de galets. À l'aide de quatre documents (origine des galets apportés par le Var et le Paillon, lames minces de trois galets observées au microscope, dureté et usure des minéraux, effets des aménagements humains), on a cherché quel galet, entre granite, calcaire et gypse, est le plus adapté pour recharger la plage.",
      pourquoi: "Utiliser des connaissances sur les minéraux et les roches pour éclairer un vrai choix d'aménagement du littoral. Pour répondre, il fallait regarder à l'intérieur des galets, à l'échelle de leurs cristaux.",
@@ -1351,6 +1353,7 @@ function renderActivites(tab, p){
     }
     h += '</div></div></div></div>';
   });
+  if (!h) h = '<p class="hint-line">Les activités de cette partie apparaîtront ici après la séance en classe.</p>';
   tab.innerHTML = h;
   tab.querySelectorAll('[data-acc]').forEach(function(b){ b.onclick = function(){ $('acc' + b.dataset.acc).classList.toggle('open'); }; });
 }
