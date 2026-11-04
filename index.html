@@ -46,6 +46,18 @@ h1,h2,h3{font-family:var(--serif);font-weight:700;letter-spacing:-.005em}
 .ch-head{border-top:3px solid var(--c);padding-top:12px;margin-bottom:14px}
 .ch-head .kicker{margin-bottom:2px}
 .ch-head h2{margin:0;font-size:clamp(1.2rem,1.2vw + .9rem,1.45rem);line-height:1.3}
+/* Chapitre repliable + pastille « Nouveau » */
+button.ch-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;width:100%;text-align:left;background:none;border-left:0;border-right:0;border-bottom:0;cursor:pointer;font:inherit;color:inherit}
+button.ch-head .kicker,button.ch-head .ch-h{display:block}
+button.ch-head .ch-h{font-family:var(--serif);font-weight:700;letter-spacing:-.005em;font-size:clamp(1.2rem,1.2vw + .9rem,1.45rem);line-height:1.3}
+.ch-act{flex:none;margin-top:2px;font-size:.82rem;font-weight:600;color:var(--c-ink);background:var(--c-soft);border:1px solid var(--c-mid);border-radius:999px;padding:6px 12px;white-space:nowrap}
+.ch-act::after{content:"";display:inline-block;width:.45em;height:.45em;margin-left:8px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:translateY(-2px) rotate(45deg);transition:transform .25s var(--ease)}
+.chapter:not(.closed) .ch-act::after{transform:translateY(1px) rotate(-135deg)}
+.chapter.closed{margin-bottom:16px}
+.chapter.closed .parts{display:none}
+.chapter.closed .ch-head{margin-bottom:0}
+.badge-new{display:inline-block;vertical-align:middle;margin-left:10px;padding:2px 9px;border-radius:999px;background:var(--c);color:#fff;font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;line-height:1.5}
+@media (max-width:420px){.ch-act{padding:6px 10px;font-size:.78rem}}
 .parts{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(320px,1fr))}
 .part{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;transition:border-color .25s,transform .25s var(--ease),box-shadow .25s}
 .part .pid{grid-row:span 3;font-family:var(--serif);font-weight:700;font-size:1.35rem;color:var(--c);line-height:1.2;min-width:30px}
@@ -99,26 +111,36 @@ h1,h2,h3{font-family:var(--serif);font-weight:700;letter-spacing:-.005em}
 .corr-item .ca{margin:0;font-family:var(--serif);font-size:1rem;line-height:1.6}
 .ext{display:inline-flex;margin-top:4px;font-weight:600;font-size:.9rem;color:var(--c-ink);text-decoration:none;min-height:40px;align-items:center}
 
-/* ---------- Tableaux (en cartes sur téléphone) ---------- */
-.tbl{overflow-x:auto;margin:18px 0;border:1px solid var(--line);border-radius:10px;background:var(--surface);-webkit-overflow-scrolling:touch}
-.tbl table{border-collapse:collapse;width:100%;font-size:.9rem}
-.tbl th,.tbl td{padding:9px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
-.tbl tr:last-child th,.tbl tr:last-child td{border-bottom:none}
-.tbl thead th{background:var(--c-soft);color:var(--c-ink);font-size:.76rem;text-transform:uppercase;letter-spacing:.05em;font-weight:600}
-.tbl tbody th{font-weight:600}
-.tbl caption{caption-side:top;text-align:left;padding:10px 12px 0;font-size:.82rem;color:var(--muted)}
-@media (max-width:560px){
-  .tbl{border:none;background:none;overflow:visible}
-  .tbl caption{padding:0 0 8px}
+/* ---------- Tableaux ---------- */
+.tbl{margin:20px 0;border:1px solid var(--line-2);border-radius:12px;background:var(--surface);overflow:hidden;box-shadow:0 6px 18px -16px rgba(0,0,0,.35)}
+.tbl table{border-collapse:collapse;width:100%;font-size:.93rem;line-height:1.45}
+.tbl caption{caption-side:top;text-align:left;padding:12px 16px;font-family:var(--serif);font-weight:600;font-size:1rem;color:var(--ink);border-bottom:1px solid var(--line)}
+.tbl th,.tbl td{padding:11px 16px;text-align:left;vertical-align:top;overflow-wrap:break-word;hyphens:auto;-webkit-hyphens:auto}
+.tbl thead th{background:var(--c-soft);color:var(--c-ink);font-size:.74rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;border-bottom:2px solid var(--c)}
+.tbl tbody tr + tr th,.tbl tbody tr + tr td{border-top:1px solid var(--line)}
+.tbl tbody tr:nth-child(even){background:rgba(0,0,0,.025)}
+.tbl tbody th{font-weight:700;color:var(--c-ink);width:30%}
+html.th-sombre .tbl tbody tr:nth-child(even){background:rgba(255,255,255,.03)}
+/* Tablettes et téléphones : chaque ligne devient une carte */
+@media (max-width:700px){
+  .tbl{border:none;background:none;box-shadow:none;overflow:visible;border-radius:0}
+  .tbl caption{display:block;width:100%;padding:0 0 10px;border:none;font-size:.98rem}
   .tbl thead{display:none}
   .tbl table,.tbl tbody,.tbl tr,.tbl th,.tbl td{display:block;width:100%}
-  .tbl tr{background:var(--surface);border:1px solid var(--line);border-radius:10px;margin-bottom:8px;overflow:hidden}
-  .tbl tbody th{background:var(--c-soft);color:var(--c-ink);border-bottom:1px solid var(--line)}
-  .tbl td{display:flex;justify-content:space-between;gap:14px;text-align:right;border-bottom:1px solid var(--line)}
-  .tbl td:last-child{border-bottom:none}
-  .tbl td::before{content:attr(data-label);text-align:left;color:var(--muted);font-size:.84rem;flex:0 0 42%}
+  .tbl tbody tr{background:var(--surface);border:1px solid var(--line-2);border-radius:12px;margin-bottom:10px;overflow:hidden}
+  .tbl tbody tr:nth-child(even){background:var(--surface)}
+  .tbl tbody tr + tr th,.tbl tbody tr + tr td{border-top:0}
+  .tbl tbody th{width:auto;background:var(--c-soft);color:var(--c-ink);padding:10px 14px;border-bottom:2px solid var(--c)}
+  .tbl td{padding:9px 14px}
+  .tbl td + td{border-top:1px solid var(--line)}
+  .tbl td::before{content:attr(data-label);display:block;margin-bottom:2px;color:var(--muted);font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+  .tbl td[data-label=""]::before{display:none}
 }
 
+/* ---------- Surlignage des notions clés (==mot== dans le texte) ---------- */
+mark.hl-b{background:#bcdcff;color:inherit;border-radius:4px;padding:0 3px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+html.th-sombre mark.hl-b{background:rgba(96,165,250,.34)}
+mark.hl-b .term{border-bottom-color:var(--ink-2)}
 /* ---------- L'essentiel ---------- */
 .toc{display:flex;flex-wrap:wrap;gap:6px 18px;margin:-6px 0 26px;padding:0 0 16px;border-bottom:1px solid var(--line)}
 .toc button{font-size:.88rem;color:var(--c-ink);font-weight:600;min-height:36px;text-align:left}
@@ -543,30 +565,30 @@ var NIVEAUX = [
    essentiel: {
     intro: {
      texte: [
-      "Aujourd'hui, on sait que tous les êtres vivants sont formés de [[cellules|cellule]]. Pourtant, une cellule mesure le plus souvent quelques dizaines de [[micromètres|micromètre]] : elle est **invisible à l'œil nu**. Cette idée ne s'est donc pas imposée d'un coup : elle s'est construite en près de trois siècles. C'est ce que résume la **[[théorie cellulaire]]**."
+      "Aujourd'hui, on sait que tous les êtres vivants sont formés de [[cellules|cellule]]. Pourtant, une cellule mesure le plus souvent quelques dizaines de [[micromètres|micromètre]] : elle est invisible à l'œil nu. Cette idée ne s'est donc pas imposée d'un coup : elle s'est construite en près de trois siècles. C'est ce que résume la ==[[théorie cellulaire]]==."
      ]
     },
     sections: [
      {titre: "Le microscope rend visible l'invisible", blocs: [
-      "**La découverte de la cellule est liée à l'invention du [[microscope]].** Tant qu'on ne disposait que de l'œil nu, il était impossible de savoir de quoi les êtres vivants sont faits. Les premiers microscopes apparaissent vers 1595 ; au XVIIᵉ siècle, ils permettent d'observer **des structures invisibles à l'œil nu**.",
-      "En **1665**, **Robert Hooke** observe dans le [[liège]] de nombreuses **petites cavités séparées par de fines cloisons**, qu'il nomme **« cellules »**. C'est la première fois que ce mot est employé. Quelques années plus tard, en 1674, Leeuwenhoek observe des êtres vivants microscopiques, les « [[animalcules|animalcule]] ».",
+      "La découverte de la cellule est liée à l'invention du ==[[microscope]]==. Tant qu'on ne disposait que de l'œil nu, il était impossible de savoir de quoi les êtres vivants sont faits. Les premiers microscopes apparaissent vers 1595 ; au XVIIᵉ siècle, ils permettent d'observer des structures invisibles à l'œil nu.",
+      "En 1665, Robert Hooke observe dans le [[liège]] de nombreuses petites cavités séparées par de fines cloisons, qu'il nomme « cellules ». C'est la première fois que ce mot est employé. Quelques années plus tard, en 1674, Leeuwenhoek observe des êtres vivants microscopiques, les « [[animalcules|animalcule]] ».",
       {aside: "Pour bien comprendre", texte: "Le mot « cellule » vient du latin *cellula*, « petite chambre ». Le liège est un tissu mort : Hooke n'a vu que les [[parois|paroi]] de cellules vides, sans leur contenu. Il a donc donné son nom à la cellule sans savoir encore ce qu'elle est vraiment."},
-      {aside: "À retenir", texte: "Un progrès **technique** (le microscope) a rendu possible un progrès des **connaissances** (la cellule). Ce lien entre instruments et découvertes se retrouve dans toute l'histoire des sciences."}
+      {aside: "À retenir", texte: "Un progrès technique (le microscope) a rendu possible un progrès des connaissances (la cellule). Ce lien entre instruments et découvertes se retrouve dans toute l'histoire des sciences."}
      ]},
      {titre: "Végétaux et animaux : une organisation commune", blocs: [
-      "Près de deux siècles après Hooke, les microscopes se sont améliorés. En **1838**, **Schleiden** observe que **les [[tissus|tissu]] végétaux sont constitués de cellules**, souvent avec un **[[noyau]]**. En **1839**, **Schwann** **retrouve également des cellules dans différents tissus animaux**.",
-      "En comparant leurs travaux, ils montrent que **végétaux et animaux possèdent une organisation commune**. Des êtres vivants qui se ressemblent très peu sont donc construits de la même façon.",
-      "Ces observations conduisent à une idée essentielle de la théorie cellulaire : **la cellule constitue l'unité de base de l'organisation des êtres vivants**.",
-      {aside: "Pour bien comprendre", texte: "« Unité de base » signifie deux choses : la cellule est la **brique** avec laquelle tous les êtres vivants sont construits, et c'est la **plus petite structure** que l'on puisse qualifier de vivante. Un être vivant peut être formé d'une seule cellule ou de milliards de cellules."},
-      {aside: "Ce qui change par rapport à Hooke", texte: "Hooke avait fait **une observation particulière**, sur un seul matériau. Schleiden et Schwann énoncent **une idée générale**, valable pour tous les êtres vivants étudiés : c'est ce passage du particulier au général qui fonde une théorie."}
+      "Près de deux siècles après Hooke, les microscopes se sont améliorés. En 1838, Schleiden observe que les [[tissus|tissu]] végétaux sont constitués de cellules, souvent avec un [[noyau]]. En 1839, Schwann retrouve également des cellules dans différents tissus animaux.",
+      "En comparant leurs travaux, ils montrent que végétaux et animaux possèdent une organisation commune. Des êtres vivants qui se ressemblent très peu sont donc construits de la même façon.",
+      "Ces observations conduisent à une idée essentielle de la théorie cellulaire : ==la cellule constitue l'unité de base de l'organisation des êtres vivants==.",
+      {aside: "Pour bien comprendre", texte: "« Unité de base » signifie deux choses : la cellule est la brique avec laquelle tous les êtres vivants sont construits, et c'est la plus petite structure que l'on puisse qualifier de vivante. Un être vivant peut être formé d'une seule cellule ou de milliards de cellules."},
+      {aside: "Ce qui change par rapport à Hooke", texte: "Hooke avait fait une observation particulière, sur un seul matériau. Schleiden et Schwann énoncent une idée générale, valable pour tous les êtres vivants étudiés : c'est ce passage du particulier au général qui fonde une théorie."}
      ]},
      {titre: "Toute cellule provient d'une cellule", blocs: [
-      "Il restait une question : **d'où viennent les nouvelles cellules ?** Depuis l'Antiquité, beaucoup pensaient que des êtres vivants pouvaient apparaître spontanément à partir de matière non vivante : c'est la **[[génération spontanée]]**.",
-      "Au XIXᵉ siècle, cette idée est abandonnée. On observe que les nouvelles cellules apparaissent par **[[division cellulaire]]** d'une cellule déjà présente, ce que Virchow résume en 1858 par la formule **[[Omnis cellula e cellula]]** : toute cellule provient d'une cellule. Puis **Pasteur réfute la génération spontanée** en 1859 : des [[micro-organismes|micro-organisme]] n'apparaissent dans un liquide que s'ils y ont été apportés.",
-      {aside: "Pour bien comprendre", texte: "Cette idée a une conséquence importante : chaque cellule actuelle descend d'une cellule plus ancienne, qui descend elle-même d'une autre cellule… La vie se transmet donc **de cellule en cellule, sans interruption**."}
+      "Il restait une question : d'où viennent les nouvelles cellules ? Depuis l'Antiquité, beaucoup pensaient que des êtres vivants pouvaient apparaître spontanément à partir de matière non vivante : c'est la ==[[génération spontanée]]==.",
+      "Au XIXᵉ siècle, cette idée est abandonnée. On observe que les nouvelles cellules apparaissent par [[division cellulaire]] d'une cellule déjà présente, ce que Virchow résume en 1858 par la formule ==[[Omnis cellula e cellula]]== : toute cellule provient d'une cellule. Puis Pasteur réfute la génération spontanée en 1859 : des [[micro-organismes|micro-organisme]] n'apparaissent dans un liquide que s'ils y ont été apportés.",
+      {aside: "Pour bien comprendre", texte: "Cette idée a une conséquence importante : chaque cellule actuelle descend d'une cellule plus ancienne, qui descend elle-même d'une autre cellule… La vie se transmet donc de cellule en cellule, sans interruption."}
      ]},
      {titre: "La théorie cellulaire : un savoir construit dans le temps", blocs: [
-      "La **théorie cellulaire** rassemble ces idées : **tous les êtres vivants sont formés de cellules ; la cellule est l'unité de base du vivant ; toute cellule provient d'une cellule préexistante**.",
+      "La théorie cellulaire rassemble ces idées : tous les êtres vivants sont formés de cellules ; la cellule est l'unité de base du vivant ; toute cellule provient d'une cellule préexistante.",
       {html: frise([
        ["1595", "Invention du microscope", "Janssen"],
        ["1665", "Première observation de cellules", "Hooke"],
@@ -574,9 +596,9 @@ var NIVEAUX = [
        ["1838", "Cellule = unité de base du vivant", "Schwann et Schleiden"],
        ["1859", "Réfutation de la génération spontanée", "Pasteur"]
       ])},
-      "Cette frise montre qu'un savoir scientifique **se construit progressivement** : il s'appuie sur des observations de plus en plus nombreuses, dépend des instruments disponibles, et peut **remettre en cause une idée ancienne** lorsque les faits la contredisent.",
-      {aside: "À retenir en priorité", texte: "Les **trois idées** de la théorie cellulaire et **l'ordre des étapes** de la frise. Les dates servent de repères : l'important est de savoir ce que chaque étape a apporté."},
-      {aside: "Et ensuite ?", texte: "Au XXᵉ siècle, le **[[microscope électronique]]** permet d'explorer l'intérieur de la cellule, jusqu'à l'échelle des [[molécules|molécule]]. C'est grâce à lui que l'on observe la [[membrane plasmique]], étudiée en 1b)."}
+      "Cette frise montre qu'un savoir scientifique se construit progressivement : il s'appuie sur des observations de plus en plus nombreuses, dépend des instruments disponibles, et peut remettre en cause une idée ancienne lorsque les faits la contredisent.",
+      {aside: "À retenir en priorité", texte: "Les trois idées de la théorie cellulaire et l'ordre des étapes de la frise. Les dates servent de repères : l'important est de savoir ce que chaque étape a apporté."},
+      {aside: "Et ensuite ?", texte: "Au XXᵉ siècle, le [[microscope électronique]] permet d'explorer l'intérieur de la cellule, jusqu'à l'échelle des [[molécules|molécule]]. C'est grâce à lui que l'on observe la [[membrane plasmique]], étudiée en 1b)."}
      ]}
     ],
     /* « En résumé » = les bilans du cours, mot pour mot */
@@ -651,24 +673,24 @@ var NIVEAUX = [
    essentiel: {
     sections: [
      {titre: "Une frontière très fine autour de la cellule", blocs: [
-      "**La [[membrane plasmique]] délimite la cellule et sépare son contenu du milieu extérieur.** À l'intérieur se trouve le [[cytoplasme]], à l'extérieur le [[milieu extracellulaire]]. Ces deux milieux sont **aqueux**, c'est-à-dire riches en eau.",
-      "C'est **une structure très fine : environ 7 à 10 [[nanomètres|nanomètre]]** d'épaisseur. Elle est donc invisible au microscope optique : seul le **[[microscope électronique à transmission]]** permet de la distinguer.",
+      "La ==[[membrane plasmique]]== délimite la cellule et sépare son contenu du milieu extérieur. À l'intérieur se trouve le [[cytoplasme]], à l'extérieur le [[milieu extracellulaire]]. Ces deux milieux sont aqueux, c'est-à-dire riches en eau.",
+      "C'est une structure très fine : environ ==7 à 10 [[nanomètres|nanomètre]]== d'épaisseur. Elle est donc invisible au microscope optique : seul le [[microscope électronique à transmission]] permet de la distinguer.",
       {table: {legende: "Situer la membrane parmi les ordres de grandeur du vivant", entetes: ["Objet", "Ordre de grandeur", "Observé avec"],
        lignes: [["Atome", "0,1 nm", "Invisible au microscope"], ["Molécule (ex. phospholipide)", "Quelques nm", "Techniques moléculaires"], ["Membrane plasmique (épaisseur)", "7 à 10 nm", "Microscope électronique"], ["Organite (ex. noyau)", "1 à 10 µm", "Microscope optique ou électronique"], ["Cellule", "10 à 100 µm", "Microscope optique"], ["Organisme", "Du mm à plusieurs m", "À l'œil nu"]]}},
-      {aside: "Pour bien comprendre", texte: "1 mm = 1 000 µm et 1 µm = 1 000 nm. Une membrane de 8 nm est environ **1 000 fois plus fine** qu'une cellule de 8 µm. Si la cellule avait la taille d'une salle de classe, sa membrane aurait l'épaisseur d'une feuille de carton."}
+      {aside: "Pour bien comprendre", texte: "1 mm = 1 000 µm et 1 µm = 1 000 nm. Une membrane de 8 nm est environ 1 000 fois plus fine qu'une cellule de 8 µm. Si la cellule avait la taille d'une salle de classe, sa membrane aurait l'épaisseur d'une feuille de carton."}
      ]},
      {titre: "Une double couche de phospholipides", blocs: [
-      "Les expériences de **Gorter et Grendel (1925)** ont permis de proposer un **[[modèle]]** dans lequel **les [[lipides|lipide]] de la membrane sont organisés en [[bicouche|bicouche lipidique]]**, c'est-à-dire en deux couches superposées.",
-      "Ces lipides sont des **[[phospholipides|phospholipide]]**. Chaque phospholipide comporte deux parties qui se comportent de façon opposée face à l'eau : une **tête [[hydrophile]]**, qui peut être au contact de l'eau, et **des queues [[hydrophobes|hydrophobe]]**, qui évitent le contact avec l'eau.",
-      "Dans la bicouche, **les têtes hydrophiles sont orientées vers les milieux aqueux** (le milieu extracellulaire d'un côté, le cytoplasme de l'autre) et **les queues hydrophobes sont regroupées au centre de la membrane**.",
+      "Les expériences de Gorter et Grendel (1925) ont permis de proposer un [[modèle]] dans lequel les [[lipides|lipide]] de la membrane sont organisés en ==[[bicouche|bicouche lipidique]]==, c'est-à-dire en deux couches superposées.",
+      "Ces lipides sont des [[phospholipides|phospholipide]]. Chaque phospholipide comporte deux parties qui se comportent de façon opposée face à l'eau : une ==tête [[hydrophile]]==, qui peut être au contact de l'eau, et des ==queues [[hydrophobes|hydrophobe]]==, qui évitent le contact avec l'eau.",
+      "Dans la bicouche, les têtes hydrophiles sont orientées vers les milieux aqueux (le milieu extracellulaire d'un côté, le cytoplasme de l'autre) et les queues hydrophobes sont regroupées au centre de la membrane.",
       {html: bicoucheSVG()},
       {aside: "Pour bien comprendre", texte: "« Hydro » signifie eau, « phile » qui aime, « phobe » qui craint. Pense à l'huile dans l'eau : elle ne se mélange pas et se regroupe. Les queues des phospholipides font la même chose : elles se rassemblent entre elles, à l'abri de l'eau."}
      ]},
      {titre: "Une organisation stable", blocs: [
-      "**Cette organisation permet d'expliquer la stabilité de la bicouche lipidique.** Comme il y a de l'eau des deux côtés de la membrane, la disposition en deux couches est la seule qui place **toutes les têtes au contact de l'eau** et **toutes les queues à l'abri de l'eau**.",
-      "Les phospholipides ne sont donc pas « collés » les uns aux autres : ils **restent en place spontanément**, parce que cette disposition est la plus stable en milieu aqueux. La membrane forme ainsi une frontière continue autour de la cellule.",
-      {aside: "À retenir en priorité", texte: "Savoir **refaire le schéma** de la bicouche, titré et légendé (milieu extracellulaire, cytoplasme, tête hydrophile, queues hydrophobes), et savoir **expliquer pourquoi** cette organisation est stable. La formule chimique des phospholipides n'est pas à connaître."},
-      {aside: "Et ensuite ?", texte: "La membrane plasmique ne contient pas que des lipides : on y trouve aussi des **[[protéines|protéine]]**. La cellule réalise en permanence des échanges avec son environnement : la séance suivante montrera comment ils se font à travers la membrane."}
+      "Cette organisation permet d'expliquer la ==stabilité de la bicouche lipidique==. Comme il y a de l'eau des deux côtés de la membrane, la disposition en deux couches est la seule qui place toutes les têtes au contact de l'eau et toutes les queues à l'abri de l'eau.",
+      "Les phospholipides ne sont donc pas « collés » les uns aux autres : ils restent en place spontanément, parce que cette disposition est la plus stable en milieu aqueux. La membrane forme ainsi une frontière continue autour de la cellule.",
+      {aside: "À retenir en priorité", texte: "Savoir refaire le schéma de la bicouche, titré et légendé (milieu extracellulaire, cytoplasme, tête hydrophile, queues hydrophobes), et savoir expliquer pourquoi cette organisation est stable. La formule chimique des phospholipides n'est pas à connaître."},
+      {aside: "Et ensuite ?", texte: "La membrane plasmique ne contient pas que des lipides : on y trouve aussi des [[protéines|protéine]]. La cellule réalise en permanence des échanges avec son environnement : la séance suivante montrera comment ils se font à travers la membrane."}
      ]}
     ],
     /* « En résumé » = les bilans du cours, mot pour mot */
@@ -737,33 +759,33 @@ var NIVEAUX = [
    essentiel: {
     intro: {
      texte: [
-      "En 1a), on a vu que la cellule est l'unité de base du vivant. Les **[[virus]]** posent alors une question : ils provoquent des maladies, comme la **[[mosaïque du tabac]]**, et se transmettent d'un organisme à l'autre, mais **ce ne sont pas des cellules**. Où les placer ?"
+      "En 1a), on a vu que la cellule est l'unité de base du vivant. Les ==[[virus]]== posent alors une question : ils provoquent des maladies, comme la [[mosaïque du tabac]], et se transmettent d'un organisme à l'autre, mais ce ne sont pas des cellules. Où les placer ?"
      ]
     },
     sections: [
      {titre: "Des particules bien plus petites que les cellules", blocs: [
-      "**Les virus sont des particules beaucoup plus petites que les cellules.** Ils sont même bien plus petits que les [[bactéries|bactérie]] : c'est pour cela qu'on ne les voit qu'au **[[microscope électronique]]**.",
+      "Les virus sont des particules beaucoup plus petites que les cellules. Ils sont même bien plus petits que les [[bactéries|bactérie]] : c'est pour cela qu'on ne les voit qu'au [[microscope électronique]].",
       {table: {legende: "Situer un virus parmi les ordres de grandeur", entetes: ["Objet", "Taille", "Observé avec"],
        lignes: [["Membrane plasmique (épaisseur)", "7 à 10 nm", "Microscope électronique"], ["Virus de la mosaïque du tabac", "300 nm de long", "Microscope électronique"], ["Bactérie", "1 à 5 µm", "Microscope optique"], ["Cellule végétale ou animale", "10 à 100 µm", "Microscope optique"]]}},
-      "**Ils sont constitués d'un [[matériel génétique]] entouré de [[protéines|protéine]].** Le matériel génétique porte les informations nécessaires à la fabrication de nouveaux virus ; les protéines forment une enveloppe qui le protège. Dans le virus de la mosaïque du tabac, ce matériel génétique est un **[[ARN]]**.",
-      {aside: "Pour bien comprendre", texte: "Un virus n'a **ni [[membrane plasmique]], ni [[cytoplasme]]** : ce n'est donc pas une cellule. On parle de « particule » virale. Comparé à une cellule, il est extrêmement simple : quelques molécules assemblées."}
+      "Ils sont constitués d'un ==[[matériel génétique]]== entouré de [[protéines|protéine]]. Le matériel génétique porte les informations nécessaires à la fabrication de nouveaux virus ; les protéines forment une enveloppe qui le protège. Dans le virus de la mosaïque du tabac, ce matériel génétique est un [[ARN]].",
+      {aside: "Pour bien comprendre", texte: "Un virus n'a ni [[membrane plasmique]], ni [[cytoplasme]] : ce n'est donc pas une cellule. On parle de « particule » virale. Comparé à une cellule, il est extrêmement simple : quelques molécules assemblées."}
      ]},
      {titre: "Une multiplication impossible sans cellule vivante", blocs: [
-      "**Les virus ne peuvent pas se multiplier seuls : ils utilisent obligatoirement une cellule vivante pour produire de nouveaux virus.**",
-      "Une cellule fabrique elle-même ses constituants et se divise. Un virus en est incapable : il doit **entrer dans une cellule** et utiliser le fonctionnement de celle-ci pour faire fabriquer de nouveaux virus à partir de son matériel génétique. C'est ce qui rend la cellule, puis l'organisme, malade.",
+      "Les virus ==ne peuvent pas se multiplier seuls== : ils utilisent obligatoirement une cellule vivante pour produire de nouveaux virus.",
+      "Une cellule fabrique elle-même ses constituants et se divise. Un virus en est incapable : il doit entrer dans une cellule et utiliser le fonctionnement de celle-ci pour faire fabriquer de nouveaux virus à partir de son matériel génétique. C'est ce qui rend la cellule, puis l'organisme, malade.",
       {aside: "Pour bien comprendre", texte: "Une bactérie se multiplie seule dans un [[milieu de culture]] qui lui apporte de quoi se nourrir. Un virus placé dans le même milieu ne se multiplie jamais : il lui faut des cellules vivantes. C'est une différence essentielle entre une bactérie et un virus."}
      ]},
      {titre: "En dehors des cellules, des particules inertes", blocs: [
-      "**En dehors d'une cellule, les virus peuvent rester [[inertes|inerte]]** : ils ne se nourrissent pas, ne réalisent aucun échange avec leur milieu et ne se multiplient pas.",
-      "**Certains peuvent même être cristallisés, comme une matière non vivante.** La **[[cristallisation]]** est ce qui se produit pour le sel lorsque l'eau s'évapore : les particules s'empilent de façon régulière pour former un [[cristal]]. Un virus cristallisé peut pourtant redevenir infectieux dès qu'il retrouve une cellule vivante.",
-      {aside: "Pour bien comprendre", texte: "Aucune cellule ne peut être cristallisée puis « redémarrer ». Le virus se comporte donc de deux façons : comme une **matière inerte** hors d'une cellule, et comme un **agent qui se multiplie** dans une cellule."}
+      "En dehors d'une cellule, les virus peuvent rester ==[[inertes|inerte]]== : ils ne se nourrissent pas, ne réalisent aucun échange avec leur milieu et ne se multiplient pas.",
+      "Certains peuvent même être cristallisés, comme une matière non vivante. La [[cristallisation]] est ce qui se produit pour le sel lorsque l'eau s'évapore : les particules s'empilent de façon régulière pour former un [[cristal]]. Un virus cristallisé peut pourtant redevenir infectieux dès qu'il retrouve une cellule vivante.",
+      {aside: "Pour bien comprendre", texte: "Aucune cellule ne peut être cristallisée puis « redémarrer ». Le virus se comporte donc de deux façons : comme une matière inerte hors d'une cellule, et comme un agent qui se multiplie dans une cellule."}
      ]},
      {titre: "Vivants ou non ? Une question de critères", blocs: [
-      "**Les virus possèdent donc certaines caractéristiques du vivant, mais pas toutes.**",
+      "Les virus possèdent donc certaines caractéristiques du vivant, mais pas toutes.",
       {table: {legende: "Le virus face aux caractères du vivant", entetes: ["Caractère du vivant", "Cellule", "Virus"],
        lignes: [["Formé d'au moins une cellule", "Oui", "Non"], ["Possède un matériel génétique", "Oui", "Oui"], ["Se multiplie", "Oui, par division", "Oui, mais seulement dans une cellule vivante"], ["Réalise des échanges avec son milieu", "Oui", "Non"], ["Peut être cristallisé", "Non", "Oui, comme une matière inerte"]]}},
-      "**Leur appartenance au monde vivant dépend des critères retenus et reste discutée.** Si l'on retient « posséder un matériel génétique et se multiplier », le virus peut être considéré comme vivant. Si l'on retient « être formé d'une cellule et fonctionner de façon autonome », il ne l'est pas.",
-      {aside: "À retenir en priorité", texte: "Il n'y a pas une « bonne réponse » à réciter : tu dois savoir **donner des arguments dans les deux sens** et expliquer que la conclusion **dépend de la définition du vivant** que l'on choisit."}
+      "Leur appartenance au monde vivant ==dépend des critères retenus== et reste discutée. Si l'on retient « posséder un matériel génétique et se multiplier », le virus peut être considéré comme vivant. Si l'on retient « être formé d'une cellule et fonctionner de façon autonome », il ne l'est pas.",
+      {aside: "À retenir en priorité", texte: "Il n'y a pas une « bonne réponse » à réciter : tu dois savoir donner des arguments dans les deux sens et expliquer que la conclusion dépend de la définition du vivant que l'on choisit."}
      ]}
     ],
     /* « En résumé » = les bilans du cours, mot pour mot */
@@ -809,6 +831,7 @@ var NIVEAUX = [
  },
  {
   num: 2,
+  nouveau: true,
   titre: "Les cristaux, des édifices ordonnés",
   parties: [
   /* ================================================================ Introduction du chapitre 2 */
@@ -837,23 +860,23 @@ var NIVEAUX = [
    essentiel: {
     sections: [
      {titre: "Un cristal ne se reconnaît pas à son aspect", blocs: [
-      "**En sciences, un [[cristal]] ne se reconnaît pas à sa transparence ou à sa valeur.** Dans la vie courante, on appelle « cristal » un objet transparent, brillant ou précieux, comme un verre ou un lustre. Ce sens courant ne correspond pas au sens scientifique.",
-      "**La [[pyrite]], opaque, et le [[gypse]], très commun, sont des cristaux.** À l'inverse, un verre « en cristal » est transparent et coûteux, mais ce n'est pas un cristal : « cristal » n'est ici qu'un nom commercial.",
-      {aside: "Pour bien comprendre", texte: "Un cristal est défini par **la façon dont la matière qui le compose est organisée**, et non par son apparence. Deux objets qui se ressemblent peuvent donc être l'un un cristal, l'autre non."}
+      "En sciences, un ==[[cristal]]== ne se reconnaît pas à sa transparence ou à sa valeur. Dans la vie courante, on appelle « cristal » un objet transparent, brillant ou précieux, comme un verre ou un lustre. Ce sens courant ne correspond pas au sens scientifique.",
+      "La [[pyrite]], opaque, et le [[gypse]], très commun, sont des cristaux. À l'inverse, un verre « en cristal » est transparent et coûteux, mais ce n'est pas un cristal : « cristal » n'est ici qu'un nom commercial.",
+      {aside: "Pour bien comprendre", texte: "Un cristal est défini par la façon dont la matière qui le compose est organisée, et non par son apparence. Deux objets qui se ressemblent peuvent donc être l'un un cristal, l'autre non."}
      ]},
-     {titre: "Une forme géométrique régulière, quelle que soit la taille", blocs: [
-      "**Un cristal présente souvent une forme géométrique régulière, à faces planes, quelle que soit sa taille.** Ses faces sont lisses et planes, ses arêtes droites, et personne ne les a taillées : elles se forment naturellement, pendant la croissance du cristal.",
-      "**Par exemple, un grain de sel est un petit cube** d'environ 0,4 mm de côté. À l'autre extrême, les cristaux de gypse de la grotte de Naica, au Mexique, atteignent 11 m de long : ils gardent pourtant des faces planes et des arêtes droites.",
+     {titre: "Une ==forme géométrique régulière==, quelle que soit la taille", blocs: [
+      "Un cristal présente souvent une forme géométrique régulière, à faces planes, quelle que soit sa taille. Ses faces sont lisses et planes, ses arêtes droites, et personne ne les a taillées : elles se forment naturellement, pendant la croissance du cristal.",
+      "Par exemple, un grain de sel est un petit cube d'environ 0,4 mm de côté. À l'autre extrême, les cristaux de gypse de la grotte de Naica, au Mexique, atteignent 11 m de long : ils gardent pourtant des faces planes et des arêtes droites.",
       {table: {legende: "Une même régularité à toutes les tailles", entetes: ["Cristal", "Taille", "Forme"],
        lignes: [["Grain de sel (chlorure de sodium)", "≈ 0,4 mm", "Cube"], ["Pyrite", "Quelques cm", "Cubes"], ["Gypse de Naica", "Jusqu'à 11 m", "Longues « poutres » à faces planes"]]}},
       {aside: "Attention", texte: "« Souvent » ne veut pas dire « toujours » : un cristal qui s'est formé serré contre d'autres cristaux, dans une roche par exemple, n'a pas toujours de belles faces visibles. C'est son organisation intérieure qui compte."}
      ]},
      {titre: "Un empilement régulier : l'état cristallin", blocs: [
-      "**Cette forme traduit un empilement régulier d'[[atomes|atome]] ou d'[[ions|ion]] : c'est l'[[état cristallin]].** La forme que l'on voit à l'œil nu (échelle **[[macroscopique]]**) est la conséquence de l'organisation de la matière à l'échelle **[[microscopique]]**.",
-      "Dans le sel, le **[[chlorure de sodium]]** (NaCl), les ions sodium et les ions chlorure alternent régulièrement dans les trois directions de l'espace. Le plus petit motif qui se répète est la **[[maille]]** : un petit cube d'ions. En empilant un nombre gigantesque de mailles identiques, on obtient un cristal… en forme de cube.",
+      "Cette forme traduit un empilement régulier d'[[atomes|atome]] ou d'[[ions|ion]] : c'est l'==[[état cristallin]]==. La forme que l'on voit à l'œil nu (échelle [[macroscopique]]) est la conséquence de l'organisation de la matière à l'échelle [[microscopique]].",
+      "Dans le sel, le [[chlorure de sodium]] (NaCl), les ions sodium et les ions chlorure alternent régulièrement dans les trois directions de l'espace. Le plus petit motif qui se répète est la ==[[maille]]== : un petit cube d'ions. En empilant un nombre gigantesque de mailles identiques, on obtient un cristal… en forme de cube.",
       {html: mailleSVG()},
       {aside: "Pour bien comprendre", texte: "Pense à un mur de briques identiques, posées toujours de la même façon : quelle que soit la taille du mur, il garde des bords droits. La maille joue le rôle de la brique, le cristal celui du mur."},
-      {aside: "Et ensuite ?", texte: "Les cristaux forment les **[[minéraux|minéral]]**, et les minéraux forment les **[[roches|roche]]** : c'est l'objet de la partie 2a)."}
+      {aside: "Et ensuite ?", texte: "Les cristaux forment les [[minéraux|minéral]], et les minéraux forment les [[roches|roche]] : c'est l'objet de la partie 2a)."}
      ]}
     ],
     /* « En résumé » = les bilans du cours, mot pour mot */
@@ -916,26 +939,26 @@ var NIVEAUX = [
    essentiel: {
     sections: [
      {titre: "Le minéral : une composition et une organisation", blocs: [
-      "**Un [[minéral]] est défini par sa composition chimique et son organisation cristalline.** Il faut les deux à la fois : sa **composition chimique** dit de quels atomes ou ions il est formé (sa formule) ; son **organisation cristalline** dit comment ces atomes ou ions sont empilés dans le cristal.",
+      "Un ==[[minéral]]== est défini par sa ==composition chimique et son organisation cristalline==. Il faut les deux à la fois : sa composition chimique dit de quels atomes ou ions il est formé (sa formule) ; son organisation cristalline dit comment ces atomes ou ions sont empilés dans le cristal.",
       {table: {legende: "Quelques minéraux et leur composition chimique", entetes: ["Minéral", "Formule chimique", "Dureté (échelle de Mohs)"],
        lignes: [["Gypse", "CaSO₄, 2 H₂O", "2"], ["Calcite", "CaCO₃", "3"], ["Feldspath", "Silicate (Si, O, Al…)", "6"], ["Quartz", "SiO₂", "7"]]}},
-      {aside: "Pour bien comprendre", texte: "Une même formule ne suffit pas à définir un minéral. Le carbonate de calcium (CaCO₃) peut cristalliser de deux façons différentes : la **calcite** et l'**aragonite**, celle de la nacre vue en introduction. Même composition, organisation différente : ce sont deux minéraux distincts."}
+      {aside: "Pour bien comprendre", texte: "Une même formule ne suffit pas à définir un minéral. Le carbonate de calcium (CaCO₃) peut cristalliser de deux façons différentes : la calcite et l'aragonite, celle de la nacre vue en introduction. Même composition, organisation différente : ce sont deux minéraux distincts."}
      ]},
      {titre: "La roche : un assemblage de cristaux", blocs: [
-      "**Une [[roche]] est formée de cristaux d'un seul ou de plusieurs minéraux.** Le calcaire est formé surtout de cristaux de calcite ; une roche de gypse, de cristaux de gypse. Le **granite**, lui, associe des cristaux de trois minéraux : quartz, feldspath et mica.",
+      "Une ==[[roche]]== est formée de cristaux d'un seul ou de plusieurs minéraux. Le calcaire est formé surtout de cristaux de calcite ; une roche de gypse, de cristaux de gypse. Le granite, lui, associe des cristaux de trois minéraux : quartz, feldspath et mica.",
       {table: {legende: "Une roche, un ou plusieurs minéraux", entetes: ["Roche", "Minéral(aux)", "Nombre de minéraux"],
        lignes: [["Gypse", "Gypse", "Un seul"], ["Calcaire", "Calcite", "Un seul"], ["Granite", "Quartz, feldspath, mica", "Plusieurs"]]}},
-      "On peut ainsi décrire la matière à des **échelles emboîtées**, de l'atome à la roche :",
+      "On peut ainsi décrire la matière à des échelles emboîtées, de l'atome à la roche :",
       {table: {legende: "De l'atome à la roche", entetes: ["Niveau", "Ordre de grandeur", "Ce que c'est"],
        lignes: [["Atome ou ion", "0,1 nm (10⁻¹⁰ m)", "Particule de base de la matière"], ["Maille", "Moins de 1 nm", "Plus petit motif qui se répète"], ["Cristal", "Du µm au mètre", "Empilement régulier de mailles"], ["Roche", "Du cm au km", "Assemblage de cristaux d'un ou plusieurs minéraux"]]}},
-      {aside: "Attention", texte: "Ne confonds pas **minéral** et **roche** : le quartz est un minéral, le granite est une roche qui contient du quartz. Une roche peut contenir un seul minéral (le calcaire) : elle reste une roche, c'est-à-dire un assemblage de nombreux cristaux."}
+      {aside: "Attention", texte: "Ne confonds pas minéral et roche : le quartz est un minéral, le granite est une roche qui contient du quartz. Une roche peut contenir un seul minéral (le calcaire) : elle reste une roche, c'est-à-dire un assemblage de nombreux cristaux."}
      ]},
      {titre: "Les cristaux déterminent les propriétés de la roche", blocs: [
-      "**Les cristaux d'une roche déterminent ses propriétés, comme sa [[dureté]].** La dureté d'un minéral est sa résistance à la rayure : un minéral dur raye un minéral plus tendre. On la mesure sur l'**[[échelle de Mohs]]**, de 1 (le plus tendre) à 10 (le diamant).",
+      "Les cristaux d'une roche déterminent ses propriétés, comme sa ==[[dureté]]==. La dureté d'un minéral est sa résistance à la rayure : un minéral dur raye un minéral plus tendre. On la mesure sur l'[[échelle de Mohs]], de 1 (le plus tendre) à 10 (le diamant).",
       "Une roche formée de minéraux durs, comme le granite (quartz et feldspath), résiste bien à l'usure. Une roche formée de minéraux tendres, comme le gypse ou le calcaire, s'use beaucoup plus vite. Le gypse, en plus, se dissout lentement dans l'eau.",
-      "**Ce que l'on observe à l'échelle de la roche (sa résistance) s'explique donc par ce qui se passe à l'échelle de ses cristaux** (la nature des minéraux et leur proportion).",
-      {aside: "Pour bien comprendre", texte: "Dans une roche formée de plusieurs minéraux, ce sont surtout les **minéraux majoritaires** qui fixent ses propriétés. Le granite contient un peu de mica tendre, mais il reste très résistant car il est formé surtout de quartz et de feldspath."},
-      {aside: "À retenir en priorité", texte: "Savoir distinguer **atome, maille, cristal, minéral et roche**, et savoir expliquer une propriété d'une roche à partir des minéraux qui la composent."}
+      "Ce que l'on observe à l'échelle de la roche (sa résistance) s'explique donc par ce qui se passe à l'échelle de ses cristaux (la nature des minéraux et leur proportion).",
+      {aside: "Pour bien comprendre", texte: "Dans une roche formée de plusieurs minéraux, ce sont surtout les minéraux majoritaires qui fixent ses propriétés. Le granite contient un peu de mica tendre, mais il reste très résistant car il est formé surtout de quartz et de feldspath."},
+      {aside: "À retenir en priorité", texte: "Savoir distinguer atome, maille, cristal, minéral et roche, et savoir expliquer une propriété d'une roche à partir des minéraux qui la composent."}
      ]}
     ],
     /* « En résumé » = les bilans du cours, mot pour mot */
@@ -1046,6 +1069,7 @@ Object.keys(GLOSS).forEach(function(k){ if (!GLOSS[k].parts.length) delete GLOSS
 /* Mise en forme : **gras**, *italique*, [[terme]] */
 function rich(s){
   return String(s)
+    .replace(/==([^=]+)==/g, '<mark class="hl-b">$1</mark>')
     .replace(/\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g, function(_, txt, key){
       var k = norm(key || txt);
       if (!GLOSS[k]){ if (window.console) console.warn('Terme sans définition : ' + (key || txt)); return txt; }
@@ -1188,13 +1212,17 @@ function renderNiveaux(){
   app.querySelectorAll('[data-n]').forEach(function(b){ b.onclick = function(){ S.niveau = NIVEAUX[+b.dataset.n]; go('home'); }; });
 }
 
+var CH_OUVERT = store('chap_ouvert') || {};
 function renderNiveau(){
   var n = S.niveau;
   var h = '<div class="view"><header class="home-head"><p class="kicker" style="color:var(--muted)">Sciences de la vie et de la Terre</p><h1>' + esc(n.nom) + '</h1><p class="lead">' + esc(n.intro || '') + '</p></header>';
-  n.chapitres.forEach(function(ch){
+  /* Par défaut, seul le dernier chapitre est déplié ; le choix de l'élève est mémorisé */
+  var chaps = n.chapitres.filter(function(ch){ return (ch.parties || []).filter(visible).length; });
+  var dernierCh = chaps[chaps.length - 1];
+  chaps.forEach(function(ch){
     var parts = (ch.parties || []).filter(visible);
-    if (!parts.length) return;
-    h += '<section class="chapter" style="' + colorVars(chapColor(ch)) + '"><div class="ch-head"><p class="kicker">Chapitre ' + ch.num + '</p><h2>' + esc(ch.titre) + '</h2></div><div class="parts">';
+    var ouvert = CH_OUVERT[ch.num] !== undefined ? !!CH_OUVERT[ch.num] : ch === dernierCh;
+    h += '<section class="chapter' + (ouvert ? '' : ' closed') + '" style="' + colorVars(chapColor(ch)) + '"><button type="button" class="ch-head" data-chtog="' + ch.num + '" data-np="' + parts.length + '" aria-expanded="' + ouvert + '"><span><span class="kicker">Chapitre ' + ch.num + (ch.nouveau ? '<span class="badge-new">Nouveau</span>' : '') + '</span><span class="ch-h">' + esc(ch.titre) + '</span></span><span class="ch-act">' + (ouvert ? 'Replier' : 'Afficher les ' + parts.length + ' parties') + '</span></button><div class="parts">';
     parts.forEach(function(p){
       h += '<button class="part" data-p="' + p.id + '"><span class="pid">' + esc(lbl(p)) + '</span><h3>' + esc(p.titre) + '</h3><p class="pq">' + esc(p.problematique || '') + '</p><span class="go">Ouvrir le cours →</span></button>';
     });
@@ -1204,6 +1232,15 @@ function renderNiveau(){
     + '<div class="extras" style="' + colorVars(neutre()) + '"><div class="revise"><div><h3>Glossaire</h3><p>Tous les mots du cours, avec une recherche.</p></div><button class="btn" id="goG">Ouvrir</button></div></div></div>';
   app.innerHTML = h;
   $('goG').onclick = function(){ go('glossaire'); };
+  app.querySelectorAll('[data-chtog]').forEach(function(b){
+    b.onclick = function(){
+      var sec = b.closest('.chapter'), ouvre = sec.classList.contains('closed');
+      sec.classList.toggle('closed', !ouvre);
+      b.setAttribute('aria-expanded', ouvre ? 'true' : 'false');
+      b.querySelector('.ch-act').textContent = ouvre ? 'Replier' : 'Afficher les ' + b.dataset.np + ' parties';
+      CH_OUVERT[b.dataset.chtog] = ouvre; store('chap_ouvert', CH_OUVERT);
+    };
+  });
   app.querySelectorAll('[data-p]').forEach(function(b){ b.onclick = function(){ var f = findPartie(b.dataset.p); go('partie', {partie: f.p, ch: f.ch, tab: 'essentiel'}); }; });
   $('rvF').onclick = function(){ go('revision', {tab: 'flashcards'}); };
   $('rvQ').onclick = function(){ go('revision', {tab: 'qcm'}); };
@@ -1262,7 +1299,7 @@ function renderEssentiel(tab, p){
     secs.forEach(function(s, i){ h += '<button data-sec="' + i + '"><span>' + ROMAIN[i] + '.</span>' + esc(s.titre) + '</button>'; });
     h += '</nav>';
   }
-  h += '<p class="hint-line">Les mots <span class="term">soulignés en pointillés</span> ont une définition : ' + (FINE ? 'passe la souris dessus.' : 'touche-les pour l\'afficher.') + ' Tu les retrouves tous dans le glossaire.</p><article class="lesson">';
+  h += '<p class="hint-line">Les mots <span class="term">soulignés en pointillés</span> ont une définition : ' + (FINE ? 'passe la souris dessus.' : 'touche-les pour l\'afficher.') + ' Les notions <mark class="hl-b">surlignées en bleu</mark> sont les plus importantes.</p><article class="lesson">';
   /* Introduction (chiffres + texte), avant les parties numérotées */
   if (ess.intro){
     h += '<section id="secIntro"><h2><span>Introduction</span></h2>';
@@ -1445,7 +1482,7 @@ var TUTO = [
  {t: "Bienvenue !", h: "<p>Ce site accompagne la partie SVT de l'enseignement scientifique de première. Chaque partie du cahier (1a, 1b, 1c…) a sa propre page, avec le cours, les corrections des activités et des outils pour réviser.</p><p>Ce tuto présente en quelques étapes comment le site est organisé et ce que tu peux y faire. Tu peux le rouvrir à tout moment avec le bouton <b>Tuto</b>, en haut de l'écran.</p>"},
  {t: "L'organisation du site", h: "<ul><li>L'<b>accueil</b> présente les chapitres. Chaque chapitre a sa couleur et contient ses parties, avec leur problématique.</li><li>Clique sur une partie pour ouvrir son cours.</li><li>En haut, <b>← Retour</b> ramène à la page précédente et <b>Accueil</b> à la liste des chapitres.</li><li>En bas de chaque partie, tu peux passer directement à la <b>partie précédente</b> ou à la <b>partie suivante</b>.</li></ul>"},
  {t: "Les quatre onglets d'une partie", h: "<div class=\"tuto-demo\"><span>L'essentiel</span><span>Activités</span><span>Flashcards</span><span>QCM</span></div><ul><li><b>L'essentiel</b> : les bilans du cours, repris idée par idée, complétés et expliqués, avec un sommaire (I, II, III…). À la fin, l'encadré <b>En résumé</b> redonne les bilans de ton cahier, mot pour mot.</li><li><b>Activités</b> : pour chaque activité, ce qu'on a fait, pourquoi on l'a faite et à quoi elle nous a servi, puis la correction question par question (C1, C2…). Touche le titre pour l'ouvrir.</li><li><b>Flashcards</b> et <b>QCM</b> : pour réviser, voir les étapes suivantes.</li></ul>"},
- {t: "Les mots du cours et le glossaire", h: "<div class=\"tuto-demo\"><span class=\"dterm\">matrice extracellulaire</span></div><ul><li>Dans le cours, les mots <b>soulignés en pointillés</b> ont une définition : passe la souris dessus ou touche-les pour l'afficher.</li><li>Le bouton <b>Glossaire</b>, en haut, rassemble tous les mots du cours, classés par ordre alphabétique.</li><li>La recherche du glossaire accepte les petites fautes d'orthographe, et chaque mot indique les parties où il est utilisé.</li></ul>"},
+ {t: "Les mots du cours et le glossaire", h: "<div class=\"tuto-demo\"><span class=\"dterm\">matrice extracellulaire</span></div><ul><li>Dans le cours, les mots <b>soulignés en pointillés</b> ont une définition : passe la souris dessus ou touche-les pour l'afficher.</li><li>Les notions <mark class=\"hl-b\">surlignées en bleu</mark> sont les plus importantes : ce sont elles qu'il faut retenir en priorité.</li><li>Le bouton <b>Glossaire</b>, en haut, rassemble tous les mots du cours, classés par ordre alphabétique.</li><li>La recherche du glossaire accepte les petites fautes d'orthographe, et chaque mot indique les parties où il est utilisé.</li></ul>"},
  {t: "Réviser avec les flashcards", h: "<ul><li>Chaque carte a un mot-clé d'un côté et sa définition de l'autre. <b>Touche la carte</b> (ou appuie sur Espace) pour la retourner.</li><li>Réponds honnêtement avec <b>Je savais</b> ou <b>À revoir</b> : à la fin, tu vois ton score et tu peux revoir seulement les cartes ratées.</li><li><b>Une par une</b> ou <b>Toutes</b> : une carte à la fois, ou toutes les cartes affichées d'un coup.</li><li><b>Mot d'abord</b> ou <b>Définition d'abord</b> : pour t'entraîner dans les deux sens.</li><li>Pour changer de carte, fais glisser ton doigt ou utilise les flèches.</li></ul>"},
  {t: "S'entraîner avec les QCM", h: "<ul><li>Choisis un <b>niveau</b> (facile, moyen, difficile ou tous) et le <b>nombre de questions</b>.</li><li>Après chaque réponse, une <b>explication</b> s'affiche, que tu aies juste ou non.</li><li>Les questions et les réponses sont mélangées à chaque essai.</li><li>À la fin, tu peux revoir tes erreurs. Ton <b>meilleur score</b> est gardé sur ton appareil.</li><li>Sur l'accueil, <b>Tout réviser</b> mélange les flashcards et les QCM de toutes les parties : idéal avant un contrôle.</li></ul>"},
  {t: "Adapter l'affichage", h: "<p>Le bouton <b>Aa</b>, en haut à droite, permet de régler la lecture selon tes besoins :</p><ul><li><b>Thème</b> : jaune, clair ou sombre.</li><li><b>Taille du texte</b> : de A− à A++.</li><li><b>Police</b> : Lexend, conçue pour faciliter la lecture, ou une police classique.</li><li><b>Espacement élargi</b> : plus d'espace entre les lettres, les mots et les lignes (utile en cas de dyslexie).</li></ul><p>Tes réglages sont gardés pour tes prochaines visites.</p>"},
