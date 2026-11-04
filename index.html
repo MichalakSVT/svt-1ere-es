@@ -453,7 +453,11 @@ var GLOSSAIRE = {
  "microscope électronique à transmission": "Microscope très puissant (MET), qui montre des détails de quelques nanomètres.",
  "modèle": "Représentation simplifiée, construite à partir de résultats d'expériences.",
  "milieu de culture": "Mélange nutritif où l'on fait pousser des micro-organismes.",
- "cristal": "Solide aux constituants empilés régulièrement, comme le sel."
+ "cristal": "Solide aux constituants empilés régulièrement, comme le sel.",
+ "atome": "Particule de base de la matière (environ 0,1 nm).",
+ "pyrite": "Minéral de fer et de soufre, opaque, qui forme des cubes.",
+ "gypse": "Minéral très commun et très tendre, dont on fait le plâtre.",
+ "chlorure de sodium": "Nom chimique du sel de cuisine (NaCl)."
 };
 /* Schéma de la bicouche de phospholipides (dessiné en SVG, s'adapte au thème) */
 function bicoucheSVG(){
@@ -470,6 +474,16 @@ function bicoucheSVG(){
   return '<figure class="fig">' + s + '<figcaption><span><i class="dot"></i>Tête hydrophile, au contact de l\'eau</span><span><i class="tails"></i>Deux queues hydrophobes, regroupées au centre</span><span>Épaisseur totale ≈ 7 à 10 nm</span></figcaption><p class="fig-t">Organisation des phospholipides en bicouche (schéma en coupe)</p></figure>';
 }
 
+/* Schéma d'une face du cristal de chlorure de sodium (ions alternés et une maille) */
+function mailleSVG(){
+  var s = '<svg viewBox="0 0 300 300" role="img" aria-label="Disposition régulière des ions sodium et chlorure, avec une maille encadrée" style="display:block;width:min(100%,320px);height:auto;margin:0 auto">', n = 6, step = 46, o = 35;
+  for (var r = 0; r < n; r++) for (var k = 0; k < n; k++){
+    var cl = (r + k) % 2 === 0;
+    s += '<circle cx="' + (o + k * step) + '" cy="' + (o + r * step) + '" r="' + (cl ? 17 : 10) + '" fill="' + (cl ? 'var(--c)' : 'var(--ink-2)') + '"/>';
+  }
+  s += '<rect x="' + (o - 23) + '" y="' + (o - 23) + '" width="' + (2 * step + 46) + '" height="' + (2 * step + 46) + '" fill="none" stroke="var(--ink)" stroke-width="2.5" stroke-dasharray="7 5" rx="4"/>';
+  return '<figure class="fig">' + s + '</svg><figcaption><span><i class="dot"></i>Ion chlorure (Cl⁻)</span><span><i class="dot" style="background:var(--ink-2);width:8px;height:8px"></i>Ion sodium (Na⁺)</span><span>Pointillés : une maille</span></figcaption><p class="fig-t">Une face d\'un cristal de chlorure de sodium : les ions alternent régulièrement</p></figure>';
+}
 /* Frise chronologique de la théorie cellulaire */
 function frise(items){
   var h = '<ol class="frise">';
@@ -792,6 +806,171 @@ var NIVEAUX = [
    ]
   }
   ]
+ },
+ {
+  num: 2,
+  titre: "Les cristaux, des édifices ordonnés",
+  parties: [
+  /* ================================================================ Introduction du chapitre 2 */
+  {
+   id: "2intro",
+   label: "Intro",
+   titre: "Qu'est-ce qu'un cristal ?",
+   problematique: "Qu'est-ce qu'un cristal, et en quoi son organisation le distingue-t-elle des autres solides ?",
+
+   activites: [
+    {
+     type: "Activité · Introduction", titre: "Cristal ou pas cristal ?",
+     resume: "Après deux photographies d'accroche (la grotte des cristaux géants de Naica, au Mexique, et des cubes de pyrite que personne n'a taillés), chacun a classé neuf échantillons en « cristal », « pas cristal » ou « je ne sais pas » : sel gemme, flocon de neige, verre « en cristal », quartz, obsidienne, granite, nacre, calcul rénal et ambre. On a ensuite noté le critère utilisé pour décider, puis observé un grain de sel de cuisine au microscope électronique à balayage (MEB) avant de proposer une hypothèse pour expliquer sa forme.",
+     pourquoi: "Faire apparaître ce que l'on pense savoir des cristaux avant le chapitre. Dans la vie courante, « cristal » évoque un objet transparent, brillant ou précieux : il fallait voir que ces critères ne suffisent pas et qu'une définition scientifique est nécessaire.",
+     apport: "Les contre-exemples de la pyrite (opaque, sans valeur) et du gypse (très commun) ont montré que l'aspect ne permet pas de reconnaître un cristal. Le grain de sel, parfaitement cubique, a posé la question de l'origine de cette forme : elle a conduit à l'idée d'un empilement régulier de la matière, l'état cristallin, notée dans le bilan.",
+     correction: [
+      ["C1 · Cristal ou pas cristal ?", "<b>Cristaux :</b> sel gemme (chlorure de sodium), flocon de neige (glace), quartz, nacre (petits cristaux de carbonate de calcium fabriqués par le mollusque), calcul rénal (cristaux formés dans les voies urinaires).<br><b>Pas des cristaux :</b> verre « en cristal » (verre au plomb, solide amorphe : « cristal » est un nom commercial), obsidienne (verre volcanique), ambre (résine fossile).<br><b>Granite :</b> c'est une roche, formée de nombreux cristaux de plusieurs minéraux.", "cache"],
+      ["C2 · « Pour moi, un cristal, c'est… »", "Il n'y avait pas de mauvaise réponse : la question servait à dire quel critère on utilise. Les critères les plus fréquents (transparent, brillant, dur, précieux) ne fonctionnent pas : la pyrite est opaque et sans valeur, le gypse est très commun, et pourtant ce sont des cristaux. Le critère de la forme géométrique régulière est plus pertinent, mais il faudra le préciser."],
+      ["C3 · Pourquoi un grain de sel est-il un cube ?", "Au MEB, le grain de sel a la forme d'un cube : des faces planes et carrées, des arêtes droites. Il est environ 4 fois plus large que la barre d'échelle de 100 µm : il mesure donc environ 400 µm, soit 0,4 mm de côté.<br><br>Hypothèse retenue : les petits éléments qui forment le sel sont eux-mêmes rangés de façon régulière. Le modèle du chlorure de sodium le confirme : des ions disposés en cube forment une maille, et l'empilement de très nombreuses mailles donne un cristal cubique."]
+     ],
+     conclusionTitre: "À noter",
+     conclusion: "La correction complète de C1 sera donnée à la fin du chapitre, quand on aura vu les minéraux, les roches et les solides qui ne sont pas des cristaux."
+    }
+   ],
+
+   essentiel: {
+    sections: [
+     {titre: "Un cristal ne se reconnaît pas à son aspect", blocs: [
+      "**En sciences, un [[cristal]] ne se reconnaît pas à sa transparence ou à sa valeur.** Dans la vie courante, on appelle « cristal » un objet transparent, brillant ou précieux, comme un verre ou un lustre. Ce sens courant ne correspond pas au sens scientifique.",
+      "**La [[pyrite]], opaque, et le [[gypse]], très commun, sont des cristaux.** À l'inverse, un verre « en cristal » est transparent et coûteux, mais ce n'est pas un cristal : « cristal » n'est ici qu'un nom commercial.",
+      {aside: "Pour bien comprendre", texte: "Un cristal est défini par **la façon dont la matière qui le compose est organisée**, et non par son apparence. Deux objets qui se ressemblent peuvent donc être l'un un cristal, l'autre non."}
+     ]},
+     {titre: "Une forme géométrique régulière, quelle que soit la taille", blocs: [
+      "**Un cristal présente souvent une forme géométrique régulière, à faces planes, quelle que soit sa taille.** Ses faces sont lisses et planes, ses arêtes droites, et personne ne les a taillées : elles se forment naturellement, pendant la croissance du cristal.",
+      "**Par exemple, un grain de sel est un petit cube** d'environ 0,4 mm de côté. À l'autre extrême, les cristaux de gypse de la grotte de Naica, au Mexique, atteignent 11 m de long : ils gardent pourtant des faces planes et des arêtes droites.",
+      {table: {legende: "Une même régularité à toutes les tailles", entetes: ["Cristal", "Taille", "Forme"],
+       lignes: [["Grain de sel (chlorure de sodium)", "≈ 0,4 mm", "Cube"], ["Pyrite", "Quelques cm", "Cubes"], ["Gypse de Naica", "Jusqu'à 11 m", "Longues « poutres » à faces planes"]]}},
+      {aside: "Attention", texte: "« Souvent » ne veut pas dire « toujours » : un cristal qui s'est formé serré contre d'autres cristaux, dans une roche par exemple, n'a pas toujours de belles faces visibles. C'est son organisation intérieure qui compte."}
+     ]},
+     {titre: "Un empilement régulier : l'état cristallin", blocs: [
+      "**Cette forme traduit un empilement régulier d'[[atomes|atome]] ou d'[[ions|ion]] : c'est l'[[état cristallin]].** La forme que l'on voit à l'œil nu (échelle **[[macroscopique]]**) est la conséquence de l'organisation de la matière à l'échelle **[[microscopique]]**.",
+      "Dans le sel, le **[[chlorure de sodium]]** (NaCl), les ions sodium et les ions chlorure alternent régulièrement dans les trois directions de l'espace. Le plus petit motif qui se répète est la **[[maille]]** : un petit cube d'ions. En empilant un nombre gigantesque de mailles identiques, on obtient un cristal… en forme de cube.",
+      {html: mailleSVG()},
+      {aside: "Pour bien comprendre", texte: "Pense à un mur de briques identiques, posées toujours de la même façon : quelle que soit la taille du mur, il garde des bords droits. La maille joue le rôle de la brique, le cristal celui du mur."},
+      {aside: "Et ensuite ?", texte: "Les cristaux forment les **[[minéraux|minéral]]**, et les minéraux forment les **[[roches|roche]]** : c'est l'objet de la partie 2a)."}
+     ]}
+    ],
+    /* « En résumé » = les bilans du cours, mot pour mot */
+    recap: [
+     {titre: "Bilan de l'introduction", texte: "En sciences, un cristal ne se reconnaît pas à sa transparence ou à sa valeur : la pyrite, opaque, et le gypse, très commun, sont des cristaux."},
+     {texte: "Un cristal présente souvent une forme géométrique régulière, à faces planes, quelle que soit sa taille. Par exemple, un grain de sel est un petit cube."},
+     {texte: "Cette forme traduit un empilement régulier d'atomes ou d'ions : c'est l'état cristallin."}
+    ]
+   },
+
+   flashcards: [
+    ["Cristal", "Solide dont les atomes ou les ions sont empilés de façon régulière."],
+    ["État cristallin", "État d'un solide dont la matière est empilée de façon régulière."],
+    ["Maille", "Plus petit motif d'atomes ou d'ions qui se répète dans un cristal."],
+    ["Ion", "Atome qui porte une charge électrique (ex. Na⁺, Cl⁻)."],
+    ["Macroscopique", "Visible à l'œil nu."],
+    ["Microscopique", "Trop petit pour être vu à l'œil nu."]
+   ],
+
+   qcm: [
+    {n: 1, q: "En sciences, un cristal se reconnaît :", o: ["à sa transparence", "à sa valeur", "à l'organisation de la matière qui le compose", "à sa couleur"], r: 2, e: "La pyrite est opaque et le gypse très commun : ce sont pourtant des cristaux."},
+    {n: 1, q: "La pyrite, opaque et sans valeur, est :", o: ["un verre", "un cristal", "une roche amorphe", "un objet taillé par l'Homme"], r: 1, e: "Ses cubes se sont formés naturellement dans une roche."},
+    {n: 1, q: "Un grain de sel de cuisine a la forme :", o: ["d'une sphère", "d'un cube", "d'une aiguille", "d'aucune forme précise"], r: 1, e: "Des faces planes et carrées, des arêtes droites."},
+    {n: 1, q: "L'état cristallin correspond à :", o: ["un empilement régulier d'atomes ou d'ions", "un mélange désordonné d'atomes", "un objet transparent", "un solide précieux"], r: 0, e: "C'est cet empilement qui donne sa forme régulière au cristal."},
+    {n: 1, q: "La formule du chlorure de sodium (sel) est :", o: ["CaCO₃", "NaCl", "SiO₂", "H₂O"], r: 1, e: "Il est formé d'ions sodium et d'ions chlorure."},
+    {n: 2, q: "Les faces planes d'un cristal naturel :", o: ["ont été polies par l'Homme", "se forment naturellement pendant sa croissance", "n'existent que sur les petits cristaux", "sont dues à l'érosion"], r: 1, e: "Personne n'a taillé les cubes de pyrite ni les cristaux de Naica."},
+    {n: 2, q: "Les cristaux de gypse de Naica mesurent jusqu'à 11 m. On en déduit que :", o: ["seuls les petits cristaux ont une forme régulière", "la forme régulière existe quelle que soit la taille du cristal", "ce ne sont pas des cristaux", "ils ont été fabriqués"], r: 1, e: "Du grain de sel (0,4 mm) au cristal géant, la régularité est la même."},
+    {n: 2, q: "La maille d'un cristal est :", o: ["la forme extérieure du cristal", "le plus petit motif qui se répète dans le cristal", "un défaut du cristal", "un minéral"], r: 1, e: "Le cristal est un empilement de mailles identiques."},
+    {n: 2, q: "La forme visible d'un cristal (échelle macroscopique) s'explique par :", o: ["sa couleur", "l'organisation de la matière à l'échelle microscopique", "sa température", "sa valeur"], r: 1, e: "La forme traduit l'empilement régulier des atomes ou des ions."},
+    {n: 2, q: "Un verre « en cristal » vendu dans un magasin est :", o: ["un cristal au sens scientifique", "un solide dont la matière n'est pas empilée régulièrement", "un minéral", "du chlorure de sodium"], r: 1, e: "« Cristal » est ici un nom commercial."},
+    {n: 2, q: "Au MEB, un grain de sel mesure 4 fois la barre d'échelle de 100 µm. Il mesure environ :", o: ["25 µm", "100 µm", "0,4 mm", "4 mm"], r: 2, e: "4 × 100 µm = 400 µm = 0,4 mm."},
+    {n: 3, q: "Pourquoi un cristal de chlorure de sodium est-il cubique ?", o: ["Parce qu'il est broyé en cubes", "Parce que ses mailles sont des cubes empilés de façon régulière", "Parce que l'eau lui donne cette forme", "Parce qu'il est transparent"], r: 1, e: "La forme de la maille se retrouve à l'échelle du cristal."},
+    {n: 3, q: "Quel critère permet vraiment de dire qu'un solide est un cristal ?", o: ["Il est dur", "Il brille", "Sa matière est empilée de façon régulière", "Il est rare"], r: 2, e: "Dureté, éclat et rareté dépendent du cristal, mais ne le définissent pas."},
+    {n: 3, q: "Un cristal formé serré contre d'autres, dans une roche, n'a pas de belles faces. Est-ce encore un cristal ?", o: ["Non, car il n'a pas de forme géométrique", "Oui, si sa matière est empilée de façon régulière", "Non, car il est dans une roche", "Oui, s'il est transparent"], r: 1, e: "La forme extérieure est « souvent » régulière, mais c'est l'organisation intérieure qui définit le cristal."}
+   ]
+  },
+  /* ================================================================ 2a */
+  {
+   id: "2a",
+   titre: "Des cristaux aux roches",
+   problematique: "Comment l'organisation des cristaux dans une roche explique-t-elle ses propriétés ?",
+
+   activites: [
+    {
+     type: "Activité", titre: "Les galets de Nice",
+     resume: "La plage de Nice est un cordon de galets de 4,5 km qui protège la ville des vagues de tempête, mais elle perd chaque année des milliers de mètres cubes de galets. À l'aide de quatre documents (origine des galets apportés par le Var et le Paillon, lames minces de trois galets observées au microscope, dureté et usure des minéraux, effets des aménagements humains), on a cherché quel galet, entre granite, calcaire et gypse, est le plus adapté pour recharger la plage.",
+     pourquoi: "Utiliser des connaissances sur les minéraux et les roches pour éclairer un vrai choix d'aménagement du littoral. Pour répondre, il fallait regarder à l'intérieur des galets, à l'échelle de leurs cristaux.",
+     apport: "Elle a montré qu'une roche est un assemblage de cristaux d'un ou de plusieurs minéraux, et que ce sont ces minéraux qui expliquent ses propriétés : le granite, riche en quartz et en feldspath, minéraux durs et insolubles, résiste beaucoup mieux que le calcaire ou le gypse. C'est ce que résume le bilan de la partie 2a).",
+     correction: [
+      ["C1 · Des galets de roches variées", "Les galets proviennent de l'érosion des montagnes du bassin du Var et du Paillon : ce sont des morceaux de roches arrachés lors des crues, transportés et arrondis par les cours d'eau. Ils sont faits de roches variées : granite, gneiss, calcaire, grès, andésite, gypse.<br><br>Le granite est formé de plusieurs minéraux : quartz, feldspath et mica noir. Le calcaire est formé d'un seul minéral, la calcite (cristaux et débris de coquilles). Le gypse est lui aussi formé d'un seul minéral : des cristaux de gypse jointifs."],
+      ["C2 · Classer les galets selon leur résistance", "Du moins résistant au plus résistant : gypse < calcaire < granite.<br>– Le galet de gypse est formé d'un minéral très tendre (dureté 2), qui de plus se dissout lentement dans l'eau : il s'use et disparaît le plus vite.<br>– Le galet de calcaire est formé uniquement de calcite, un minéral tendre (dureté 3), mais qui ne se dissout presque pas dans l'eau de mer.<br>– Le galet de granite est surtout formé de quartz (dureté 7) et de feldspath (dureté 6), des minéraux durs et insolubles : c'est le plus résistant.<br><br><b>Nuance :</b> le granite contient aussi du mica, aussi tendre que la calcite, mais en faible quantité ; la résistance d'une roche dépend des minéraux qui la composent majoritairement."],
+      ["C3 · Pourquoi recharger la plage ?", "La plage perd des galets chaque année (15 000 à 20 000 m³) et le Var en apporte moins qu'autrefois : son lit est endigué, des ouvrages retiennent les sédiments et l'aéroport envoie ses apports hors de la baie. Une partie des galets ajoutés part vers le large. Sans rechargements, la plage maigrirait et protégerait moins bien la ville des tempêtes."],
+      ["C4 · Choisir le galet le plus adapté", "La plage perd chaque année des galets et la ville doit en rajouter. Il faut donc choisir des galets qui s'usent le moins possible pour que les rechargements soient efficaces plus longtemps. Le galet de granite est le plus adapté : il est surtout formé de quartz et de feldspath, des minéraux durs (dureté 6 à 7) qui ne se dissolvent presque pas. Le gypse est à éviter : il est très tendre et se dissout dans l'eau. Le calcaire, formé de calcite tendre, s'userait plus vite que le granite.<br><br>La connaissance des minéraux et de leur organisation permet ainsi de faire un choix argumenté. Ce choix ne règle pas tout : une partie des galets part au large quelle que soit leur nature, et la décision dépend aussi d'autres critères, comme le coût ou la provenance des galets."]
+     ],
+     conclusionTitre: "Pour réussir C4",
+     conclusion: "Choisir le granite et le justifier par ses minéraux majoritaires (quartz, feldspath : durs, insolubles) ; écarter le gypse et le calcaire avec des valeurs du document 3 ; relier la résistance des galets aux pertes de la plage et signaler une limite (pertes au large, coût, provenance) ; employer correctement les mots minéral, roche et cristal."
+    }
+   ],
+
+   essentiel: {
+    sections: [
+     {titre: "Le minéral : une composition et une organisation", blocs: [
+      "**Un [[minéral]] est défini par sa composition chimique et son organisation cristalline.** Il faut les deux à la fois : sa **composition chimique** dit de quels atomes ou ions il est formé (sa formule) ; son **organisation cristalline** dit comment ces atomes ou ions sont empilés dans le cristal.",
+      {table: {legende: "Quelques minéraux et leur composition chimique", entetes: ["Minéral", "Formule chimique", "Dureté (échelle de Mohs)"],
+       lignes: [["Gypse", "CaSO₄, 2 H₂O", "2"], ["Calcite", "CaCO₃", "3"], ["Feldspath", "Silicate (Si, O, Al…)", "6"], ["Quartz", "SiO₂", "7"]]}},
+      {aside: "Pour bien comprendre", texte: "Une même formule ne suffit pas à définir un minéral. Le carbonate de calcium (CaCO₃) peut cristalliser de deux façons différentes : la **calcite** et l'**aragonite**, celle de la nacre vue en introduction. Même composition, organisation différente : ce sont deux minéraux distincts."}
+     ]},
+     {titre: "La roche : un assemblage de cristaux", blocs: [
+      "**Une [[roche]] est formée de cristaux d'un seul ou de plusieurs minéraux.** Le calcaire est formé surtout de cristaux de calcite ; une roche de gypse, de cristaux de gypse. Le **granite**, lui, associe des cristaux de trois minéraux : quartz, feldspath et mica.",
+      {table: {legende: "Une roche, un ou plusieurs minéraux", entetes: ["Roche", "Minéral(aux)", "Nombre de minéraux"],
+       lignes: [["Gypse", "Gypse", "Un seul"], ["Calcaire", "Calcite", "Un seul"], ["Granite", "Quartz, feldspath, mica", "Plusieurs"]]}},
+      "On peut ainsi décrire la matière à des **échelles emboîtées**, de l'atome à la roche :",
+      {table: {legende: "De l'atome à la roche", entetes: ["Niveau", "Ordre de grandeur", "Ce que c'est"],
+       lignes: [["Atome ou ion", "0,1 nm (10⁻¹⁰ m)", "Particule de base de la matière"], ["Maille", "Moins de 1 nm", "Plus petit motif qui se répète"], ["Cristal", "Du µm au mètre", "Empilement régulier de mailles"], ["Roche", "Du cm au km", "Assemblage de cristaux d'un ou plusieurs minéraux"]]}},
+      {aside: "Attention", texte: "Ne confonds pas **minéral** et **roche** : le quartz est un minéral, le granite est une roche qui contient du quartz. Une roche peut contenir un seul minéral (le calcaire) : elle reste une roche, c'est-à-dire un assemblage de nombreux cristaux."}
+     ]},
+     {titre: "Les cristaux déterminent les propriétés de la roche", blocs: [
+      "**Les cristaux d'une roche déterminent ses propriétés, comme sa [[dureté]].** La dureté d'un minéral est sa résistance à la rayure : un minéral dur raye un minéral plus tendre. On la mesure sur l'**[[échelle de Mohs]]**, de 1 (le plus tendre) à 10 (le diamant).",
+      "Une roche formée de minéraux durs, comme le granite (quartz et feldspath), résiste bien à l'usure. Une roche formée de minéraux tendres, comme le gypse ou le calcaire, s'use beaucoup plus vite. Le gypse, en plus, se dissout lentement dans l'eau.",
+      "**Ce que l'on observe à l'échelle de la roche (sa résistance) s'explique donc par ce qui se passe à l'échelle de ses cristaux** (la nature des minéraux et leur proportion).",
+      {aside: "Pour bien comprendre", texte: "Dans une roche formée de plusieurs minéraux, ce sont surtout les **minéraux majoritaires** qui fixent ses propriétés. Le granite contient un peu de mica tendre, mais il reste très résistant car il est formé surtout de quartz et de feldspath."},
+      {aside: "À retenir en priorité", texte: "Savoir distinguer **atome, maille, cristal, minéral et roche**, et savoir expliquer une propriété d'une roche à partir des minéraux qui la composent."}
+     ]}
+    ],
+    /* « En résumé » = les bilans du cours, mot pour mot */
+    recap: [
+     {titre: "Bilan 1", texte: "Un minéral est défini par sa composition chimique et son organisation cristalline."},
+     {texte: "Une roche est formée de cristaux d'un seul ou de plusieurs minéraux, et ces cristaux déterminent ses propriétés, comme sa dureté."}
+    ]
+   },
+
+   flashcards: [
+    ["Minéral", "Solide défini par sa composition chimique et son organisation cristalline."],
+    ["Roche", "Assemblage de cristaux d'un ou de plusieurs minéraux."],
+    ["Dureté", "Résistance d'un minéral à la rayure."],
+    ["Échelle de Mohs", "Échelle de dureté des minéraux, de 1 (tendre) à 10 (diamant)."],
+    ["Composition chimique", "Nature des atomes ou des ions qui forment un minéral (sa formule)."]
+   ],
+
+   qcm: [
+    {n: 1, q: "Un minéral est défini par :", o: ["sa couleur et sa taille", "sa composition chimique et son organisation cristalline", "la roche qui le contient", "sa valeur"], r: 1, e: "Il faut les deux à la fois."},
+    {n: 1, q: "Une roche est :", o: ["un seul cristal", "un assemblage de cristaux d'un ou de plusieurs minéraux", "un atome", "une maille"], r: 1, e: "Exemple : le granite (quartz, feldspath, mica)."},
+    {n: 1, q: "Le granite est formé de :", o: ["calcite seulement", "quartz, feldspath et mica", "gypse seulement", "verre"], r: 1, e: "C'est une roche formée de plusieurs minéraux."},
+    {n: 1, q: "Le calcaire est formé surtout de :", o: ["quartz", "calcite", "mica", "feldspath"], r: 1, e: "Un seul minéral : la calcite (CaCO₃)."},
+    {n: 1, q: "La dureté d'un minéral, c'est :", o: ["sa masse", "sa résistance à la rayure", "sa couleur", "sa taille"], r: 1, e: "Un minéral dur raye un minéral plus tendre."},
+    {n: 1, q: "Le quartz est :", o: ["une roche", "un minéral", "une maille", "un atome"], r: 1, e: "Le granite est une roche qui contient du quartz."},
+    {n: 2, q: "Sur l'échelle de Mohs, quel minéral est le plus dur ?", o: ["Gypse (2)", "Calcite (3)", "Feldspath (6)", "Quartz (7)"], r: 3, e: "Plus le nombre est grand, plus le minéral est dur."},
+    {n: 2, q: "Quel est l'ordre correct, du plus petit au plus grand ?", o: ["Roche – cristal – maille – atome", "Atome – maille – cristal – roche", "Maille – atome – roche – cristal", "Cristal – atome – maille – roche"], r: 1, e: "Atome (0,1 nm), maille (< 1 nm), cristal, roche."},
+    {n: 2, q: "Calcite et aragonite ont la même formule (CaCO₃). Ce sont pourtant deux minéraux différents car :", o: ["elles n'ont pas la même couleur", "leur organisation cristalline est différente", "l'une est une roche", "l'une est amorphe"], r: 1, e: "Un minéral = composition chimique + organisation cristalline."},
+    {n: 2, q: "Une roche formée d'un seul minéral :", o: ["n'existe pas", "est un minéral et non une roche", "reste une roche, car c'est un assemblage de nombreux cristaux", "est forcément du granite"], r: 2, e: "Exemple : le calcaire, formé de calcite."},
+    {n: 2, q: "Pourquoi le granite résiste-t-il bien à l'usure ?", o: ["Parce qu'il contient beaucoup de mica", "Parce qu'il est surtout formé de quartz et de feldspath, minéraux durs", "Parce qu'il est un seul cristal", "Parce qu'il se dissout dans l'eau"], r: 1, e: "Ses minéraux majoritaires sont durs (6 et 7) et presque insolubles."},
+    {n: 3, q: "Le gypse s'use très vite dans l'eau de mer. Deux raisons liées à son minéral :", o: ["il est dur et insoluble", "il est très tendre (dureté 2) et se dissout lentement dans l'eau", "il contient du quartz", "il est formé de plusieurs minéraux"], r: 1, e: "Les propriétés de la roche viennent de celles de son minéral."},
+    {n: 3, q: "Le granite contient un peu de mica, minéral tendre. Pourquoi reste-t-il résistant ?", o: ["Parce que le mica est en réalité dur", "Parce que ce sont surtout ses minéraux majoritaires qui fixent ses propriétés", "Parce que le mica disparaît", "Parce que le granite est un minéral"], r: 1, e: "Le quartz et le feldspath forment l'essentiel de la roche."},
+    {n: 3, q: "Quelle phrase répond le mieux à la problématique ?", o: ["Une roche a toujours les mêmes propriétés", "Les propriétés d'une roche, comme sa dureté, dépendent des cristaux des minéraux qui la composent", "Les propriétés d'une roche dépendent de sa couleur", "Une roche n'est pas formée de cristaux"], r: 1, e: "C'est le bilan de la partie 2a)."}
+   ]
+  }
+  ]
  }
  ]
 }
@@ -809,6 +988,7 @@ var S = {view: 'home', niveau: null, chap: null, partie: null, tab: 'essentiel'}
 var keyHandler = null;
 var NIVEAUX_LBL = {1: 'Facile', 2: 'Moyen', 3: 'Difficile'};
 
+function lbl(p){ return p.label || p.id; }
 function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
 function shuffle(a){ a = a.slice(); for (var i = a.length - 1; i > 0; i--){ var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
 function $(id){ return document.getElementById(id); }
@@ -935,7 +1115,7 @@ function bindFolds(root){ root.querySelectorAll('[data-fold]').forEach(function(
 function renderCrumbs(){
   var h = '', LBL = {revision: 'Tout réviser', glossaire: 'Glossaire'};
   if (S.view !== 'home' && S.niveau) h += '<span>/</span><button data-go="home">' + esc(S.niveau.nom) + '</button>';
-  if (S.view === 'partie') h += '<span>/</span><span class="cur">' + esc(S.partie.id) + ' · ' + esc(S.partie.titre) + '</span>';
+  if (S.view === 'partie') h += '<span>/</span><span class="cur">' + esc(lbl(S.partie)) + ' · ' + esc(S.partie.titre) + '</span>';
   if (LBL[S.view]) h += '<span>/</span><span class="cur">' + LBL[S.view] + '</span>';
   $('glBtn').classList.toggle('on', S.view === 'glossaire');
   var home = S.view === 'home';
@@ -1016,7 +1196,7 @@ function renderNiveau(){
     if (!parts.length) return;
     h += '<section class="chapter" style="' + colorVars(chapColor(ch)) + '"><div class="ch-head"><p class="kicker">Chapitre ' + ch.num + '</p><h2>' + esc(ch.titre) + '</h2></div><div class="parts">';
     parts.forEach(function(p){
-      h += '<button class="part" data-p="' + p.id + '"><span class="pid">' + esc(p.id) + '</span><h3>' + esc(p.titre) + '</h3><p class="pq">' + esc(p.problematique || '') + '</p><span class="go">Ouvrir le cours →</span></button>';
+      h += '<button class="part" data-p="' + p.id + '"><span class="pid">' + esc(lbl(p)) + '</span><h3>' + esc(p.titre) + '</h3><p class="pq">' + esc(p.problematique || '') + '</p><span class="go">Ouvrir le cours →</span></button>';
     });
     h += '</div></section>';
   });
@@ -1034,7 +1214,7 @@ var TABS = [['essentiel', "L'essentiel"], ['activites', 'Activités'], ['flashca
 
 function renderPartie(){
   var p = S.partie, ch = S.chap;
-  var h = '<div class="view"><header class="hero"><p class="kicker">Chapitre ' + ch.num + ' · Partie ' + esc(p.id) + '</p><h1>' + esc(p.titre) + '</h1>'
+  var h = '<div class="view"><header class="hero"><p class="kicker">Chapitre ' + ch.num + ' · ' + (p.label ? 'Introduction' : 'Partie ' + esc(p.id)) + '</p><h1>' + esc(p.titre) + '</h1>'
     + '<p class="probl"><span>Problématique</span>' + esc(p.problematique || '') + '</p></header></div>'
     + '<nav class="tabs" id="tabs">';
   TABS.forEach(function(t){ h += '<button data-t="' + t[0] + '" class="' + (S.tab === t[0] ? 'on' : '') + '">' + t[1] + '</button>'; });
@@ -1043,8 +1223,8 @@ function renderPartie(){
   var list = allParties(S.niveau), idx = -1;
   list.forEach(function(x, i){ if (x.p.id === p.id) idx = i; });
   h += '<nav class="next-nav">';
-  if (idx > 0) h += '<button data-nav="' + (idx - 1) + '"><small>← Partie précédente</small><span>' + esc(list[idx - 1].p.id + ' · ' + list[idx - 1].p.titre) + '</span></button>';
-  if (idx < list.length - 1) h += '<button data-nav="' + (idx + 1) + '"><small>Partie suivante →</small><span>' + esc(list[idx + 1].p.id + ' · ' + list[idx + 1].p.titre) + '</span></button>';
+  if (idx > 0) h += '<button data-nav="' + (idx - 1) + '"><small>← Partie précédente</small><span>' + esc(lbl(list[idx - 1].p) + ' · ' + list[idx - 1].p.titre) + '</span></button>';
+  if (idx < list.length - 1) h += '<button data-nav="' + (idx + 1) + '"><small>Partie suivante →</small><span>' + esc(lbl(list[idx + 1].p) + ' · ' + list[idx + 1].p.titre) + '</span></button>';
   h += '</nav>';
   app.innerHTML = h;
   app.querySelectorAll('#tabs button').forEach(function(b){ b.onclick = function(){ switchTab(b.dataset.t); }; });
@@ -1130,7 +1310,7 @@ function renderActivites(tab, p){
     if (AFFICHER_CORRECTIONS && a.correction && a.correction.length){
       h += '<p class="corr-title">Correction</p>';
       /* Titre « Étiquette · intitulé » : l'étiquette (C1, Dossier 2, Bonus…) remplace la numérotation automatique */
-      a.correction.forEach(function(c, k){ var m = /^(.+?) · (.+)$/.exec(c[0]); h += '<div class="corr-item"><div class="cq"><b>' + (m ? m[1] : 'C' + (k + 1)) + '</b><span>' + (m ? m[2] : c[0]) + '</span></div><p class="ca">' + c[1] + '</p></div>'; });
+      a.correction.filter(visible).forEach(function(c, k){ var m = /^(.+?) · (.+)$/.exec(c[0]); h += '<div class="corr-item"><div class="cq"><b>' + (m ? m[1] : 'C' + (k + 1)) + '</b><span>' + (m ? m[2] : c[0]) + '</span></div><p class="ca">' + c[1] + '</p></div>'; });
     }
     h += '</div></div></div></div>';
   });
@@ -1203,7 +1383,7 @@ function renderGlossaire(){
     r.list.forEach(function(e){
       if (!qt){ var L = e.k.charAt(0).toUpperCase(); if (L !== letter){ letter = L; out += '<div class="gl-letter">' + L + '</div>'; } }
       out += '<div class="gl-item"><h3>' + hl(e.g.t, qt) + '</h3><p>' + hl(e.g.d, qt) + '</p>';
-      if (e.g.parts.length){ out += '<div class="gl-tags">'; e.g.parts.forEach(function(x){ out += '<button style="' + colorVars(chapColor(x.ch)) + '" data-gp="' + x.p.id + '">' + esc(x.p.id) + ' · ' + esc(x.p.titre) + '</button>'; }); out += '</div>'; }
+      if (e.g.parts.length){ out += '<div class="gl-tags">'; e.g.parts.forEach(function(x){ out += '<button style="' + colorVars(chapColor(x.ch)) + '" data-gp="' + x.p.id + '">' + esc(lbl(x.p)) + ' · ' + esc(x.p.titre) + '</button>'; }); out += '</div>'; }
       out += '</div>';
     });
     $('gll').innerHTML = out;
@@ -1311,8 +1491,8 @@ function renderRevision(){
   var fc = [], q = [];
   allParties(S.niveau).forEach(function(x){
     var col = chapColor(x.ch);
-    x.p.flashcards.filter(visible).forEach(function(c){ fc.push({t: c[0], d: c[1], col: col, tag: x.p.id}); });
-    x.p.qcm.filter(visible).forEach(function(it){ q.push({q: it.q, o: it.o, r: it.r, e: it.e, n: it.n, col: col, tag: x.p.id}); });
+    x.p.flashcards.filter(visible).forEach(function(c){ fc.push({t: c[0], d: c[1], col: col, tag: lbl(x.p)}); });
+    x.p.qcm.filter(visible).forEach(function(it){ q.push({q: it.q, o: it.o, r: it.r, e: it.e, n: it.n, col: col, tag: lbl(x.p)}); });
   });
   var h = '<div class="view"><header class="hero"><p class="kicker">' + esc(S.niveau.nom) + '</p><h1>Tout réviser</h1><p class="probl"><span>Mode révision</span>Toutes les parties sont mélangées.</p></header></div>'
     + '<nav class="tabs" id="tabs"><button data-t="flashcards" class="' + (S.tab === 'flashcards' ? 'on' : '') + '">Flashcards</button><button data-t="qcm" class="' + (S.tab === 'qcm' ? 'on' : '') + '">QCM</button></nav><div id="tab"></div>';
@@ -1525,59 +1705,6 @@ if (HALLOWEEN) (function(){
 /* ---------- Démarrage ---------- */
 if (OUVRIR_SUR){ var f0 = findPartie(OUVRIR_SUR); if (f0){ S.niveau = f0.niveau; S.view = 'partie'; S.partie = f0.p; S.chap = f0.ch; } }
 render();
-</script>
-<!-- =====================================================================
-     STATISTIQUES DE VISITES (GoatCounter : sans cookie, sans donnée personnelle)
-     Tableau de bord : https://michalaksvt-1es.goatcounter.com
-     Compte seulement de grandes catégories : ouverture du site, cours, activités,
-     flashcards, QCM lancé, méthodes, glossaire, tout réviser.
-     Pour arrêter : supprimer ce bloc.
-     ===================================================================== -->
-<script>
-(function(){
-  var COMPTEUR = 'https://michalaksvt-1es.goatcounter.com/count';
-  var CATEGORIES = {
-    ouverture: 'Ouverture du site', cours: 'Cours', activites: 'Activités', flashcards: 'Flashcards',
-    qcm: 'QCM lancé', methodes: 'Méthodes', glossaire: 'Glossaire', revision: 'Tout réviser'
-  };
-  var file = [], pret = false;
-  function compter(cat){
-    if (!CATEGORIES[cat]) return;
-    var o = {path: '/' + cat, title: CATEGORIES[cat]};
-    if (pret) { try { window.goatcounter.count(o); } catch(e){} } else file.push(o);
-  }
-  /* Le script de GoatCounter ne compte rien tout seul (no_onload) : c'est nous qui envoyons les catégories */
-  window.goatcounter = {no_onload: true, allow_frame: true};
-  var s = document.createElement('script');
-  s.async = true; s.src = 'https://gc.zgo.at/count.js';
-  s.setAttribute('data-goatcounter', COMPTEUR);
-  s.onload = function(){ pret = !!(window.goatcounter && window.goatcounter.count); if (pret) file.splice(0).forEach(function(o){ try { window.goatcounter.count(o); } catch(e){} }); };
-  document.head.appendChild(s);
-
-  var ONGLET = {essentiel: 'cours', activites: 'activites', flashcards: 'flashcards'};
-  var VUE = {glossaire: 'glossaire', methodes: 'methodes', revision: 'revision'};
-  var dernier = null;
-  function etat(){
-    if (typeof S === 'undefined') return null;
-    if (S.view === 'partie' && S.partie) return {cle: 'p:' + S.partie.id + ':' + S.tab, cat: ONGLET[S.tab]};
-    return {cle: 'v:' + S.view, cat: VUE[S.view]};
-  }
-  function suivre(){
-    var e = etat(); if (!e || e.cle === dernier) return;
-    dernier = e.cle;
-    if (e.cat) compter(e.cat);
-  }
-  compter('ouverture');
-  var e0 = etat(); dernier = e0 ? e0.cle : null;
-  if (e0 && e0.cle.indexOf('p:') === 0 && e0.cat) compter(e0.cat);   /* site ouvert directement sur une partie */
-  /* Changements de page et d'onglet */
-  if (typeof render === 'function'){ var r0 = render; render = function(){ r0.apply(this, arguments); suivre(); }; }
-  if (typeof switchTab === 'function'){ var t0 = switchTab; switchTab = function(){ t0.apply(this, arguments); suivre(); }; }
-  /* Chaque QCM lancé (bouton « Commencer »), où qu'il soit */
-  document.addEventListener('click', function(ev){
-    if (ev.target && ev.target.closest && ev.target.closest('#go')) compter('qcm');
-  }, true);
-})();
 </script>
 </body>
 </html>
